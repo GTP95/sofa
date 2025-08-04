@@ -1,0 +1,14 @@
+{
+  "platform": "CW308_STM32F4",
+  "__platform__comment": "The hardware platform used for this operation (e.g., CW308_STM32F4)",
+  "target": "AES",
+  "__target__comment": "The specific target profile or algorithm being used (e.g., AES, ASCON, KECCAK)",
+  "key_length": "128",
+  "__key_length__comment": "The length of the encryption key in bits (e.g., 128, 192, 256)",
+  "plaintext_length": "64",
+  "__plaintext_length__comment": "The length of the plaintext input in bytes (e.g., 64 bytes)",
+  "use_iv": "false",
+  "__use_iv__comment": "Boolean value indicating whether an initialization vector (IV) is used; false for ECB mode, true otherwise",
+  "masked": "false",
+  "__masked__comment": "Boolean value indicating whether masking is enabled for side-channel resistance (true if masked, false otherwise)"
+}

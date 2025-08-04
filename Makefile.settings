@@ -1,0 +1,135 @@
+# Platform, do not change!
+PLATFORM = CW308_STM32F4
+
+# Simple serial version, behavare 2.0 and above don't work properly for some reasons, so don't change this.
+SS_VER = SS_VER_1_1
+
+# Useful definitions
+FIRMWAREPATH = ./Firmware
+TARGETSPATH = ./Targets
+CRYPTO_OPTIONS +=
+
+# Target profile.
+# This is the base name of the compiled files and tells the makefile in which directory to look for files.
+ifneq ($(MAKECMDGOALS), help)
+  ifeq ($(TARGET),)
+  	${error No TARGET selected, run "make help" for usage}
+  endif
+endif
+
+# Set up the plaintext size for automatic generation and checks.
+# If nothing is specified we default to 64 bytes.
+ifndef PTLEN
+  PTLEN = 64
+endif
+  
+CFLAGS += -DPTLEN=$(PTLEN)
+CRYPTO_OPTIONS += PTLEN=$(PTLEN)
+
+# Set up the algorithm flags based on the target, more profiles can be added here in a similar way.
+# Of course, you need to look at the specific algorithm implementations but a good start is the Makefile
+# of the target algorithm!
+ifeq ($(TARGET), AES)
+  ifdef MODE
+   ifeq ($(MODE), CBC)
+      CFLAGS += -DECB=0 -DCTR=0
+    else ifeq ($(MODE), CTR)
+      CFLAGS += -DECB=0 -DCBC=0
+    else
+      CFLAGS += -DCTR=0 -DCBC=0
+    endif
+	CRYPTO_OPTIONS += $(MODE)
+  else
+    MODE=ECB
+    CFLAGS += -DCTR=0 -DCBC=0
+	CRYPTO_OPTIONS += ECB
+  endif
+  ifdef KEYSIZE
+    ifeq ($(KEYSIZE), 256)
+      CFLAGS += -DAES256=1
+	  CRYPTO_OPTIONS += AES256
+    else ifeq ($(KEYSIZE), 192)
+      CFLAGS += -DAES192=1
+	  CRYPTO_OPTIONS += AES192
+    else
+      CFLAGS += -DAES128=1 
+	  CRYPTO_OPTIONS += AES128
+    endif
+  else
+    KEYSIZE=128
+    CFLAGS += -DAES128=1 
+	CRYPTO_OPTIONS += AES128
+  endif
+  ifdef MASKED
+    ifeq ($(MASKED), 1)
+      CFLAGS += -DMASKED=1
+	  CRYPTO_OPTIONS += MASKED
+    else
+      CFLAGS += -DMASKED=0
+	  CRYPTO_OPTIONS += NOT_MASKED
+    endif
+  else
+    CFLAGS += -DMASKED=0
+    CRYPTO_OPTIONS += NOT_MASKED
+  endif
+endif
+
+ifeq ($(filter $(TARGET), ASCON_REF ASCON_PROTECTED ASCON_ARM), $(TARGET))
+  ifndef AD_LEN
+    AD_LEN=0
+  endif
+
+  CFLAGS += -DAD_LEN=${AD_LEN}
+	CRYPTO_OPTIONS += AD_LEN=${AD_LEN}
+  
+  ifndef NUM_SHARES
+    NUM_SHARES=1
+  endif
+
+  CFLAGS += -DNUM_SHARES_KEY=$(NUM_SHARES) -DNUM_SHARES_NPUB=$(NUM_SHARES) -DNUM_SHARES_AD=$(NUM_SHARES) -DNUM_SHARES_M=$(NUM_SHARES) -DNUM_SHARES_C=$(NUM_SHARES)
+	CRYPTO_OPTIONS += NUM_SHARES=$(NUM_SHARES)
+
+  ifndef PA_ROUNDS
+    PA_ROUNDS=12
+  endif
+
+  CFLAGS += -DASCON_PA_ROUNDS=$(PA_ROUNDS)
+	CRYPTO_OPTIONS += PA_ROUNDS=$(PA_ROUNDS)
+
+  ifndef PB_ROUNDS
+    PB_ROUNDS=6
+  endif
+
+  CFLAGS += -DASCON_PB_ROUNDS=$(PB_ROUNDS)
+	CRYPTO_OPTIONS += PB_ROUNDS=$(PB_ROUNDS)
+
+  ifndef ROR_SHARES
+    ROR_SHARES=5
+  endif
+  
+  CFLAGS += -DASCON_ROR_SHARES=$(ROR_SHARES)
+	CRYPTO_OPTIONS += ROR_SHARES=$(ROR_SHARES)
+  
+  ifndef EXTERN_BI
+    EXTERN_BI=0
+  endif
+  
+  CFLAGS += -DASCON_EXTERN_BI=$(EXTERN_BI)
+	CRYPTO_OPTIONS += EXTERN_BI=$(EXTERN_BI)
+endif
+
+ifeq ($(TARGET), KECCAK)
+  ifndef OPLEN
+    OPLEN=64
+  endif
+
+  CFLAGS += -DOPLEN=$(OPLEN)
+	CRYPTO_OPTIONS += DIGEST_LEN=$(OPLEN)
+
+  ifndef FUNC
+    FUNC=SHAKE128
+  endif
+
+  CFLAGS += -DFUNC=$(FUNC)
+	CRYPTO_OPTIONS += FUNCTION=$(FUNC)
+endif

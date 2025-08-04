@@ -1,0 +1,11 @@
+# Get all .c and .S (assembly) files in the target
+FILES_WITH_PATH := $(wildcard $(TARGETSPATH)/$(TARGET)/*.c)
+ASSEMBLY_FILES_WITH_PATH := $(wildcard $(TARGETSPATH)/$(TARGET)/*.S)
+# Strip the directory part, leaving only the filenames
+FILES := $(notdir $(FILES_WITH_PATH))
+ASSEMBLY_FILES := $(notdir $(ASSEMBLY_FILES_WITH_PATH))
+SRC += $(FILES)
+ASRC += $(ASSEMBLY_FILES)
+VPATH += :$(TARGETSPATH)/$(TARGET)/
+EXTRAINCDIRS += $(TARGETSPATH)/$(TARGET)/
+

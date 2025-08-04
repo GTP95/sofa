@@ -1,0 +1,1269 @@
+Archive member included to satisfy reference by file (symbol)
+
+/home/giacomo/arm-gnu-toolchain-14.3.rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp/libg.a(libc_a-exit.o)
+                              /home/giacomo/arm-gnu-toolchain-14.3.rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp/crt0.o (exit)
+/home/giacomo/arm-gnu-toolchain-14.3.rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp/libg.a(libc_a-findfp.o)
+                              /home/giacomo/arm-gnu-toolchain-14.3.rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp/libg.a(libc_a-exit.o) (__stdio_exit_handler)
+/home/giacomo/arm-gnu-toolchain-14.3.rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp/libg.a(libc_a-fwalk.o)
+                              /home/giacomo/arm-gnu-toolchain-14.3.rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp/libg.a(libc_a-findfp.o) (_fwalk_sglue)
+/home/giacomo/arm-gnu-toolchain-14.3.rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp/libg.a(libc_a-stdio.o)
+                              /home/giacomo/arm-gnu-toolchain-14.3.rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp/libg.a(libc_a-findfp.o) (__sread)
+/home/giacomo/arm-gnu-toolchain-14.3.rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp/libg.a(libc_a-memset.o)
+                              /home/giacomo/arm-gnu-toolchain-14.3.rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp/crt0.o (memset)
+/home/giacomo/arm-gnu-toolchain-14.3.rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp/libg.a(libc_a-closer.o)
+                              /home/giacomo/arm-gnu-toolchain-14.3.rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp/libg.a(libc_a-stdio.o) (_close_r)
+/home/giacomo/arm-gnu-toolchain-14.3.rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp/libg.a(libc_a-reent.o)
+                              /home/giacomo/arm-gnu-toolchain-14.3.rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp/libg.a(libc_a-closer.o) (errno)
+/home/giacomo/arm-gnu-toolchain-14.3.rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp/libg.a(libc_a-impure.o)
+                              /home/giacomo/arm-gnu-toolchain-14.3.rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp/libg.a(libc_a-reent.o) (_impure_ptr)
+/home/giacomo/arm-gnu-toolchain-14.3.rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp/libg.a(libc_a-lseekr.o)
+                              /home/giacomo/arm-gnu-toolchain-14.3.rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp/libg.a(libc_a-stdio.o) (_lseek_r)
+/home/giacomo/arm-gnu-toolchain-14.3.rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp/libg.a(libc_a-readr.o)
+                              /home/giacomo/arm-gnu-toolchain-14.3.rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp/libg.a(libc_a-stdio.o) (_read_r)
+/home/giacomo/arm-gnu-toolchain-14.3.rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp/libg.a(libc_a-writer.o)
+                              /home/giacomo/arm-gnu-toolchain-14.3.rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp/libg.a(libc_a-stdio.o) (_write_r)
+/home/giacomo/arm-gnu-toolchain-14.3.rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp/libg.a(libc_a-errno.o)
+                              OBJFILES-AES-CW308_STM32F4/stm32f4_sysmem.o (__errno)
+/home/giacomo/arm-gnu-toolchain-14.3.rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp/libg.a(libc_a-init.o)
+                              /home/giacomo/arm-gnu-toolchain-14.3.rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp/crt0.o (__libc_init_array)
+/home/giacomo/arm-gnu-toolchain-14.3.rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp/libg.a(libc_a-lock.o)
+                              /home/giacomo/arm-gnu-toolchain-14.3.rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp/libg.a(libc_a-findfp.o) (__retarget_lock_init_recursive)
+/home/giacomo/arm-gnu-toolchain-14.3.rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp/libg.a(libc_a-__call_atexit.o)
+                              /home/giacomo/arm-gnu-toolchain-14.3.rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp/libg.a(libc_a-exit.o) (__call_exitprocs)
+/home/giacomo/arm-gnu-toolchain-14.3.rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp/libg.a(libc_a-atexit.o)
+                              /home/giacomo/arm-gnu-toolchain-14.3.rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp/libg.a(libc_a-__call_atexit.o) (atexit)
+/home/giacomo/arm-gnu-toolchain-14.3.rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp/libg.a(libc_a-freer.o)
+                              /home/giacomo/arm-gnu-toolchain-14.3.rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp/libg.a(libc_a-reent.o) (_free_r)
+/home/giacomo/arm-gnu-toolchain-14.3.rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp/libg.a(libc_a-mallocr.o)
+                              /home/giacomo/arm-gnu-toolchain-14.3.rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp/libg.a(libc_a-findfp.o) (_malloc_r)
+/home/giacomo/arm-gnu-toolchain-14.3.rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp/libg.a(libc_a-mlock.o)
+                              /home/giacomo/arm-gnu-toolchain-14.3.rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp/libg.a(libc_a-freer.o) (__malloc_lock)
+/home/giacomo/arm-gnu-toolchain-14.3.rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp/libg.a(libc_a-fclose.o)
+                              /home/giacomo/arm-gnu-toolchain-14.3.rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp/libg.a(libc_a-findfp.o) (_fclose_r)
+/home/giacomo/arm-gnu-toolchain-14.3.rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp/libg.a(libc_a-fflush.o)
+                              /home/giacomo/arm-gnu-toolchain-14.3.rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp/libg.a(libc_a-fclose.o) (__sflush_r)
+/home/giacomo/arm-gnu-toolchain-14.3.rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp/libg.a(libc_a-sbrkr.o)
+                              /home/giacomo/arm-gnu-toolchain-14.3.rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp/libg.a(libc_a-freer.o) (_sbrk_r)
+/home/giacomo/arm-gnu-toolchain-14.3.rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp/libg.a(libc_a-fini.o)
+                              /home/giacomo/arm-gnu-toolchain-14.3.rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp/libg.a(libc_a-__call_atexit.o) (__libc_fini_array)
+/home/giacomo/arm-gnu-toolchain-14.3.rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp/libg.a(libc_a-sysconf.o)
+                              /home/giacomo/arm-gnu-toolchain-14.3.rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp/libg.a(libc_a-freer.o) (sysconf)
+/home/giacomo/arm-gnu-toolchain-14.3.rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp/libg.a(libc_a-__atexit.o)
+                              /home/giacomo/arm-gnu-toolchain-14.3.rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp/libg.a(libc_a-atexit.o) (__register_exitproc)
+/home/giacomo/arm-gnu-toolchain-14.3.rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp/libnosys.a(close.o)
+                              /home/giacomo/arm-gnu-toolchain-14.3.rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp/libg.a(libc_a-closer.o) (_close)
+/home/giacomo/arm-gnu-toolchain-14.3.rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp/libnosys.a(lseek.o)
+                              /home/giacomo/arm-gnu-toolchain-14.3.rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp/libg.a(libc_a-lseekr.o) (_lseek)
+/home/giacomo/arm-gnu-toolchain-14.3.rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp/libnosys.a(read.o)
+                              /home/giacomo/arm-gnu-toolchain-14.3.rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp/libg.a(libc_a-readr.o) (_read)
+/home/giacomo/arm-gnu-toolchain-14.3.rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp/libnosys.a(write.o)
+                              /home/giacomo/arm-gnu-toolchain-14.3.rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp/libg.a(libc_a-writer.o) (_write)
+/home/giacomo/arm-gnu-toolchain-14.3.rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp/libnosys.a(_exit.o)
+                              /home/giacomo/arm-gnu-toolchain-14.3.rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp/libg.a(libc_a-exit.o) (_exit)
+
+Discarded input sections
+
+ .text          0x00000000        0x0 /home/giacomo/arm-gnu-toolchain-14.3.rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/thumb/v7e-m/nofp/crti.o
+ .data          0x00000000        0x0 /home/giacomo/arm-gnu-toolchain-14.3.rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/thumb/v7e-m/nofp/crti.o
+ .bss           0x00000000        0x0 /home/giacomo/arm-gnu-toolchain-14.3.rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/thumb/v7e-m/nofp/crti.o
+ .text          0x00000000        0x0 /home/giacomo/arm-gnu-toolchain-14.3.rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/thumb/v7e-m/nofp/crtbegin.o
+ .data          0x00000000        0x0 /home/giacomo/arm-gnu-toolchain-14.3.rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/thumb/v7e-m/nofp/crtbegin.o
+ .bss           0x00000000        0x0 /home/giacomo/arm-gnu-toolchain-14.3.rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/thumb/v7e-m/nofp/crtbegin.o
+ .rodata.all_implied_fbits
+                0x00000000       0x24 /home/giacomo/arm-gnu-toolchain-14.3.rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/thumb/v7e-m/nofp/crtbegin.o
+ .data.__dso_handle
+                0x00000000        0x4 /home/giacomo/arm-gnu-toolchain-14.3.rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/thumb/v7e-m/nofp/crtbegin.o
+ .text          0x00000000       0x7c /home/giacomo/arm-gnu-toolchain-14.3.rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp/crt0.o
+ .data          0x00000000        0x0 /home/giacomo/arm-gnu-toolchain-14.3.rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp/crt0.o
+ .bss           0x00000000        0x0 /home/giacomo/arm-gnu-toolchain-14.3.rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp/crt0.o
+ .ARM.extab     0x00000000        0x0 /home/giacomo/arm-gnu-toolchain-14.3.rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp/crt0.o
+ .ARM.exidx     0x00000000       0x10 /home/giacomo/arm-gnu-toolchain-14.3.rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp/crt0.o
+ .debug_line_str
+                0x00000000       0xcc /home/giacomo/arm-gnu-toolchain-14.3.rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp/crt0.o
+ .ARM.attributes
+                0x00000000       0x1c /home/giacomo/arm-gnu-toolchain-14.3.rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp/crt0.o
+ .text          0x00000000        0x0 OBJFILES-AES-CW308_STM32F4/aes.o
+ .data          0x00000000        0x0 OBJFILES-AES-CW308_STM32F4/aes.o
+ .bss           0x00000000        0x0 OBJFILES-AES-CW308_STM32F4/aes.o
+ .text.AES_ECB_decrypt
+                0x00000000      0x1ac OBJFILES-AES-CW308_STM32F4/aes.o
+ .text          0x00000000        0x0 OBJFILES-AES-CW308_STM32F4/entrypoint.o
+ .data          0x00000000        0x0 OBJFILES-AES-CW308_STM32F4/entrypoint.o
+ .text.led_ok   0x00000000        0x2 OBJFILES-AES-CW308_STM32F4/entrypoint.o
+ .text.led_error
+                0x00000000        0x2 OBJFILES-AES-CW308_STM32F4/entrypoint.o
+ .text.set_iv   0x00000000       0x14 OBJFILES-AES-CW308_STM32F4/entrypoint.o
+ .text          0x00000000        0x0 OBJFILES-AES-CW308_STM32F4/stm32f4_hal.o
+ .data          0x00000000        0x0 OBJFILES-AES-CW308_STM32F4/stm32f4_hal.o
+ .text.trigger_setup
+                0x00000000       0x40 OBJFILES-AES-CW308_STM32F4/stm32f4_hal.o
+ .text.trigger_high
+                0x00000000       0x10 OBJFILES-AES-CW308_STM32F4/stm32f4_hal.o
+ .text.trigger_low
+                0x00000000       0x10 OBJFILES-AES-CW308_STM32F4/stm32f4_hal.o
+ .text.get_rand
+                0x00000000       0x20 OBJFILES-AES-CW308_STM32F4/stm32f4_hal.o
+ .text.HW_AES128_LoadKey
+                0x00000000       0x18 OBJFILES-AES-CW308_STM32F4/stm32f4_hal.o
+ .text.HW_AES128_Init
+                0x00000000       0x4c OBJFILES-AES-CW308_STM32F4/stm32f4_hal.o
+ .text.HW_AES128_Enc_pretrigger
+                0x00000000        0xc OBJFILES-AES-CW308_STM32F4/stm32f4_hal.o
+ .text.HW_AES128_Enc
+                0x00000000       0x20 OBJFILES-AES-CW308_STM32F4/stm32f4_hal.o
+ .text.HW_AES128_Enc_posttrigger
+                0x00000000        0x2 OBJFILES-AES-CW308_STM32F4/stm32f4_hal.o
+ .text.HW_AES128_Dec
+                0x00000000       0x24 OBJFILES-AES-CW308_STM32F4/stm32f4_hal.o
+ .text          0x00000000        0x0 OBJFILES-AES-CW308_STM32F4/stm32f4_hal_lowlevel.o
+ .data          0x00000000        0x0 OBJFILES-AES-CW308_STM32F4/stm32f4_hal_lowlevel.o
+ .text.CRYP_SetKey.constprop.0
+                0x00000000       0x82 OBJFILES-AES-CW308_STM32F4/stm32f4_hal_lowlevel.o
+ .text.CRYP_ProcessData
+                0x00000000       0x96 OBJFILES-AES-CW308_STM32F4/stm32f4_hal_lowlevel.o
+ .text.RCC_AHB2PeriphClockCmd
+                0x00000000       0x18 OBJFILES-AES-CW308_STM32F4/stm32f4_hal_lowlevel.o
+ .text.HAL_RCC_GetPCLK1Freq
+                0x00000000        0x8 OBJFILES-AES-CW308_STM32F4/stm32f4_hal_lowlevel.o
+ .text.HAL_RCC_GetPCLK2Freq
+                0x00000000        0x8 OBJFILES-AES-CW308_STM32F4/stm32f4_hal_lowlevel.o
+ .text.HAL_GPIO_WritePin
+                0x00000000        0xa OBJFILES-AES-CW308_STM32F4/stm32f4_hal_lowlevel.o
+ .text.HAL_CRYP_Init
+                0x00000000       0x3c OBJFILES-AES-CW308_STM32F4/stm32f4_hal_lowlevel.o
+ .text.HAL_CRYP_DeInit
+                0x00000000       0x2a OBJFILES-AES-CW308_STM32F4/stm32f4_hal_lowlevel.o
+ .text.HAL_CRYP_AESECB_Encrypt
+                0x00000000       0x7a OBJFILES-AES-CW308_STM32F4/stm32f4_hal_lowlevel.o
+ .text.HAL_CRYP_AESECB_Decrypt
+                0x00000000       0xd0 OBJFILES-AES-CW308_STM32F4/stm32f4_hal_lowlevel.o
+ .text          0x00000000        0x0 OBJFILES-AES-CW308_STM32F4/stm32f4_sysmem.o
+ .data          0x00000000        0x0 OBJFILES-AES-CW308_STM32F4/stm32f4_sysmem.o
+ .bss           0x00000000        0x4 OBJFILES-AES-CW308_STM32F4/stm32f4_sysmem.o
+ .text._sbrk    0x00000000       0x30 OBJFILES-AES-CW308_STM32F4/stm32f4_sysmem.o
+ .debug_info    0x00000000      0x112 OBJFILES-AES-CW308_STM32F4/stm32f4_sysmem.o
+ .debug_abbrev  0x00000000       0xd3 OBJFILES-AES-CW308_STM32F4/stm32f4_sysmem.o
+ .debug_loc     0x00000000       0x82 OBJFILES-AES-CW308_STM32F4/stm32f4_sysmem.o
+ .debug_aranges
+                0x00000000       0x20 OBJFILES-AES-CW308_STM32F4/stm32f4_sysmem.o
+ .debug_ranges  0x00000000       0x10 OBJFILES-AES-CW308_STM32F4/stm32f4_sysmem.o
+ .debug_line    0x00000000      0x10c OBJFILES-AES-CW308_STM32F4/stm32f4_sysmem.o
+ .debug_str     0x00000000      0x1c5 OBJFILES-AES-CW308_STM32F4/stm32f4_sysmem.o
+ .comment       0x00000000       0x47 OBJFILES-AES-CW308_STM32F4/stm32f4_sysmem.o
+ .debug_frame   0x00000000       0x28 OBJFILES-AES-CW308_STM32F4/stm32f4_sysmem.o
+ .ARM.attributes
+                0x00000000       0x2e OBJFILES-AES-CW308_STM32F4/stm32f4_sysmem.o
+ .text          0x00000000        0x0 OBJFILES-AES-CW308_STM32F4/stm32f4xx_hal_rng.o
+ .data          0x00000000        0x0 OBJFILES-AES-CW308_STM32F4/stm32f4xx_hal_rng.o
+ .bss           0x00000000        0x0 OBJFILES-AES-CW308_STM32F4/stm32f4xx_hal_rng.o
+ .text.HAL_RNG_MspDeInit
+                0x00000000        0x2 OBJFILES-AES-CW308_STM32F4/stm32f4xx_hal_rng.o
+ .text.HAL_RNG_DeInit
+                0x00000000       0x28 OBJFILES-AES-CW308_STM32F4/stm32f4xx_hal_rng.o
+ .text.HAL_RNG_GenerateRandomNumber
+                0x00000000       0x54 OBJFILES-AES-CW308_STM32F4/stm32f4xx_hal_rng.o
+ .text.HAL_RNG_GenerateRandomNumber_IT
+                0x00000000       0x2e OBJFILES-AES-CW308_STM32F4/stm32f4xx_hal_rng.o
+ .text.HAL_RNG_GetRandomNumber
+                0x00000000       0x16 OBJFILES-AES-CW308_STM32F4/stm32f4xx_hal_rng.o
+ .text.HAL_RNG_GetRandomNumber_IT
+                0x00000000       0x22 OBJFILES-AES-CW308_STM32F4/stm32f4xx_hal_rng.o
+ .text.HAL_RNG_ReadLastRandomNumber
+                0x00000000        0x4 OBJFILES-AES-CW308_STM32F4/stm32f4xx_hal_rng.o
+ .text.HAL_RNG_ReadyDataCallback
+                0x00000000        0x2 OBJFILES-AES-CW308_STM32F4/stm32f4xx_hal_rng.o
+ .text.HAL_RNG_ErrorCallback
+                0x00000000        0x2 OBJFILES-AES-CW308_STM32F4/stm32f4xx_hal_rng.o
+ .text.HAL_RNG_IRQHandler
+                0x00000000       0x48 OBJFILES-AES-CW308_STM32F4/stm32f4xx_hal_rng.o
+ .text.HAL_RNG_GetState
+                0x00000000        0x4 OBJFILES-AES-CW308_STM32F4/stm32f4xx_hal_rng.o
+ .text          0x00000000        0x0 OBJFILES-AES-CW308_STM32F4/simpleserial.o
+ .data          0x00000000        0x0 OBJFILES-AES-CW308_STM32F4/simpleserial.o
+ .text.led_ok   0x00000000        0x2 OBJFILES-AES-CW308_STM32F4/simpleserial.o
+ .text.led_error
+                0x00000000        0x2 OBJFILES-AES-CW308_STM32F4/simpleserial.o
+ .text.ss_crc   0x00000000       0x2c OBJFILES-AES-CW308_STM32F4/simpleserial.o
+ .text          0x00000000       0x14 OBJFILES-AES-CW308_STM32F4/stm32f4_startup.o
+ .data          0x00000000        0x0 OBJFILES-AES-CW308_STM32F4/stm32f4_startup.o
+ .bss           0x00000000        0x0 OBJFILES-AES-CW308_STM32F4/stm32f4_startup.o
+ .text          0x00000000        0x0 /home/giacomo/arm-gnu-toolchain-14.3.rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp/libg.a(libc_a-exit.o)
+ .data          0x00000000        0x0 /home/giacomo/arm-gnu-toolchain-14.3.rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp/libg.a(libc_a-exit.o)
+ .bss           0x00000000        0x0 /home/giacomo/arm-gnu-toolchain-14.3.rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp/libg.a(libc_a-exit.o)
+ .text.exit     0x00000000       0x1c /home/giacomo/arm-gnu-toolchain-14.3.rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp/libg.a(libc_a-exit.o)
+ .debug_frame   0x00000000       0x28 /home/giacomo/arm-gnu-toolchain-14.3.rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp/libg.a(libc_a-exit.o)
+ .ARM.attributes
+                0x00000000       0x2e /home/giacomo/arm-gnu-toolchain-14.3.rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp/libg.a(libc_a-exit.o)
+ .text          0x00000000        0x0 /home/giacomo/arm-gnu-toolchain-14.3.rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp/libg.a(libc_a-findfp.o)
+ .data          0x00000000        0x0 /home/giacomo/arm-gnu-toolchain-14.3.rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp/libg.a(libc_a-findfp.o)
+ .bss           0x00000000        0x0 /home/giacomo/arm-gnu-toolchain-14.3.rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp/libg.a(libc_a-findfp.o)
+ .text.stdio_exit_handler
+                0x00000000       0x18 /home/giacomo/arm-gnu-toolchain-14.3.rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp/libg.a(libc_a-findfp.o)
+ .text.cleanup_stdio
+                0x00000000       0x40 /home/giacomo/arm-gnu-toolchain-14.3.rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp/libg.a(libc_a-findfp.o)
+ .text.__fp_lock
+                0x00000000       0x1c /home/giacomo/arm-gnu-toolchain-14.3.rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp/libg.a(libc_a-findfp.o)
+ .text.__fp_unlock
+                0x00000000       0x1c /home/giacomo/arm-gnu-toolchain-14.3.rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp/libg.a(libc_a-findfp.o)
+ .text.global_stdio_init.part.0
+                0x00000000       0xf0 /home/giacomo/arm-gnu-toolchain-14.3.rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp/libg.a(libc_a-findfp.o)
+ .text.__sfp    0x00000000       0xc0 /home/giacomo/arm-gnu-toolchain-14.3.rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp/libg.a(libc_a-findfp.o)
+ .text.__sinit  0x00000000       0x3c /home/giacomo/arm-gnu-toolchain-14.3.rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp/libg.a(libc_a-findfp.o)
+ .text.__sfp_lock_acquire
+                0x00000000        0xc /home/giacomo/arm-gnu-toolchain-14.3.rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp/libg.a(libc_a-findfp.o)
+ .text.__sfp_lock_release
+                0x00000000        0xc /home/giacomo/arm-gnu-toolchain-14.3.rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp/libg.a(libc_a-findfp.o)
+ .text.__fp_lock_all
+                0x00000000       0x24 /home/giacomo/arm-gnu-toolchain-14.3.rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp/libg.a(libc_a-findfp.o)
+ .text.__fp_unlock_all
+                0x00000000       0x24 /home/giacomo/arm-gnu-toolchain-14.3.rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp/libg.a(libc_a-findfp.o)
+ .data.__sglue  0x00000000        0xc /home/giacomo/arm-gnu-toolchain-14.3.rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp/libg.a(libc_a-findfp.o)
+ .bss.__sf      0x00000000      0x138 /home/giacomo/arm-gnu-toolchain-14.3.rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp/libg.a(libc_a-findfp.o)
+ .bss.__stdio_exit_handler
+                0x00000000        0x4 /home/giacomo/arm-gnu-toolchain-14.3.rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp/libg.a(libc_a-findfp.o)
+ .debug_frame   0x00000000      0x13c /home/giacomo/arm-gnu-toolchain-14.3.rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp/libg.a(libc_a-findfp.o)
+ .ARM.attributes
+                0x00000000       0x2e /home/giacomo/arm-gnu-toolchain-14.3.rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp/libg.a(libc_a-findfp.o)
+ .text          0x00000000        0x0 /home/giacomo/arm-gnu-toolchain-14.3.rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp/libg.a(libc_a-fwalk.o)
+ .data          0x00000000        0x0 /home/giacomo/arm-gnu-toolchain-14.3.rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp/libg.a(libc_a-fwalk.o)
+ .bss           0x00000000        0x0 /home/giacomo/arm-gnu-toolchain-14.3.rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp/libg.a(libc_a-fwalk.o)
+ .text._fwalk_sglue
+                0x00000000       0x44 /home/giacomo/arm-gnu-toolchain-14.3.rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp/libg.a(libc_a-fwalk.o)
+ .debug_frame   0x00000000       0x34 /home/giacomo/arm-gnu-toolchain-14.3.rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp/libg.a(libc_a-fwalk.o)
+ .ARM.attributes
+                0x00000000       0x2e /home/giacomo/arm-gnu-toolchain-14.3.rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp/libg.a(libc_a-fwalk.o)
+ .text          0x00000000        0x0 /home/giacomo/arm-gnu-toolchain-14.3.rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp/libg.a(libc_a-stdio.o)
+ .data          0x00000000        0x0 /home/giacomo/arm-gnu-toolchain-14.3.rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp/libg.a(libc_a-stdio.o)
+ .bss           0x00000000        0x0 /home/giacomo/arm-gnu-toolchain-14.3.rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp/libg.a(libc_a-stdio.o)
+ .text.__sread  0x00000000       0x24 /home/giacomo/arm-gnu-toolchain-14.3.rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp/libg.a(libc_a-stdio.o)
+ .text.__seofread
+                0x00000000        0x4 /home/giacomo/arm-gnu-toolchain-14.3.rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp/libg.a(libc_a-stdio.o)
+ .text.__swrite
+                0x00000000       0x40 /home/giacomo/arm-gnu-toolchain-14.3.rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp/libg.a(libc_a-stdio.o)
+ .text.__sseek  0x00000000       0x24 /home/giacomo/arm-gnu-toolchain-14.3.rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp/libg.a(libc_a-stdio.o)
+ .text.__sclose
+                0x00000000        0x8 /home/giacomo/arm-gnu-toolchain-14.3.rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp/libg.a(libc_a-stdio.o)
+ .debug_frame   0x00000000       0x8c /home/giacomo/arm-gnu-toolchain-14.3.rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp/libg.a(libc_a-stdio.o)
+ .ARM.attributes
+                0x00000000       0x2e /home/giacomo/arm-gnu-toolchain-14.3.rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp/libg.a(libc_a-stdio.o)
+ .text          0x00000000        0x0 /home/giacomo/arm-gnu-toolchain-14.3.rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp/libg.a(libc_a-memset.o)
+ .data          0x00000000        0x0 /home/giacomo/arm-gnu-toolchain-14.3.rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp/libg.a(libc_a-memset.o)
+ .bss           0x00000000        0x0 /home/giacomo/arm-gnu-toolchain-14.3.rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp/libg.a(libc_a-memset.o)
+ .text.memset   0x00000000       0x9c /home/giacomo/arm-gnu-toolchain-14.3.rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp/libg.a(libc_a-memset.o)
+ .debug_frame   0x00000000       0x2c /home/giacomo/arm-gnu-toolchain-14.3.rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp/libg.a(libc_a-memset.o)
+ .ARM.attributes
+                0x00000000       0x2e /home/giacomo/arm-gnu-toolchain-14.3.rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp/libg.a(libc_a-memset.o)
+ .text          0x00000000        0x0 /home/giacomo/arm-gnu-toolchain-14.3.rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp/libg.a(libc_a-closer.o)
+ .data          0x00000000        0x0 /home/giacomo/arm-gnu-toolchain-14.3.rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp/libg.a(libc_a-closer.o)
+ .bss           0x00000000        0x0 /home/giacomo/arm-gnu-toolchain-14.3.rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp/libg.a(libc_a-closer.o)
+ .text._close_r
+                0x00000000       0x24 /home/giacomo/arm-gnu-toolchain-14.3.rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp/libg.a(libc_a-closer.o)
+ .debug_frame   0x00000000       0x2c /home/giacomo/arm-gnu-toolchain-14.3.rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp/libg.a(libc_a-closer.o)
+ .ARM.attributes
+                0x00000000       0x2e /home/giacomo/arm-gnu-toolchain-14.3.rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp/libg.a(libc_a-closer.o)
+ .text          0x00000000        0x0 /home/giacomo/arm-gnu-toolchain-14.3.rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp/libg.a(libc_a-reent.o)
+ .data          0x00000000        0x0 /home/giacomo/arm-gnu-toolchain-14.3.rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp/libg.a(libc_a-reent.o)
+ .bss           0x00000000        0x0 /home/giacomo/arm-gnu-toolchain-14.3.rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp/libg.a(libc_a-reent.o)
+ .text._reclaim_reent
+                0x00000000       0x6c /home/giacomo/arm-gnu-toolchain-14.3.rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp/libg.a(libc_a-reent.o)
+ .bss.errno     0x00000000        0x4 /home/giacomo/arm-gnu-toolchain-14.3.rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp/libg.a(libc_a-reent.o)
+ .debug_frame   0x00000000       0x3c /home/giacomo/arm-gnu-toolchain-14.3.rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp/libg.a(libc_a-reent.o)
+ .ARM.attributes
+                0x00000000       0x2e /home/giacomo/arm-gnu-toolchain-14.3.rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp/libg.a(libc_a-reent.o)
+ .text          0x00000000        0x0 /home/giacomo/arm-gnu-toolchain-14.3.rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp/libg.a(libc_a-impure.o)
+ .data          0x00000000        0x0 /home/giacomo/arm-gnu-toolchain-14.3.rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp/libg.a(libc_a-impure.o)
+ .bss           0x00000000        0x0 /home/giacomo/arm-gnu-toolchain-14.3.rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp/libg.a(libc_a-impure.o)
+ .data._impure_ptr
+                0x00000000        0x4 /home/giacomo/arm-gnu-toolchain-14.3.rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp/libg.a(libc_a-impure.o)
+ .data._impure_data
+                0x00000000      0x200 /home/giacomo/arm-gnu-toolchain-14.3.rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp/libg.a(libc_a-impure.o)
+ .ARM.attributes
+                0x00000000       0x2e /home/giacomo/arm-gnu-toolchain-14.3.rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp/libg.a(libc_a-impure.o)
+ .text          0x00000000        0x0 /home/giacomo/arm-gnu-toolchain-14.3.rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp/libg.a(libc_a-lseekr.o)
+ .data          0x00000000        0x0 /home/giacomo/arm-gnu-toolchain-14.3.rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp/libg.a(libc_a-lseekr.o)
+ .bss           0x00000000        0x0 /home/giacomo/arm-gnu-toolchain-14.3.rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp/libg.a(libc_a-lseekr.o)
+ .text._lseek_r
+                0x00000000       0x2c /home/giacomo/arm-gnu-toolchain-14.3.rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp/libg.a(libc_a-lseekr.o)
+ .debug_frame   0x00000000       0x2c /home/giacomo/arm-gnu-toolchain-14.3.rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp/libg.a(libc_a-lseekr.o)
+ .ARM.attributes
+                0x00000000       0x2e /home/giacomo/arm-gnu-toolchain-14.3.rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp/libg.a(libc_a-lseekr.o)
+ .text          0x00000000        0x0 /home/giacomo/arm-gnu-toolchain-14.3.rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp/libg.a(libc_a-readr.o)
+ .data          0x00000000        0x0 /home/giacomo/arm-gnu-toolchain-14.3.rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp/libg.a(libc_a-readr.o)
+ .bss           0x00000000        0x0 /home/giacomo/arm-gnu-toolchain-14.3.rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp/libg.a(libc_a-readr.o)
+ .text._read_r  0x00000000       0x2c /home/giacomo/arm-gnu-toolchain-14.3.rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp/libg.a(libc_a-readr.o)
+ .debug_frame   0x00000000       0x2c /home/giacomo/arm-gnu-toolchain-14.3.rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp/libg.a(libc_a-readr.o)
+ .ARM.attributes
+                0x00000000       0x2e /home/giacomo/arm-gnu-toolchain-14.3.rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp/libg.a(libc_a-readr.o)
+ .text          0x00000000        0x0 /home/giacomo/arm-gnu-toolchain-14.3.rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp/libg.a(libc_a-writer.o)
+ .data          0x00000000        0x0 /home/giacomo/arm-gnu-toolchain-14.3.rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp/libg.a(libc_a-writer.o)
+ .bss           0x00000000        0x0 /home/giacomo/arm-gnu-toolchain-14.3.rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp/libg.a(libc_a-writer.o)
+ .text._write_r
+                0x00000000       0x2c /home/giacomo/arm-gnu-toolchain-14.3.rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp/libg.a(libc_a-writer.o)
+ .debug_frame   0x00000000       0x2c /home/giacomo/arm-gnu-toolchain-14.3.rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp/libg.a(libc_a-writer.o)
+ .ARM.attributes
+                0x00000000       0x2e /home/giacomo/arm-gnu-toolchain-14.3.rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp/libg.a(libc_a-writer.o)
+ .text          0x00000000        0x0 /home/giacomo/arm-gnu-toolchain-14.3.rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp/libg.a(libc_a-errno.o)
+ .data          0x00000000        0x0 /home/giacomo/arm-gnu-toolchain-14.3.rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp/libg.a(libc_a-errno.o)
+ .bss           0x00000000        0x0 /home/giacomo/arm-gnu-toolchain-14.3.rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp/libg.a(libc_a-errno.o)
+ .text.__errno  0x00000000        0xc /home/giacomo/arm-gnu-toolchain-14.3.rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp/libg.a(libc_a-errno.o)
+ .debug_frame   0x00000000       0x20 /home/giacomo/arm-gnu-toolchain-14.3.rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp/libg.a(libc_a-errno.o)
+ .ARM.attributes
+                0x00000000       0x2e /home/giacomo/arm-gnu-toolchain-14.3.rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp/libg.a(libc_a-errno.o)
+ .text          0x00000000        0x0 /home/giacomo/arm-gnu-toolchain-14.3.rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp/libg.a(libc_a-init.o)
+ .data          0x00000000        0x0 /home/giacomo/arm-gnu-toolchain-14.3.rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp/libg.a(libc_a-init.o)
+ .bss           0x00000000        0x0 /home/giacomo/arm-gnu-toolchain-14.3.rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp/libg.a(libc_a-init.o)
+ .text          0x00000000        0x0 /home/giacomo/arm-gnu-toolchain-14.3.rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp/libg.a(libc_a-lock.o)
+ .data          0x00000000        0x0 /home/giacomo/arm-gnu-toolchain-14.3.rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp/libg.a(libc_a-lock.o)
+ .bss           0x00000000        0x0 /home/giacomo/arm-gnu-toolchain-14.3.rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp/libg.a(libc_a-lock.o)
+ .text.__retarget_lock_init
+                0x00000000        0x4 /home/giacomo/arm-gnu-toolchain-14.3.rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp/libg.a(libc_a-lock.o)
+ .text.__retarget_lock_init_recursive
+                0x00000000        0x4 /home/giacomo/arm-gnu-toolchain-14.3.rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp/libg.a(libc_a-lock.o)
+ .text.__retarget_lock_close
+                0x00000000        0x4 /home/giacomo/arm-gnu-toolchain-14.3.rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp/libg.a(libc_a-lock.o)
+ .text.__retarget_lock_close_recursive
+                0x00000000        0x4 /home/giacomo/arm-gnu-toolchain-14.3.rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp/libg.a(libc_a-lock.o)
+ .text.__retarget_lock_acquire
+                0x00000000        0x4 /home/giacomo/arm-gnu-toolchain-14.3.rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp/libg.a(libc_a-lock.o)
+ .text.__retarget_lock_try_acquire
+                0x00000000        0x4 /home/giacomo/arm-gnu-toolchain-14.3.rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp/libg.a(libc_a-lock.o)
+ .text.__retarget_lock_try_acquire_recursive
+                0x00000000        0x4 /home/giacomo/arm-gnu-toolchain-14.3.rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp/libg.a(libc_a-lock.o)
+ .text.__retarget_lock_release
+                0x00000000        0x4 /home/giacomo/arm-gnu-toolchain-14.3.rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp/libg.a(libc_a-lock.o)
+ .bss.__lock___arc4random_mutex
+                0x00000000        0x1 /home/giacomo/arm-gnu-toolchain-14.3.rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp/libg.a(libc_a-lock.o)
+ .bss.__lock___dd_hash_mutex
+                0x00000000        0x1 /home/giacomo/arm-gnu-toolchain-14.3.rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp/libg.a(libc_a-lock.o)
+ .bss.__lock___tz_mutex
+                0x00000000        0x1 /home/giacomo/arm-gnu-toolchain-14.3.rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp/libg.a(libc_a-lock.o)
+ .bss.__lock___env_recursive_mutex
+                0x00000000        0x1 /home/giacomo/arm-gnu-toolchain-14.3.rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp/libg.a(libc_a-lock.o)
+ .bss.__lock___malloc_recursive_mutex
+                0x00000000        0x1 /home/giacomo/arm-gnu-toolchain-14.3.rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp/libg.a(libc_a-lock.o)
+ .bss.__lock___at_quick_exit_mutex
+                0x00000000        0x1 /home/giacomo/arm-gnu-toolchain-14.3.rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp/libg.a(libc_a-lock.o)
+ .bss.__lock___sfp_recursive_mutex
+                0x00000000        0x1 /home/giacomo/arm-gnu-toolchain-14.3.rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp/libg.a(libc_a-lock.o)
+ .text          0x00000000        0x0 /home/giacomo/arm-gnu-toolchain-14.3.rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp/libg.a(libc_a-__call_atexit.o)
+ .data          0x00000000        0x0 /home/giacomo/arm-gnu-toolchain-14.3.rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp/libg.a(libc_a-__call_atexit.o)
+ .bss           0x00000000        0x0 /home/giacomo/arm-gnu-toolchain-14.3.rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp/libg.a(libc_a-__call_atexit.o)
+ .text.__call_exitprocs
+                0x00000000       0xc0 /home/giacomo/arm-gnu-toolchain-14.3.rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp/libg.a(libc_a-__call_atexit.o)
+ .text          0x00000000        0x0 /home/giacomo/arm-gnu-toolchain-14.3.rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp/libg.a(libc_a-atexit.o)
+ .data          0x00000000        0x0 /home/giacomo/arm-gnu-toolchain-14.3.rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp/libg.a(libc_a-atexit.o)
+ .bss           0x00000000        0x0 /home/giacomo/arm-gnu-toolchain-14.3.rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp/libg.a(libc_a-atexit.o)
+ .text          0x00000000        0x0 /home/giacomo/arm-gnu-toolchain-14.3.rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp/libg.a(libc_a-freer.o)
+ .data          0x00000000        0x0 /home/giacomo/arm-gnu-toolchain-14.3.rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp/libg.a(libc_a-freer.o)
+ .bss           0x00000000        0x0 /home/giacomo/arm-gnu-toolchain-14.3.rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp/libg.a(libc_a-freer.o)
+ .text._malloc_trim_r
+                0x00000000       0xb8 /home/giacomo/arm-gnu-toolchain-14.3.rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp/libg.a(libc_a-freer.o)
+ .text._free_r  0x00000000      0x1f0 /home/giacomo/arm-gnu-toolchain-14.3.rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp/libg.a(libc_a-freer.o)
+ .debug_frame   0x00000000       0x84 /home/giacomo/arm-gnu-toolchain-14.3.rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp/libg.a(libc_a-freer.o)
+ .ARM.attributes
+                0x00000000       0x2e /home/giacomo/arm-gnu-toolchain-14.3.rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp/libg.a(libc_a-freer.o)
+ .text          0x00000000        0x0 /home/giacomo/arm-gnu-toolchain-14.3.rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp/libg.a(libc_a-mallocr.o)
+ .data          0x00000000        0x0 /home/giacomo/arm-gnu-toolchain-14.3.rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp/libg.a(libc_a-mallocr.o)
+ .bss           0x00000000        0x0 /home/giacomo/arm-gnu-toolchain-14.3.rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp/libg.a(libc_a-mallocr.o)
+ .text._malloc_r
+                0x00000000      0x598 /home/giacomo/arm-gnu-toolchain-14.3.rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp/libg.a(libc_a-mallocr.o)
+ .bss.__malloc_current_mallinfo
+                0x00000000       0x28 /home/giacomo/arm-gnu-toolchain-14.3.rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp/libg.a(libc_a-mallocr.o)
+ .bss.__malloc_max_total_mem
+                0x00000000        0x4 /home/giacomo/arm-gnu-toolchain-14.3.rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp/libg.a(libc_a-mallocr.o)
+ .bss.__malloc_max_sbrked_mem
+                0x00000000        0x4 /home/giacomo/arm-gnu-toolchain-14.3.rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp/libg.a(libc_a-mallocr.o)
+ .data.__malloc_sbrk_base
+                0x00000000        0x4 /home/giacomo/arm-gnu-toolchain-14.3.rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp/libg.a(libc_a-mallocr.o)
+ .bss.__malloc_top_pad
+                0x00000000        0x4 /home/giacomo/arm-gnu-toolchain-14.3.rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp/libg.a(libc_a-mallocr.o)
+ .data.__malloc_trim_threshold
+                0x00000000        0x4 /home/giacomo/arm-gnu-toolchain-14.3.rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp/libg.a(libc_a-mallocr.o)
+ .data.__malloc_av_
+                0x00000000      0x408 /home/giacomo/arm-gnu-toolchain-14.3.rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp/libg.a(libc_a-mallocr.o)
+ .debug_frame   0x00000000       0x4c /home/giacomo/arm-gnu-toolchain-14.3.rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp/libg.a(libc_a-mallocr.o)
+ .ARM.attributes
+                0x00000000       0x2e /home/giacomo/arm-gnu-toolchain-14.3.rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp/libg.a(libc_a-mallocr.o)
+ .text          0x00000000        0x0 /home/giacomo/arm-gnu-toolchain-14.3.rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp/libg.a(libc_a-mlock.o)
+ .data          0x00000000        0x0 /home/giacomo/arm-gnu-toolchain-14.3.rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp/libg.a(libc_a-mlock.o)
+ .bss           0x00000000        0x0 /home/giacomo/arm-gnu-toolchain-14.3.rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp/libg.a(libc_a-mlock.o)
+ .text.__malloc_lock
+                0x00000000        0xc /home/giacomo/arm-gnu-toolchain-14.3.rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp/libg.a(libc_a-mlock.o)
+ .text.__malloc_unlock
+                0x00000000        0xc /home/giacomo/arm-gnu-toolchain-14.3.rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp/libg.a(libc_a-mlock.o)
+ .debug_frame   0x00000000       0x30 /home/giacomo/arm-gnu-toolchain-14.3.rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp/libg.a(libc_a-mlock.o)
+ .ARM.attributes
+                0x00000000       0x2e /home/giacomo/arm-gnu-toolchain-14.3.rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp/libg.a(libc_a-mlock.o)
+ .text          0x00000000        0x0 /home/giacomo/arm-gnu-toolchain-14.3.rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp/libg.a(libc_a-fclose.o)
+ .data          0x00000000        0x0 /home/giacomo/arm-gnu-toolchain-14.3.rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp/libg.a(libc_a-fclose.o)
+ .bss           0x00000000        0x0 /home/giacomo/arm-gnu-toolchain-14.3.rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp/libg.a(libc_a-fclose.o)
+ .text._fclose_r
+                0x00000000       0xc0 /home/giacomo/arm-gnu-toolchain-14.3.rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp/libg.a(libc_a-fclose.o)
+ .text.fclose   0x00000000       0x10 /home/giacomo/arm-gnu-toolchain-14.3.rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp/libg.a(libc_a-fclose.o)
+ .debug_frame   0x00000000       0x3c /home/giacomo/arm-gnu-toolchain-14.3.rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp/libg.a(libc_a-fclose.o)
+ .ARM.attributes
+                0x00000000       0x2e /home/giacomo/arm-gnu-toolchain-14.3.rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp/libg.a(libc_a-fclose.o)
+ .text          0x00000000        0x0 /home/giacomo/arm-gnu-toolchain-14.3.rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp/libg.a(libc_a-fflush.o)
+ .data          0x00000000        0x0 /home/giacomo/arm-gnu-toolchain-14.3.rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp/libg.a(libc_a-fflush.o)
+ .bss           0x00000000        0x0 /home/giacomo/arm-gnu-toolchain-14.3.rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp/libg.a(libc_a-fflush.o)
+ .text.__sflush_r
+                0x00000000      0x128 /home/giacomo/arm-gnu-toolchain-14.3.rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp/libg.a(libc_a-fflush.o)
+ .text._fflush_r
+                0x00000000       0x54 /home/giacomo/arm-gnu-toolchain-14.3.rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp/libg.a(libc_a-fflush.o)
+ .text.fflush   0x00000000       0x74 /home/giacomo/arm-gnu-toolchain-14.3.rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp/libg.a(libc_a-fflush.o)
+ .debug_frame   0x00000000       0x70 /home/giacomo/arm-gnu-toolchain-14.3.rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp/libg.a(libc_a-fflush.o)
+ .ARM.attributes
+                0x00000000       0x2e /home/giacomo/arm-gnu-toolchain-14.3.rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp/libg.a(libc_a-fflush.o)
+ .text          0x00000000        0x0 /home/giacomo/arm-gnu-toolchain-14.3.rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp/libg.a(libc_a-sbrkr.o)
+ .data          0x00000000        0x0 /home/giacomo/arm-gnu-toolchain-14.3.rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp/libg.a(libc_a-sbrkr.o)
+ .bss           0x00000000        0x0 /home/giacomo/arm-gnu-toolchain-14.3.rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp/libg.a(libc_a-sbrkr.o)
+ .text._sbrk_r  0x00000000       0x24 /home/giacomo/arm-gnu-toolchain-14.3.rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp/libg.a(libc_a-sbrkr.o)
+ .debug_frame   0x00000000       0x2c /home/giacomo/arm-gnu-toolchain-14.3.rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp/libg.a(libc_a-sbrkr.o)
+ .ARM.attributes
+                0x00000000       0x2e /home/giacomo/arm-gnu-toolchain-14.3.rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp/libg.a(libc_a-sbrkr.o)
+ .text          0x00000000        0x0 /home/giacomo/arm-gnu-toolchain-14.3.rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp/libg.a(libc_a-fini.o)
+ .data          0x00000000        0x0 /home/giacomo/arm-gnu-toolchain-14.3.rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp/libg.a(libc_a-fini.o)
+ .bss           0x00000000        0x0 /home/giacomo/arm-gnu-toolchain-14.3.rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp/libg.a(libc_a-fini.o)
+ .text          0x00000000        0x0 /home/giacomo/arm-gnu-toolchain-14.3.rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp/libg.a(libc_a-sysconf.o)
+ .data          0x00000000        0x0 /home/giacomo/arm-gnu-toolchain-14.3.rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp/libg.a(libc_a-sysconf.o)
+ .bss           0x00000000        0x0 /home/giacomo/arm-gnu-toolchain-14.3.rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp/libg.a(libc_a-sysconf.o)
+ .text.sysconf  0x00000000       0x1c /home/giacomo/arm-gnu-toolchain-14.3.rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp/libg.a(libc_a-sysconf.o)
+ .debug_frame   0x00000000       0x28 /home/giacomo/arm-gnu-toolchain-14.3.rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp/libg.a(libc_a-sysconf.o)
+ .ARM.attributes
+                0x00000000       0x2e /home/giacomo/arm-gnu-toolchain-14.3.rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp/libg.a(libc_a-sysconf.o)
+ .text          0x00000000        0x0 /home/giacomo/arm-gnu-toolchain-14.3.rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp/libg.a(libc_a-__atexit.o)
+ .data          0x00000000        0x0 /home/giacomo/arm-gnu-toolchain-14.3.rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp/libg.a(libc_a-__atexit.o)
+ .bss           0x00000000        0x0 /home/giacomo/arm-gnu-toolchain-14.3.rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp/libg.a(libc_a-__atexit.o)
+ .text          0x00000000        0x0 /home/giacomo/arm-gnu-toolchain-14.3.rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp/libnosys.a(close.o)
+ .data          0x00000000        0x0 /home/giacomo/arm-gnu-toolchain-14.3.rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp/libnosys.a(close.o)
+ .bss           0x00000000        0x0 /home/giacomo/arm-gnu-toolchain-14.3.rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp/libnosys.a(close.o)
+ .text._close   0x00000000       0x10 /home/giacomo/arm-gnu-toolchain-14.3.rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp/libnosys.a(close.o)
+ .gnu.warning._close
+                0x00000000        0x0 /home/giacomo/arm-gnu-toolchain-14.3.rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp/libnosys.a(close.o)
+ .debug_frame   0x00000000       0x20 /home/giacomo/arm-gnu-toolchain-14.3.rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp/libnosys.a(close.o)
+ .ARM.attributes
+                0x00000000       0x2e /home/giacomo/arm-gnu-toolchain-14.3.rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp/libnosys.a(close.o)
+ .text          0x00000000        0x0 /home/giacomo/arm-gnu-toolchain-14.3.rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp/libnosys.a(lseek.o)
+ .data          0x00000000        0x0 /home/giacomo/arm-gnu-toolchain-14.3.rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp/libnosys.a(lseek.o)
+ .bss           0x00000000        0x0 /home/giacomo/arm-gnu-toolchain-14.3.rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp/libnosys.a(lseek.o)
+ .text._lseek   0x00000000       0x10 /home/giacomo/arm-gnu-toolchain-14.3.rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp/libnosys.a(lseek.o)
+ .gnu.warning._lseek
+                0x00000000        0x0 /home/giacomo/arm-gnu-toolchain-14.3.rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp/libnosys.a(lseek.o)
+ .debug_frame   0x00000000       0x20 /home/giacomo/arm-gnu-toolchain-14.3.rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp/libnosys.a(lseek.o)
+ .ARM.attributes
+                0x00000000       0x2e /home/giacomo/arm-gnu-toolchain-14.3.rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp/libnosys.a(lseek.o)
+ .text          0x00000000        0x0 /home/giacomo/arm-gnu-toolchain-14.3.rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp/libnosys.a(read.o)
+ .data          0x00000000        0x0 /home/giacomo/arm-gnu-toolchain-14.3.rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp/libnosys.a(read.o)
+ .bss           0x00000000        0x0 /home/giacomo/arm-gnu-toolchain-14.3.rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp/libnosys.a(read.o)
+ .text._read    0x00000000       0x10 /home/giacomo/arm-gnu-toolchain-14.3.rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp/libnosys.a(read.o)
+ .gnu.warning._read
+                0x00000000        0x0 /home/giacomo/arm-gnu-toolchain-14.3.rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp/libnosys.a(read.o)
+ .debug_frame   0x00000000       0x20 /home/giacomo/arm-gnu-toolchain-14.3.rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp/libnosys.a(read.o)
+ .ARM.attributes
+                0x00000000       0x2e /home/giacomo/arm-gnu-toolchain-14.3.rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp/libnosys.a(read.o)
+ .text          0x00000000        0x0 /home/giacomo/arm-gnu-toolchain-14.3.rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp/libnosys.a(write.o)
+ .data          0x00000000        0x0 /home/giacomo/arm-gnu-toolchain-14.3.rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp/libnosys.a(write.o)
+ .bss           0x00000000        0x0 /home/giacomo/arm-gnu-toolchain-14.3.rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp/libnosys.a(write.o)
+ .text._write   0x00000000       0x10 /home/giacomo/arm-gnu-toolchain-14.3.rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp/libnosys.a(write.o)
+ .gnu.warning._write
+                0x00000000        0x0 /home/giacomo/arm-gnu-toolchain-14.3.rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp/libnosys.a(write.o)
+ .debug_frame   0x00000000       0x20 /home/giacomo/arm-gnu-toolchain-14.3.rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp/libnosys.a(write.o)
+ .ARM.attributes
+                0x00000000       0x2e /home/giacomo/arm-gnu-toolchain-14.3.rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp/libnosys.a(write.o)
+ .text          0x00000000        0x0 /home/giacomo/arm-gnu-toolchain-14.3.rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp/libnosys.a(_exit.o)
+ .data          0x00000000        0x0 /home/giacomo/arm-gnu-toolchain-14.3.rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp/libnosys.a(_exit.o)
+ .bss           0x00000000        0x0 /home/giacomo/arm-gnu-toolchain-14.3.rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp/libnosys.a(_exit.o)
+ .text._exit    0x00000000        0x4 /home/giacomo/arm-gnu-toolchain-14.3.rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp/libnosys.a(_exit.o)
+ .debug_frame   0x00000000       0x20 /home/giacomo/arm-gnu-toolchain-14.3.rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp/libnosys.a(_exit.o)
+ .ARM.attributes
+                0x00000000       0x2e /home/giacomo/arm-gnu-toolchain-14.3.rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp/libnosys.a(_exit.o)
+ .text          0x00000000        0x0 /home/giacomo/arm-gnu-toolchain-14.3.rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/thumb/v7e-m/nofp/crtend.o
+ .data          0x00000000        0x0 /home/giacomo/arm-gnu-toolchain-14.3.rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/thumb/v7e-m/nofp/crtend.o
+ .bss           0x00000000        0x0 /home/giacomo/arm-gnu-toolchain-14.3.rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/thumb/v7e-m/nofp/crtend.o
+ .rodata.all_implied_fbits
+                0x00000000       0x24 /home/giacomo/arm-gnu-toolchain-14.3.rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/thumb/v7e-m/nofp/crtend.o
+ .eh_frame      0x00000000        0x4 /home/giacomo/arm-gnu-toolchain-14.3.rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/thumb/v7e-m/nofp/crtend.o
+ .text          0x00000000        0x0 /home/giacomo/arm-gnu-toolchain-14.3.rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/thumb/v7e-m/nofp/crtn.o
+ .data          0x00000000        0x0 /home/giacomo/arm-gnu-toolchain-14.3.rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/thumb/v7e-m/nofp/crtn.o
+ .bss           0x00000000        0x0 /home/giacomo/arm-gnu-toolchain-14.3.rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/thumb/v7e-m/nofp/crtn.o
+
+Memory Configuration
+
+Name             Origin             Length             Attributes
+RAM              0x20000000         0x00020000         xrw
+ROM              0x08000000         0x00100000         xr
+*default*        0x00000000         0xffffffff
+
+Linker script and memory map
+
+LOAD /home/giacomo/arm-gnu-toolchain-14.3.rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/thumb/v7e-m/nofp/crti.o
+LOAD /home/giacomo/arm-gnu-toolchain-14.3.rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/thumb/v7e-m/nofp/crtbegin.o
+LOAD /home/giacomo/arm-gnu-toolchain-14.3.rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp/crt0.o
+LOAD OBJFILES-AES-CW308_STM32F4/aes.o
+LOAD OBJFILES-AES-CW308_STM32F4/entrypoint.o
+LOAD OBJFILES-AES-CW308_STM32F4/stm32f4_hal.o
+LOAD OBJFILES-AES-CW308_STM32F4/stm32f4_hal_lowlevel.o
+LOAD OBJFILES-AES-CW308_STM32F4/stm32f4_sysmem.o
+LOAD OBJFILES-AES-CW308_STM32F4/stm32f4xx_hal_rng.o
+LOAD OBJFILES-AES-CW308_STM32F4/simpleserial.o
+LOAD OBJFILES-AES-CW308_STM32F4/stm32f4_startup.o
+LOAD /home/giacomo/arm-gnu-toolchain-14.3.rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp/libm.a
+START GROUP
+LOAD /home/giacomo/arm-gnu-toolchain-14.3.rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/thumb/v7e-m/nofp/libgcc.a
+LOAD /home/giacomo/arm-gnu-toolchain-14.3.rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp/libg.a
+LOAD /home/giacomo/arm-gnu-toolchain-14.3.rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp/libc.a
+END GROUP
+START GROUP
+LOAD /home/giacomo/arm-gnu-toolchain-14.3.rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/thumb/v7e-m/nofp/libgcc.a
+LOAD /home/giacomo/arm-gnu-toolchain-14.3.rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp/libc.a
+LOAD /home/giacomo/arm-gnu-toolchain-14.3.rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp/libnosys.a
+END GROUP
+LOAD /home/giacomo/arm-gnu-toolchain-14.3.rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/thumb/v7e-m/nofp/crtend.o
+LOAD /home/giacomo/arm-gnu-toolchain-14.3.rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/thumb/v7e-m/nofp/crtn.o
+                0x20020000                        _estack = 0x20020000
+                0x00000000                        _Min_Heap_Size = 0x0
+                0x00000400                        _Min_Stack_Size = 0x400
+
+.isr_vector     0x08000000      0x188
+                0x08000000                        . = ALIGN (0x4)
+ *(.isr_vector)
+ .isr_vector    0x08000000      0x188 OBJFILES-AES-CW308_STM32F4/stm32f4_startup.o
+                0x08000000                g_pfnVectors
+                0x08000188                        . = ALIGN (0x4)
+
+.text           0x08000188     0x1040
+                0x08000188                        . = ALIGN (0x4)
+ *(.text)
+ *(.text*)
+ .text.deregister_tm_clones
+                0x08000188       0x1c /home/giacomo/arm-gnu-toolchain-14.3.rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/thumb/v7e-m/nofp/crtbegin.o
+ .text.register_tm_clones
+                0x080001a4       0x24 /home/giacomo/arm-gnu-toolchain-14.3.rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/thumb/v7e-m/nofp/crtbegin.o
+ .text.__do_global_dtors_aux
+                0x080001c8       0x28 /home/giacomo/arm-gnu-toolchain-14.3.rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/thumb/v7e-m/nofp/crtbegin.o
+ .text.frame_dummy
+                0x080001f0       0x24 /home/giacomo/arm-gnu-toolchain-14.3.rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/thumb/v7e-m/nofp/crtbegin.o
+ .text.AddRoundKey
+                0x08000214       0x26 OBJFILES-AES-CW308_STM32F4/aes.o
+ .text.xtime    0x0800023a       0x12 OBJFILES-AES-CW308_STM32F4/aes.o
+ .text.AES_init_ctx
+                0x0800024c       0x6c OBJFILES-AES-CW308_STM32F4/aes.o
+                0x0800024c                AES_init_ctx
+ .text.AES_ECB_encrypt
+                0x080002b8       0xf0 OBJFILES-AES-CW308_STM32F4/aes.o
+                0x080002b8                AES_ECB_encrypt
+ .text.done     0x080003a8        0x4 OBJFILES-AES-CW308_STM32F4/entrypoint.o
+                0x080003a8                done
+ .text.set_key  0x080003ac       0x14 OBJFILES-AES-CW308_STM32F4/entrypoint.o
+                0x080003ac                set_key
+ .text.return_value
+                0x080003c0        0x8 OBJFILES-AES-CW308_STM32F4/entrypoint.o
+                0x080003c0                return_value
+ .text.encrypt_plaintext
+                0x080003c8       0x30 OBJFILES-AES-CW308_STM32F4/entrypoint.o
+                0x080003c8                encrypt_plaintext
+ .text.startup.main
+                0x080003f8       0x40 OBJFILES-AES-CW308_STM32F4/entrypoint.o
+                0x080003f8                main
+ .text.platform_init
+                0x08000438       0x80 OBJFILES-AES-CW308_STM32F4/stm32f4_hal.o
+                0x08000438                platform_init
+ .text.init_uart
+                0x080004b8       0x7c OBJFILES-AES-CW308_STM32F4/stm32f4_hal.o
+                0x080004b8                init_uart
+ .text.getch    0x08000534       0x24 OBJFILES-AES-CW308_STM32F4/stm32f4_hal.o
+                0x08000534                getch
+ .text.putch    0x08000558       0x20 OBJFILES-AES-CW308_STM32F4/stm32f4_hal.o
+                0x08000558                putch
+ .text.UART_WaitOnFlagForever.constprop.0.isra.0
+                0x08000578        0xc OBJFILES-AES-CW308_STM32F4/stm32f4_hal_lowlevel.o
+ .text.HAL_GetTick
+                0x08000584       0x10 OBJFILES-AES-CW308_STM32F4/stm32f4_hal_lowlevel.o
+                0x08000584                HAL_GetTick
+ .text.HAL_RCC_OscConfig
+                0x08000594      0x33c OBJFILES-AES-CW308_STM32F4/stm32f4_hal_lowlevel.o
+                0x08000594                HAL_RCC_OscConfig
+ .text.HAL_RCC_ClockConfig
+                0x080008d0      0x130 OBJFILES-AES-CW308_STM32F4/stm32f4_hal_lowlevel.o
+                0x080008d0                HAL_RCC_ClockConfig
+ .text.HAL_GPIO_Init
+                0x08000a00      0x1b0 OBJFILES-AES-CW308_STM32F4/stm32f4_hal_lowlevel.o
+                0x08000a00                HAL_GPIO_Init
+ .text.HAL_UART_Init
+                0x08000bb0       0xdc OBJFILES-AES-CW308_STM32F4/stm32f4_hal_lowlevel.o
+                0x08000bb0                HAL_UART_Init
+ .text.HAL_UART_Transmit
+                0x08000c8c       0x8e OBJFILES-AES-CW308_STM32F4/stm32f4_hal_lowlevel.o
+                0x08000c8c                HAL_UART_Transmit
+ .text.HAL_UART_Receive
+                0x08000d1a       0x98 OBJFILES-AES-CW308_STM32F4/stm32f4_hal_lowlevel.o
+                0x08000d1a                HAL_UART_Receive
+ .text.HAL_RNG_MspInit
+                0x08000db2        0x2 OBJFILES-AES-CW308_STM32F4/stm32f4xx_hal_rng.o
+                0x08000db2                HAL_RNG_MspInit
+ .text.HAL_RNG_Init
+                0x08000db4       0x3a OBJFILES-AES-CW308_STM32F4/stm32f4xx_hal_rng.o
+                0x08000db4                HAL_RNG_Init
+ .text.check_version
+                0x08000dee        0x4 OBJFILES-AES-CW308_STM32F4/simpleserial.o
+                0x08000dee                check_version
+ .text.hex_decode
+                0x08000df2       0x78 OBJFILES-AES-CW308_STM32F4/simpleserial.o
+                0x08000df2                hex_decode
+ *fill*         0x08000e6a        0x2 
+ .text.simpleserial_addcmd_flags
+                0x08000e6c       0x2c OBJFILES-AES-CW308_STM32F4/simpleserial.o
+                0x08000e6c                simpleserial_addcmd_flags
+ .text.simpleserial_addcmd
+                0x08000e98        0x6 OBJFILES-AES-CW308_STM32F4/simpleserial.o
+                0x08000e98                simpleserial_addcmd
+ *fill*         0x08000e9e        0x2 
+ .text.simpleserial_init
+                0x08000ea0       0x2c OBJFILES-AES-CW308_STM32F4/simpleserial.o
+                0x08000ea0                simpleserial_init
+ .text.simpleserial_put
+                0x08000ecc       0x40 OBJFILES-AES-CW308_STM32F4/simpleserial.o
+                0x08000ecc                simpleserial_put
+ .text.ss_num_commands
+                0x08000f0c       0x24 OBJFILES-AES-CW308_STM32F4/simpleserial.o
+                0x08000f0c                ss_num_commands
+ .text.ss_get_commands
+                0x08000f30       0x50 OBJFILES-AES-CW308_STM32F4/simpleserial.o
+                0x08000f30                ss_get_commands
+ .text.simpleserial_get
+                0x08000f80       0xc4 OBJFILES-AES-CW308_STM32F4/simpleserial.o
+                0x08000f80                simpleserial_get
+ .text.Reset_Handler
+                0x08001044       0x48 OBJFILES-AES-CW308_STM32F4/stm32f4_startup.o
+                0x08001044                Reset_Handler
+ .text.Default_Handler
+                0x0800108c        0x2 OBJFILES-AES-CW308_STM32F4/stm32f4_startup.o
+                0x0800108c                DebugMon_Handler
+                0x0800108c                HardFault_Handler
+                0x0800108c                SysTick_Handler
+                0x0800108c                PendSV_Handler
+                0x0800108c                NMI_Handler
+                0x0800108c                UsageFault_Handler
+                0x0800108c                Default_Handler
+                0x0800108c                MemManage_Handler
+                0x0800108c                SVC_Handler
+                0x0800108c                BusFault_Handler
+ *fill*         0x0800108e        0x2 
+ .text.__libc_init_array
+                0x08001090       0x50 /home/giacomo/arm-gnu-toolchain-14.3.rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp/libg.a(libc_a-init.o)
+                0x08001090                __libc_init_array
+ .text.__retarget_lock_acquire_recursive
+                0x080010e0        0x4 /home/giacomo/arm-gnu-toolchain-14.3.rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp/libg.a(libc_a-lock.o)
+                0x080010e0                __retarget_lock_acquire_recursive
+ .text.__retarget_lock_release_recursive
+                0x080010e4        0x4 /home/giacomo/arm-gnu-toolchain-14.3.rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp/libg.a(libc_a-lock.o)
+                0x080010e4                __retarget_lock_release_recursive
+ .text.startup.register_fini
+                0x080010e8       0x14 /home/giacomo/arm-gnu-toolchain-14.3.rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp/libg.a(libc_a-__call_atexit.o)
+ .text.atexit   0x080010fc        0xc /home/giacomo/arm-gnu-toolchain-14.3.rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp/libg.a(libc_a-atexit.o)
+                0x080010fc                atexit
+ .text.__libc_fini_array
+                0x08001108       0x28 /home/giacomo/arm-gnu-toolchain-14.3.rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp/libg.a(libc_a-fini.o)
+                0x08001108                __libc_fini_array
+ .text.__register_exitproc
+                0x08001130       0x80 /home/giacomo/arm-gnu-toolchain-14.3.rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp/libg.a(libc_a-__atexit.o)
+                0x08001130                __register_exitproc
+ *(.glue_7)
+ .glue_7        0x080011b0        0x0 linker stubs
+ *(.glue_7t)
+ .glue_7t       0x080011b0        0x0 linker stubs
+ *(.eh_frame)
+ .eh_frame      0x080011b0        0x0 /home/giacomo/arm-gnu-toolchain-14.3.rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/thumb/v7e-m/nofp/crtbegin.o
+ *(.init)
+ .init          0x080011b0        0x4 /home/giacomo/arm-gnu-toolchain-14.3.rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/thumb/v7e-m/nofp/crti.o
+                0x080011b0                _init
+ .init          0x080011b4        0x8 /home/giacomo/arm-gnu-toolchain-14.3.rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/thumb/v7e-m/nofp/crtn.o
+ *(.fini)
+ .fini          0x080011bc        0x4 /home/giacomo/arm-gnu-toolchain-14.3.rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/thumb/v7e-m/nofp/crti.o
+                0x080011bc                _fini
+ .fini          0x080011c0        0x8 /home/giacomo/arm-gnu-toolchain-14.3.rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/thumb/v7e-m/nofp/crtn.o
+                0x080011c8                        . = ALIGN (0x4)
+                0x080011c8                        _etext = .
+
+.vfp11_veneer   0x080011c8        0x0
+ .vfp11_veneer  0x080011c8        0x0 linker stubs
+
+.v4_bx          0x080011c8        0x0
+ .v4_bx         0x080011c8        0x0 linker stubs
+
+.iplt           0x080011c8        0x0
+ .iplt          0x080011c8        0x0 /home/giacomo/arm-gnu-toolchain-14.3.rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/thumb/v7e-m/nofp/crtbegin.o
+
+.rodata         0x080011c8      0x61c
+                0x080011c8                        . = ALIGN (0x4)
+ *(.rodata)
+ .rodata        0x080011c8      0x60b OBJFILES-AES-CW308_STM32F4/aes.o
+                0x080013d3                mul_14
+                0x080014d3                mul_13
+                0x080015d3                mul_11
+                0x080016d3                mul_09
+ .rodata        0x080017d3       0x10 OBJFILES-AES-CW308_STM32F4/simpleserial.o
+ *(.rodata*)
+                0x080017e4                        . = ALIGN (0x4)
+ *fill*         0x080017e3        0x1 
+
+.rel.dyn        0x080017e4        0x0
+ .rel.iplt      0x080017e4        0x0 /home/giacomo/arm-gnu-toolchain-14.3.rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/thumb/v7e-m/nofp/crtbegin.o
+
+.ARM.extab      0x080017e4        0x0
+                0x080017e4                        . = ALIGN (0x4)
+ *(.ARM.extab* .gnu.linkonce.armextab.*)
+                0x080017e4                        . = ALIGN (0x4)
+
+.ARM            0x080017e4        0x0
+                0x080017e4                        . = ALIGN (0x4)
+                0x080017e4                        __exidx_start = .
+ *(.ARM.exidx*)
+                0x080017e4                        __exidx_end = .
+                0x080017e4                        . = ALIGN (0x4)
+
+.preinit_array  0x080017e4        0x0
+                0x080017e4                        . = ALIGN (0x4)
+                0x080017e4                        PROVIDE (__preinit_array_start = .)
+ *(.preinit_array*)
+                0x080017e4                        PROVIDE (__preinit_array_end = .)
+                0x080017e4                        . = ALIGN (0x4)
+
+.init_array     0x080017e4        0x8
+                0x080017e4                        . = ALIGN (0x4)
+                0x080017e4                        PROVIDE (__init_array_start = .)
+ *(SORT_BY_NAME(.init_array.*))
+ .init_array.00000
+                0x080017e4        0x4 /home/giacomo/arm-gnu-toolchain-14.3.rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp/libg.a(libc_a-__call_atexit.o)
+ *(.init_array*)
+ .init_array    0x080017e8        0x4 /home/giacomo/arm-gnu-toolchain-14.3.rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/thumb/v7e-m/nofp/crtbegin.o
+                0x080017ec                        PROVIDE (__init_array_end = .)
+                0x080017ec                        . = ALIGN (0x4)
+
+.fini_array     0x080017ec        0x4
+                0x080017ec                        . = ALIGN (0x4)
+                0x080017ec                        PROVIDE (__fini_array_start = .)
+ *(SORT_BY_NAME(.fini_array.*))
+ *(.fini_array*)
+ .fini_array    0x080017ec        0x4 /home/giacomo/arm-gnu-toolchain-14.3.rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/thumb/v7e-m/nofp/crtbegin.o
+                0x080017f0                        PROVIDE (__fini_array_end = .)
+                0x080017f0                        . = ALIGN (0x4)
+                0x080017f0                        _sidata = LOADADDR (.data)
+
+.data           0x20000000        0x4 load address 0x080017f0
+                0x20000000                        . = ALIGN (0x4)
+                0x20000000                        _sdata = .
+ *(.data)
+ *(.data*)
+ .data.__atexit_recursive_mutex
+                0x20000000        0x4 /home/giacomo/arm-gnu-toolchain-14.3.rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp/libg.a(libc_a-__call_atexit.o)
+                0x20000000                __atexit_recursive_mutex
+                0x20000004                        . = ALIGN (0x4)
+                0x20000004                        _edata = .
+
+.tm_clone_table
+                0x20000004        0x0 load address 0x080017f4
+ .tm_clone_table
+                0x20000004        0x0 /home/giacomo/arm-gnu-toolchain-14.3.rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/thumb/v7e-m/nofp/crtbegin.o
+ .tm_clone_table
+                0x20000004        0x0 /home/giacomo/arm-gnu-toolchain-14.3.rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/thumb/v7e-m/nofp/crtend.o
+
+.igot.plt       0x20000004        0x0 load address 0x080017f4
+ .igot.plt      0x20000004        0x0 /home/giacomo/arm-gnu-toolchain-14.3.rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/thumb/v7e-m/nofp/crtbegin.o
+                0x20000004                        . = ALIGN (0x4)
+
+.bss            0x20000004      0x408 load address 0x080017f4
+                0x20000004                        _sbss = .
+                0x20000004                        __bss_start__ = _sbss
+ *(.bss)
+ .bss           0x20000004       0xb0 OBJFILES-AES-CW308_STM32F4/entrypoint.o
+                0x20000004                ctx
+ .bss           0x200000b4       0x9c OBJFILES-AES-CW308_STM32F4/stm32f4_hal.o
+                0x200000b4                RngHandle
+                0x200000c0                UartHandle
+                0x20000140                hw_key
+ .bss           0x20000150        0x4 OBJFILES-AES-CW308_STM32F4/stm32f4_hal_lowlevel.o
+ .bss           0x20000154      0x104 OBJFILES-AES-CW308_STM32F4/simpleserial.o
+ *(.bss*)
+ .bss.completed.1
+                0x20000258        0x1 /home/giacomo/arm-gnu-toolchain-14.3.rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/thumb/v7e-m/nofp/crtbegin.o
+ *fill*         0x20000259        0x3 
+ .bss.object.0  0x2000025c       0x18 /home/giacomo/arm-gnu-toolchain-14.3.rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/thumb/v7e-m/nofp/crtbegin.o
+ .bss.__lock___atexit_recursive_mutex
+                0x20000274        0x1 /home/giacomo/arm-gnu-toolchain-14.3.rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp/libg.a(libc_a-lock.o)
+                0x20000274                __lock___atexit_recursive_mutex
+ *fill*         0x20000275        0x3 
+ .bss.__atexit  0x20000278        0x4 /home/giacomo/arm-gnu-toolchain-14.3.rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp/libg.a(libc_a-__call_atexit.o)
+                0x20000278                __atexit
+ .bss.__atexit0
+                0x2000027c      0x190 /home/giacomo/arm-gnu-toolchain-14.3.rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp/libg.a(libc_a-__atexit.o)
+                0x2000027c                __atexit0
+ *(COMMON)
+                0x2000040c                        . = ALIGN (0x4)
+                0x2000040c                        _ebss = .
+                0x2000040c                        __bss_end__ = _ebss
+
+._user_heap_stack
+                0x2000040c      0x404 load address 0x080017f4
+                0x20000410                        . = ALIGN (0x8)
+ *fill*         0x2000040c        0x4 
+                0x20000410                        PROVIDE (end = .)
+                [!provide]                        PROVIDE (_end = .)
+                0x20000410                        . = (. + _Min_Heap_Size)
+                0x20000810                        . = (. + _Min_Stack_Size)
+ *fill*         0x20000410      0x400 
+                0x20000810                        . = ALIGN (0x8)
+
+/DISCARD/
+ libc.a(*)
+ libm.a(*)
+ libgcc.a(*)
+
+.ARM.attributes
+                0x00000000       0x2a
+ *(.ARM.attributes)
+ .ARM.attributes
+                0x00000000       0x1e /home/giacomo/arm-gnu-toolchain-14.3.rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/thumb/v7e-m/nofp/crti.o
+ .ARM.attributes
+                0x0000001e       0x2e /home/giacomo/arm-gnu-toolchain-14.3.rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/thumb/v7e-m/nofp/crtbegin.o
+ .ARM.attributes
+                0x0000004c       0x2e OBJFILES-AES-CW308_STM32F4/aes.o
+ .ARM.attributes
+                0x0000007a       0x2e OBJFILES-AES-CW308_STM32F4/entrypoint.o
+ .ARM.attributes
+                0x000000a8       0x2e OBJFILES-AES-CW308_STM32F4/stm32f4_hal.o
+ .ARM.attributes
+                0x000000d6       0x2e OBJFILES-AES-CW308_STM32F4/stm32f4_hal_lowlevel.o
+ .ARM.attributes
+                0x00000104       0x2e OBJFILES-AES-CW308_STM32F4/stm32f4xx_hal_rng.o
+ .ARM.attributes
+                0x00000132       0x2e OBJFILES-AES-CW308_STM32F4/simpleserial.o
+ .ARM.attributes
+                0x00000160       0x21 OBJFILES-AES-CW308_STM32F4/stm32f4_startup.o
+ .ARM.attributes
+                0x00000181       0x2e /home/giacomo/arm-gnu-toolchain-14.3.rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp/libg.a(libc_a-init.o)
+ .ARM.attributes
+                0x000001af       0x2e /home/giacomo/arm-gnu-toolchain-14.3.rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp/libg.a(libc_a-lock.o)
+ .ARM.attributes
+                0x000001dd       0x2e /home/giacomo/arm-gnu-toolchain-14.3.rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp/libg.a(libc_a-__call_atexit.o)
+ .ARM.attributes
+                0x0000020b       0x2e /home/giacomo/arm-gnu-toolchain-14.3.rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp/libg.a(libc_a-atexit.o)
+ .ARM.attributes
+                0x00000239       0x2e /home/giacomo/arm-gnu-toolchain-14.3.rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp/libg.a(libc_a-fini.o)
+ .ARM.attributes
+                0x00000267       0x2e /home/giacomo/arm-gnu-toolchain-14.3.rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp/libg.a(libc_a-__atexit.o)
+ .ARM.attributes
+                0x00000295       0x2e /home/giacomo/arm-gnu-toolchain-14.3.rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/thumb/v7e-m/nofp/crtend.o
+ .ARM.attributes
+                0x000002c3       0x1e /home/giacomo/arm-gnu-toolchain-14.3.rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/thumb/v7e-m/nofp/crtn.o
+OUTPUT(AES-CW308_STM32F4.elf elf32-littlearm)
+LOAD linker stubs
+LOAD /home/giacomo/arm-gnu-toolchain-14.3.rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp/libc.a
+LOAD /home/giacomo/arm-gnu-toolchain-14.3.rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp/libm.a
+LOAD /home/giacomo/arm-gnu-toolchain-14.3.rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/thumb/v7e-m/nofp/libgcc.a
+
+.debug_info     0x00000000     0x5418
+ .debug_info    0x00000000      0xc0c OBJFILES-AES-CW308_STM32F4/aes.o
+ .debug_info    0x00000c0c      0x4f0 OBJFILES-AES-CW308_STM32F4/entrypoint.o
+ .debug_info    0x000010fc     0x16d9 OBJFILES-AES-CW308_STM32F4/stm32f4_hal.o
+ .debug_info    0x000027d5     0x1ea7 OBJFILES-AES-CW308_STM32F4/stm32f4_hal_lowlevel.o
+ .debug_info    0x0000467c      0x571 OBJFILES-AES-CW308_STM32F4/stm32f4xx_hal_rng.o
+ .debug_info    0x00004bed      0x82b OBJFILES-AES-CW308_STM32F4/simpleserial.o
+
+.debug_abbrev   0x00000000     0x10be
+ .debug_abbrev  0x00000000      0x259 OBJFILES-AES-CW308_STM32F4/aes.o
+ .debug_abbrev  0x00000259      0x243 OBJFILES-AES-CW308_STM32F4/entrypoint.o
+ .debug_abbrev  0x0000049c      0x29d OBJFILES-AES-CW308_STM32F4/stm32f4_hal.o
+ .debug_abbrev  0x00000739      0x41c OBJFILES-AES-CW308_STM32F4/stm32f4_hal_lowlevel.o
+ .debug_abbrev  0x00000b55      0x274 OBJFILES-AES-CW308_STM32F4/stm32f4xx_hal_rng.o
+ .debug_abbrev  0x00000dc9      0x2f5 OBJFILES-AES-CW308_STM32F4/simpleserial.o
+
+.debug_loc      0x00000000     0x2dc1
+ .debug_loc     0x00000000      0x9e8 OBJFILES-AES-CW308_STM32F4/aes.o
+ .debug_loc     0x000009e8      0x286 OBJFILES-AES-CW308_STM32F4/entrypoint.o
+ .debug_loc     0x00000c6e      0x2f2 OBJFILES-AES-CW308_STM32F4/stm32f4_hal.o
+ .debug_loc     0x00000f60     0x13d6 OBJFILES-AES-CW308_STM32F4/stm32f4_hal_lowlevel.o
+ .debug_loc     0x00002336      0x3e3 OBJFILES-AES-CW308_STM32F4/stm32f4xx_hal_rng.o
+ .debug_loc     0x00002719      0x6a8 OBJFILES-AES-CW308_STM32F4/simpleserial.o
+
+.debug_aranges  0x00000000      0x2c0
+ .debug_aranges
+                0x00000000       0x40 OBJFILES-AES-CW308_STM32F4/aes.o
+ .debug_aranges
+                0x00000040       0x58 OBJFILES-AES-CW308_STM32F4/entrypoint.o
+ .debug_aranges
+                0x00000098       0x88 OBJFILES-AES-CW308_STM32F4/stm32f4_hal.o
+ .debug_aranges
+                0x00000120       0xa8 OBJFILES-AES-CW308_STM32F4/stm32f4_hal_lowlevel.o
+ .debug_aranges
+                0x000001c8       0x80 OBJFILES-AES-CW308_STM32F4/stm32f4xx_hal_rng.o
+ .debug_aranges
+                0x00000248       0x78 OBJFILES-AES-CW308_STM32F4/simpleserial.o
+
+.debug_ranges   0x00000000      0x570
+ .debug_ranges  0x00000000       0xf0 OBJFILES-AES-CW308_STM32F4/aes.o
+ .debug_ranges  0x000000f0       0x48 OBJFILES-AES-CW308_STM32F4/entrypoint.o
+ .debug_ranges  0x00000138      0x120 OBJFILES-AES-CW308_STM32F4/stm32f4_hal.o
+ .debug_ranges  0x00000258      0x180 OBJFILES-AES-CW308_STM32F4/stm32f4_hal_lowlevel.o
+ .debug_ranges  0x000003d8       0x88 OBJFILES-AES-CW308_STM32F4/stm32f4xx_hal_rng.o
+ .debug_ranges  0x00000460      0x110 OBJFILES-AES-CW308_STM32F4/simpleserial.o
+
+.debug_line     0x00000000     0x2f5e
+ .debug_line    0x00000000      0x6fb OBJFILES-AES-CW308_STM32F4/aes.o
+ .debug_line    0x000006fb      0x2a0 OBJFILES-AES-CW308_STM32F4/entrypoint.o
+ .debug_line    0x0000099b      0x56b OBJFILES-AES-CW308_STM32F4/stm32f4_hal.o
+ .debug_line    0x00000f06     0x15a3 OBJFILES-AES-CW308_STM32F4/stm32f4_hal_lowlevel.o
+ .debug_line    0x000024a9      0x4d7 OBJFILES-AES-CW308_STM32F4/stm32f4xx_hal_rng.o
+ .debug_line    0x00002980      0x5de OBJFILES-AES-CW308_STM32F4/simpleserial.o
+
+.debug_str      0x00000000     0x1333
+ .debug_str     0x00000000     0x1333 OBJFILES-AES-CW308_STM32F4/aes.o
+                                0x2b8 (size before relaxing)
+ .debug_str     0x00001333      0x2b9 OBJFILES-AES-CW308_STM32F4/entrypoint.o
+ .debug_str     0x00001333      0xda0 OBJFILES-AES-CW308_STM32F4/stm32f4_hal.o
+ .debug_str     0x00001333      0xe15 OBJFILES-AES-CW308_STM32F4/stm32f4_hal_lowlevel.o
+ .debug_str     0x00001333      0x414 OBJFILES-AES-CW308_STM32F4/stm32f4xx_hal_rng.o
+ .debug_str     0x00001333      0x2e3 OBJFILES-AES-CW308_STM32F4/simpleserial.o
+
+.comment        0x00000000       0x46
+ .comment       0x00000000       0x46 OBJFILES-AES-CW308_STM32F4/aes.o
+                                 0x47 (size before relaxing)
+ .comment       0x00000046       0x47 OBJFILES-AES-CW308_STM32F4/entrypoint.o
+ .comment       0x00000046       0x47 OBJFILES-AES-CW308_STM32F4/stm32f4_hal.o
+ .comment       0x00000046       0x47 OBJFILES-AES-CW308_STM32F4/stm32f4_hal_lowlevel.o
+ .comment       0x00000046       0x47 OBJFILES-AES-CW308_STM32F4/stm32f4xx_hal_rng.o
+ .comment       0x00000046       0x47 OBJFILES-AES-CW308_STM32F4/simpleserial.o
+
+.debug_frame    0x00000000      0x8d8
+ .debug_frame   0x00000000       0xc4 OBJFILES-AES-CW308_STM32F4/aes.o
+ .debug_frame   0x000000c4       0xb8 OBJFILES-AES-CW308_STM32F4/entrypoint.o
+ .debug_frame   0x0000017c      0x164 OBJFILES-AES-CW308_STM32F4/stm32f4_hal.o
+ .debug_frame   0x000002e0      0x1d4 OBJFILES-AES-CW308_STM32F4/stm32f4_hal_lowlevel.o
+ .debug_frame   0x000004b4      0x110 OBJFILES-AES-CW308_STM32F4/stm32f4xx_hal_rng.o
+ .debug_frame   0x000005c4      0x154 OBJFILES-AES-CW308_STM32F4/simpleserial.o
+ .debug_frame   0x00000718       0x2c /home/giacomo/arm-gnu-toolchain-14.3.rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp/libg.a(libc_a-init.o)
+ .debug_frame   0x00000744       0xb0 /home/giacomo/arm-gnu-toolchain-14.3.rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp/libg.a(libc_a-lock.o)
+ .debug_frame   0x000007f4       0x5c /home/giacomo/arm-gnu-toolchain-14.3.rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp/libg.a(libc_a-__call_atexit.o)
+ .debug_frame   0x00000850       0x20 /home/giacomo/arm-gnu-toolchain-14.3.rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp/libg.a(libc_a-atexit.o)
+ .debug_frame   0x00000870       0x34 /home/giacomo/arm-gnu-toolchain-14.3.rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp/libg.a(libc_a-fini.o)
+ .debug_frame   0x000008a4       0x34 /home/giacomo/arm-gnu-toolchain-14.3.rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp/libg.a(libc_a-__atexit.o)
+
+.stab           0x00000000      0x144
+ .stab          0x00000000      0x144 OBJFILES-AES-CW308_STM32F4/stm32f4_startup.o
+
+.stabstr        0x00000000       0x3a
+ .stabstr       0x00000000       0x3a OBJFILES-AES-CW308_STM32F4/stm32f4_startup.o
+
+Cross Reference Table
+
+Symbol                                            File
+AES_ECB_decrypt                                   OBJFILES-AES-CW308_STM32F4/aes.o
+AES_ECB_encrypt                                   OBJFILES-AES-CW308_STM32F4/aes.o
+                                                  OBJFILES-AES-CW308_STM32F4/entrypoint.o
+AES_ctx_set_iv                                    OBJFILES-AES-CW308_STM32F4/entrypoint.o
+AES_init_ctx                                      OBJFILES-AES-CW308_STM32F4/aes.o
+                                                  OBJFILES-AES-CW308_STM32F4/entrypoint.o
+BusFault_Handler                                  OBJFILES-AES-CW308_STM32F4/stm32f4_startup.o
+DebugMon_Handler                                  OBJFILES-AES-CW308_STM32F4/stm32f4_startup.o
+Default_Handler                                   OBJFILES-AES-CW308_STM32F4/stm32f4_startup.o
+HAL_CRYP_AESECB_Decrypt                           OBJFILES-AES-CW308_STM32F4/stm32f4_hal_lowlevel.o
+                                                  OBJFILES-AES-CW308_STM32F4/stm32f4_hal.o
+HAL_CRYP_AESECB_Encrypt                           OBJFILES-AES-CW308_STM32F4/stm32f4_hal_lowlevel.o
+                                                  OBJFILES-AES-CW308_STM32F4/stm32f4_hal.o
+HAL_CRYP_DeInit                                   OBJFILES-AES-CW308_STM32F4/stm32f4_hal_lowlevel.o
+HAL_CRYP_Init                                     OBJFILES-AES-CW308_STM32F4/stm32f4_hal_lowlevel.o
+                                                  OBJFILES-AES-CW308_STM32F4/stm32f4_hal.o
+HAL_GPIO_Init                                     OBJFILES-AES-CW308_STM32F4/stm32f4_hal_lowlevel.o
+                                                  OBJFILES-AES-CW308_STM32F4/stm32f4_hal.o
+HAL_GPIO_WritePin                                 OBJFILES-AES-CW308_STM32F4/stm32f4_hal_lowlevel.o
+                                                  OBJFILES-AES-CW308_STM32F4/stm32f4_hal.o
+HAL_GetTick                                       OBJFILES-AES-CW308_STM32F4/stm32f4_hal_lowlevel.o
+                                                  OBJFILES-AES-CW308_STM32F4/stm32f4xx_hal_rng.o
+HAL_RCC_ClockConfig                               OBJFILES-AES-CW308_STM32F4/stm32f4_hal_lowlevel.o
+                                                  OBJFILES-AES-CW308_STM32F4/stm32f4_hal.o
+HAL_RCC_GetPCLK1Freq                              OBJFILES-AES-CW308_STM32F4/stm32f4_hal_lowlevel.o
+HAL_RCC_GetPCLK2Freq                              OBJFILES-AES-CW308_STM32F4/stm32f4_hal_lowlevel.o
+HAL_RCC_OscConfig                                 OBJFILES-AES-CW308_STM32F4/stm32f4_hal_lowlevel.o
+                                                  OBJFILES-AES-CW308_STM32F4/stm32f4_hal.o
+HAL_RNG_DeInit                                    OBJFILES-AES-CW308_STM32F4/stm32f4xx_hal_rng.o
+HAL_RNG_ErrorCallback                             OBJFILES-AES-CW308_STM32F4/stm32f4xx_hal_rng.o
+HAL_RNG_GenerateRandomNumber                      OBJFILES-AES-CW308_STM32F4/stm32f4xx_hal_rng.o
+                                                  OBJFILES-AES-CW308_STM32F4/stm32f4_hal.o
+HAL_RNG_GenerateRandomNumber_IT                   OBJFILES-AES-CW308_STM32F4/stm32f4xx_hal_rng.o
+HAL_RNG_GetRandomNumber                           OBJFILES-AES-CW308_STM32F4/stm32f4xx_hal_rng.o
+HAL_RNG_GetRandomNumber_IT                        OBJFILES-AES-CW308_STM32F4/stm32f4xx_hal_rng.o
+HAL_RNG_GetState                                  OBJFILES-AES-CW308_STM32F4/stm32f4xx_hal_rng.o
+HAL_RNG_IRQHandler                                OBJFILES-AES-CW308_STM32F4/stm32f4xx_hal_rng.o
+HAL_RNG_Init                                      OBJFILES-AES-CW308_STM32F4/stm32f4xx_hal_rng.o
+                                                  OBJFILES-AES-CW308_STM32F4/stm32f4_hal.o
+HAL_RNG_MspDeInit                                 OBJFILES-AES-CW308_STM32F4/stm32f4xx_hal_rng.o
+HAL_RNG_MspInit                                   OBJFILES-AES-CW308_STM32F4/stm32f4xx_hal_rng.o
+HAL_RNG_ReadLastRandomNumber                      OBJFILES-AES-CW308_STM32F4/stm32f4xx_hal_rng.o
+HAL_RNG_ReadyDataCallback                         OBJFILES-AES-CW308_STM32F4/stm32f4xx_hal_rng.o
+HAL_UART_Init                                     OBJFILES-AES-CW308_STM32F4/stm32f4_hal_lowlevel.o
+                                                  OBJFILES-AES-CW308_STM32F4/stm32f4_hal.o
+HAL_UART_Receive                                  OBJFILES-AES-CW308_STM32F4/stm32f4_hal_lowlevel.o
+                                                  OBJFILES-AES-CW308_STM32F4/stm32f4_hal.o
+HAL_UART_Transmit                                 OBJFILES-AES-CW308_STM32F4/stm32f4_hal_lowlevel.o
+                                                  OBJFILES-AES-CW308_STM32F4/stm32f4_hal.o
+HW_AES128_Dec                                     OBJFILES-AES-CW308_STM32F4/stm32f4_hal.o
+HW_AES128_Enc                                     OBJFILES-AES-CW308_STM32F4/stm32f4_hal.o
+HW_AES128_Enc_posttrigger                         OBJFILES-AES-CW308_STM32F4/stm32f4_hal.o
+HW_AES128_Enc_pretrigger                          OBJFILES-AES-CW308_STM32F4/stm32f4_hal.o
+HW_AES128_Init                                    OBJFILES-AES-CW308_STM32F4/stm32f4_hal.o
+HW_AES128_LoadKey                                 OBJFILES-AES-CW308_STM32F4/stm32f4_hal.o
+HardFault_Handler                                 OBJFILES-AES-CW308_STM32F4/stm32f4_startup.o
+MemManage_Handler                                 OBJFILES-AES-CW308_STM32F4/stm32f4_startup.o
+NMI_Handler                                       OBJFILES-AES-CW308_STM32F4/stm32f4_startup.o
+PendSV_Handler                                    OBJFILES-AES-CW308_STM32F4/stm32f4_startup.o
+RCC_AHB2PeriphClockCmd                            OBJFILES-AES-CW308_STM32F4/stm32f4_hal_lowlevel.o
+Reset_Handler                                     OBJFILES-AES-CW308_STM32F4/stm32f4_startup.o
+RngHandle                                         OBJFILES-AES-CW308_STM32F4/stm32f4_hal.o
+SVC_Handler                                       OBJFILES-AES-CW308_STM32F4/stm32f4_startup.o
+SysTick_Handler                                   OBJFILES-AES-CW308_STM32F4/stm32f4_startup.o
+SystemInit                                        OBJFILES-AES-CW308_STM32F4/stm32f4_startup.o
+UartHandle                                        OBJFILES-AES-CW308_STM32F4/stm32f4_hal.o
+UsageFault_Handler                                OBJFILES-AES-CW308_STM32F4/stm32f4_startup.o
+_ITM_deregisterTMCloneTable                       /home/giacomo/arm-gnu-toolchain-14.3.rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/thumb/v7e-m/nofp/crtbegin.o
+_ITM_registerTMCloneTable                         /home/giacomo/arm-gnu-toolchain-14.3.rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/thumb/v7e-m/nofp/crtbegin.o
+__TMC_END__                                       /home/giacomo/arm-gnu-toolchain-14.3.rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/thumb/v7e-m/nofp/crtend.o
+                                                  /home/giacomo/arm-gnu-toolchain-14.3.rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/thumb/v7e-m/nofp/crtbegin.o
+__atexit                                          /home/giacomo/arm-gnu-toolchain-14.3.rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp/libg.a(libc_a-__call_atexit.o)
+                                                  /home/giacomo/arm-gnu-toolchain-14.3.rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp/libg.a(libc_a-__atexit.o)
+__atexit0                                         /home/giacomo/arm-gnu-toolchain-14.3.rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp/libg.a(libc_a-__atexit.o)
+__atexit_recursive_mutex                          /home/giacomo/arm-gnu-toolchain-14.3.rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp/libg.a(libc_a-__call_atexit.o)
+                                                  /home/giacomo/arm-gnu-toolchain-14.3.rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp/libg.a(libc_a-__atexit.o)
+__bss_end__                                       /home/giacomo/arm-gnu-toolchain-14.3.rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp/crt0.o
+__bss_start__                                     /home/giacomo/arm-gnu-toolchain-14.3.rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp/crt0.o
+__call_exitprocs                                  /home/giacomo/arm-gnu-toolchain-14.3.rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp/libg.a(libc_a-__call_atexit.o)
+                                                  /home/giacomo/arm-gnu-toolchain-14.3.rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp/libg.a(libc_a-exit.o)
+__deregister_frame_info                           /home/giacomo/arm-gnu-toolchain-14.3.rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/thumb/v7e-m/nofp/crtbegin.o
+__dso_handle                                      /home/giacomo/arm-gnu-toolchain-14.3.rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/thumb/v7e-m/nofp/crtbegin.o
+__errno                                           /home/giacomo/arm-gnu-toolchain-14.3.rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp/libg.a(libc_a-errno.o)
+                                                  /home/giacomo/arm-gnu-toolchain-14.3.rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp/libg.a(libc_a-sysconf.o)
+                                                  OBJFILES-AES-CW308_STM32F4/stm32f4_sysmem.o
+__fini_array_end                                  /home/giacomo/arm-gnu-toolchain-14.3.rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp/libg.a(libc_a-fini.o)
+__fini_array_start                                /home/giacomo/arm-gnu-toolchain-14.3.rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp/libg.a(libc_a-fini.o)
+__fp_lock_all                                     /home/giacomo/arm-gnu-toolchain-14.3.rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp/libg.a(libc_a-findfp.o)
+__fp_unlock_all                                   /home/giacomo/arm-gnu-toolchain-14.3.rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp/libg.a(libc_a-findfp.o)
+__init_array_end                                  /home/giacomo/arm-gnu-toolchain-14.3.rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp/libg.a(libc_a-init.o)
+__init_array_start                                /home/giacomo/arm-gnu-toolchain-14.3.rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp/libg.a(libc_a-init.o)
+__libc_fini                                       /home/giacomo/arm-gnu-toolchain-14.3.rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp/libg.a(libc_a-__call_atexit.o)
+__libc_fini_array                                 /home/giacomo/arm-gnu-toolchain-14.3.rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp/libg.a(libc_a-fini.o)
+                                                  /home/giacomo/arm-gnu-toolchain-14.3.rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp/libg.a(libc_a-__call_atexit.o)
+                                                  /home/giacomo/arm-gnu-toolchain-14.3.rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp/crt0.o
+__libc_init_array                                 /home/giacomo/arm-gnu-toolchain-14.3.rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp/libg.a(libc_a-init.o)
+                                                  OBJFILES-AES-CW308_STM32F4/stm32f4_startup.o
+                                                  /home/giacomo/arm-gnu-toolchain-14.3.rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp/crt0.o
+__lock___arc4random_mutex                         /home/giacomo/arm-gnu-toolchain-14.3.rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp/libg.a(libc_a-lock.o)
+__lock___at_quick_exit_mutex                      /home/giacomo/arm-gnu-toolchain-14.3.rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp/libg.a(libc_a-lock.o)
+__lock___atexit_recursive_mutex                   /home/giacomo/arm-gnu-toolchain-14.3.rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp/libg.a(libc_a-lock.o)
+                                                  /home/giacomo/arm-gnu-toolchain-14.3.rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp/libg.a(libc_a-__call_atexit.o)
+__lock___dd_hash_mutex                            /home/giacomo/arm-gnu-toolchain-14.3.rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp/libg.a(libc_a-lock.o)
+__lock___env_recursive_mutex                      /home/giacomo/arm-gnu-toolchain-14.3.rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp/libg.a(libc_a-lock.o)
+__lock___malloc_recursive_mutex                   /home/giacomo/arm-gnu-toolchain-14.3.rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp/libg.a(libc_a-lock.o)
+                                                  /home/giacomo/arm-gnu-toolchain-14.3.rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp/libg.a(libc_a-mlock.o)
+__lock___sfp_recursive_mutex                      /home/giacomo/arm-gnu-toolchain-14.3.rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp/libg.a(libc_a-lock.o)
+                                                  /home/giacomo/arm-gnu-toolchain-14.3.rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp/libg.a(libc_a-findfp.o)
+__lock___tz_mutex                                 /home/giacomo/arm-gnu-toolchain-14.3.rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp/libg.a(libc_a-lock.o)
+__malloc_av_                                      /home/giacomo/arm-gnu-toolchain-14.3.rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp/libg.a(libc_a-mallocr.o)
+                                                  /home/giacomo/arm-gnu-toolchain-14.3.rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp/libg.a(libc_a-freer.o)
+__malloc_current_mallinfo                         /home/giacomo/arm-gnu-toolchain-14.3.rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp/libg.a(libc_a-mallocr.o)
+                                                  /home/giacomo/arm-gnu-toolchain-14.3.rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp/libg.a(libc_a-freer.o)
+__malloc_lock                                     /home/giacomo/arm-gnu-toolchain-14.3.rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp/libg.a(libc_a-mlock.o)
+                                                  /home/giacomo/arm-gnu-toolchain-14.3.rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp/libg.a(libc_a-mallocr.o)
+                                                  /home/giacomo/arm-gnu-toolchain-14.3.rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp/libg.a(libc_a-freer.o)
+__malloc_max_sbrked_mem                           /home/giacomo/arm-gnu-toolchain-14.3.rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp/libg.a(libc_a-mallocr.o)
+__malloc_max_total_mem                            /home/giacomo/arm-gnu-toolchain-14.3.rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp/libg.a(libc_a-mallocr.o)
+__malloc_sbrk_base                                /home/giacomo/arm-gnu-toolchain-14.3.rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp/libg.a(libc_a-mallocr.o)
+                                                  /home/giacomo/arm-gnu-toolchain-14.3.rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp/libg.a(libc_a-freer.o)
+__malloc_top_pad                                  /home/giacomo/arm-gnu-toolchain-14.3.rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp/libg.a(libc_a-mallocr.o)
+                                                  /home/giacomo/arm-gnu-toolchain-14.3.rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp/libg.a(libc_a-freer.o)
+__malloc_trim_threshold                           /home/giacomo/arm-gnu-toolchain-14.3.rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp/libg.a(libc_a-mallocr.o)
+                                                  /home/giacomo/arm-gnu-toolchain-14.3.rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp/libg.a(libc_a-freer.o)
+__malloc_unlock                                   /home/giacomo/arm-gnu-toolchain-14.3.rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp/libg.a(libc_a-mlock.o)
+                                                  /home/giacomo/arm-gnu-toolchain-14.3.rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp/libg.a(libc_a-mallocr.o)
+                                                  /home/giacomo/arm-gnu-toolchain-14.3.rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp/libg.a(libc_a-freer.o)
+__preinit_array_end                               /home/giacomo/arm-gnu-toolchain-14.3.rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp/libg.a(libc_a-init.o)
+__preinit_array_start                             /home/giacomo/arm-gnu-toolchain-14.3.rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp/libg.a(libc_a-init.o)
+__register_exitproc                               /home/giacomo/arm-gnu-toolchain-14.3.rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp/libg.a(libc_a-__atexit.o)
+                                                  /home/giacomo/arm-gnu-toolchain-14.3.rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp/libg.a(libc_a-atexit.o)
+__register_frame_info                             /home/giacomo/arm-gnu-toolchain-14.3.rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/thumb/v7e-m/nofp/crtbegin.o
+__retarget_lock_acquire                           /home/giacomo/arm-gnu-toolchain-14.3.rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp/libg.a(libc_a-lock.o)
+__retarget_lock_acquire_recursive                 /home/giacomo/arm-gnu-toolchain-14.3.rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp/libg.a(libc_a-lock.o)
+                                                  /home/giacomo/arm-gnu-toolchain-14.3.rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp/libg.a(libc_a-__atexit.o)
+                                                  /home/giacomo/arm-gnu-toolchain-14.3.rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp/libg.a(libc_a-fflush.o)
+                                                  /home/giacomo/arm-gnu-toolchain-14.3.rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp/libg.a(libc_a-fclose.o)
+                                                  /home/giacomo/arm-gnu-toolchain-14.3.rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp/libg.a(libc_a-mlock.o)
+                                                  /home/giacomo/arm-gnu-toolchain-14.3.rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp/libg.a(libc_a-__call_atexit.o)
+                                                  /home/giacomo/arm-gnu-toolchain-14.3.rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp/libg.a(libc_a-findfp.o)
+__retarget_lock_close                             /home/giacomo/arm-gnu-toolchain-14.3.rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp/libg.a(libc_a-lock.o)
+__retarget_lock_close_recursive                   /home/giacomo/arm-gnu-toolchain-14.3.rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp/libg.a(libc_a-lock.o)
+                                                  /home/giacomo/arm-gnu-toolchain-14.3.rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp/libg.a(libc_a-fclose.o)
+__retarget_lock_init                              /home/giacomo/arm-gnu-toolchain-14.3.rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp/libg.a(libc_a-lock.o)
+__retarget_lock_init_recursive                    /home/giacomo/arm-gnu-toolchain-14.3.rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp/libg.a(libc_a-lock.o)
+                                                  /home/giacomo/arm-gnu-toolchain-14.3.rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp/libg.a(libc_a-findfp.o)
+__retarget_lock_release                           /home/giacomo/arm-gnu-toolchain-14.3.rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp/libg.a(libc_a-lock.o)
+__retarget_lock_release_recursive                 /home/giacomo/arm-gnu-toolchain-14.3.rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp/libg.a(libc_a-lock.o)
+                                                  /home/giacomo/arm-gnu-toolchain-14.3.rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp/libg.a(libc_a-__atexit.o)
+                                                  /home/giacomo/arm-gnu-toolchain-14.3.rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp/libg.a(libc_a-fflush.o)
+                                                  /home/giacomo/arm-gnu-toolchain-14.3.rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp/libg.a(libc_a-fclose.o)
+                                                  /home/giacomo/arm-gnu-toolchain-14.3.rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp/libg.a(libc_a-mlock.o)
+                                                  /home/giacomo/arm-gnu-toolchain-14.3.rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp/libg.a(libc_a-__call_atexit.o)
+                                                  /home/giacomo/arm-gnu-toolchain-14.3.rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp/libg.a(libc_a-findfp.o)
+__retarget_lock_try_acquire                       /home/giacomo/arm-gnu-toolchain-14.3.rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp/libg.a(libc_a-lock.o)
+__retarget_lock_try_acquire_recursive             /home/giacomo/arm-gnu-toolchain-14.3.rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp/libg.a(libc_a-lock.o)
+__sclose                                          /home/giacomo/arm-gnu-toolchain-14.3.rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp/libg.a(libc_a-stdio.o)
+                                                  /home/giacomo/arm-gnu-toolchain-14.3.rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp/libg.a(libc_a-findfp.o)
+__seofread                                        /home/giacomo/arm-gnu-toolchain-14.3.rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp/libg.a(libc_a-stdio.o)
+__sf                                              /home/giacomo/arm-gnu-toolchain-14.3.rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp/libg.a(libc_a-findfp.o)
+                                                  /home/giacomo/arm-gnu-toolchain-14.3.rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp/libg.a(libc_a-impure.o)
+__sflush_r                                        /home/giacomo/arm-gnu-toolchain-14.3.rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp/libg.a(libc_a-fflush.o)
+                                                  /home/giacomo/arm-gnu-toolchain-14.3.rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp/libg.a(libc_a-fclose.o)
+__sfp                                             /home/giacomo/arm-gnu-toolchain-14.3.rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp/libg.a(libc_a-findfp.o)
+__sfp_lock_acquire                                /home/giacomo/arm-gnu-toolchain-14.3.rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp/libg.a(libc_a-findfp.o)
+                                                  /home/giacomo/arm-gnu-toolchain-14.3.rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp/libg.a(libc_a-fclose.o)
+__sfp_lock_release                                /home/giacomo/arm-gnu-toolchain-14.3.rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp/libg.a(libc_a-findfp.o)
+                                                  /home/giacomo/arm-gnu-toolchain-14.3.rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp/libg.a(libc_a-fclose.o)
+__sglue                                           /home/giacomo/arm-gnu-toolchain-14.3.rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp/libg.a(libc_a-findfp.o)
+                                                  /home/giacomo/arm-gnu-toolchain-14.3.rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp/libg.a(libc_a-fflush.o)
+__sinit                                           /home/giacomo/arm-gnu-toolchain-14.3.rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp/libg.a(libc_a-findfp.o)
+                                                  /home/giacomo/arm-gnu-toolchain-14.3.rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp/libg.a(libc_a-fflush.o)
+                                                  /home/giacomo/arm-gnu-toolchain-14.3.rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp/libg.a(libc_a-fclose.o)
+__sread                                           /home/giacomo/arm-gnu-toolchain-14.3.rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp/libg.a(libc_a-stdio.o)
+                                                  /home/giacomo/arm-gnu-toolchain-14.3.rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp/libg.a(libc_a-findfp.o)
+__sseek                                           /home/giacomo/arm-gnu-toolchain-14.3.rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp/libg.a(libc_a-stdio.o)
+                                                  /home/giacomo/arm-gnu-toolchain-14.3.rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp/libg.a(libc_a-findfp.o)
+__stack                                           /home/giacomo/arm-gnu-toolchain-14.3.rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp/crt0.o
+__stdio_exit_handler                              /home/giacomo/arm-gnu-toolchain-14.3.rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp/libg.a(libc_a-findfp.o)
+                                                  /home/giacomo/arm-gnu-toolchain-14.3.rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp/libg.a(libc_a-exit.o)
+__swrite                                          /home/giacomo/arm-gnu-toolchain-14.3.rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp/libg.a(libc_a-stdio.o)
+                                                  /home/giacomo/arm-gnu-toolchain-14.3.rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp/libg.a(libc_a-findfp.o)
+_close                                            /home/giacomo/arm-gnu-toolchain-14.3.rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp/libnosys.a(close.o)
+                                                  /home/giacomo/arm-gnu-toolchain-14.3.rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp/libg.a(libc_a-closer.o)
+_close_r                                          /home/giacomo/arm-gnu-toolchain-14.3.rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp/libg.a(libc_a-closer.o)
+                                                  /home/giacomo/arm-gnu-toolchain-14.3.rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp/libg.a(libc_a-stdio.o)
+_ebss                                             OBJFILES-AES-CW308_STM32F4/stm32f4_startup.o
+_edata                                            OBJFILES-AES-CW308_STM32F4/stm32f4_startup.o
+_estack                                           OBJFILES-AES-CW308_STM32F4/stm32f4_startup.o
+_exit                                             /home/giacomo/arm-gnu-toolchain-14.3.rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp/libnosys.a(_exit.o)
+                                                  /home/giacomo/arm-gnu-toolchain-14.3.rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp/libg.a(libc_a-exit.o)
+_fclose_r                                         /home/giacomo/arm-gnu-toolchain-14.3.rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp/libg.a(libc_a-fclose.o)
+                                                  /home/giacomo/arm-gnu-toolchain-14.3.rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp/libg.a(libc_a-findfp.o)
+_fflush_r                                         /home/giacomo/arm-gnu-toolchain-14.3.rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp/libg.a(libc_a-fflush.o)
+_fini                                             /home/giacomo/arm-gnu-toolchain-14.3.rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/thumb/v7e-m/nofp/crti.o
+                                                  /home/giacomo/arm-gnu-toolchain-14.3.rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp/libg.a(libc_a-fini.o)
+_free_r                                           /home/giacomo/arm-gnu-toolchain-14.3.rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp/libg.a(libc_a-freer.o)
+                                                  /home/giacomo/arm-gnu-toolchain-14.3.rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp/libg.a(libc_a-fflush.o)
+                                                  /home/giacomo/arm-gnu-toolchain-14.3.rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp/libg.a(libc_a-fclose.o)
+                                                  /home/giacomo/arm-gnu-toolchain-14.3.rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp/libg.a(libc_a-mallocr.o)
+                                                  /home/giacomo/arm-gnu-toolchain-14.3.rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp/libg.a(libc_a-reent.o)
+_fwalk_sglue                                      /home/giacomo/arm-gnu-toolchain-14.3.rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp/libg.a(libc_a-fwalk.o)
+                                                  /home/giacomo/arm-gnu-toolchain-14.3.rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp/libg.a(libc_a-fflush.o)
+                                                  /home/giacomo/arm-gnu-toolchain-14.3.rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp/libg.a(libc_a-findfp.o)
+_impure_data                                      /home/giacomo/arm-gnu-toolchain-14.3.rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp/libg.a(libc_a-impure.o)
+                                                  /home/giacomo/arm-gnu-toolchain-14.3.rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp/libg.a(libc_a-fflush.o)
+                                                  /home/giacomo/arm-gnu-toolchain-14.3.rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp/libg.a(libc_a-findfp.o)
+_impure_ptr                                       /home/giacomo/arm-gnu-toolchain-14.3.rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp/libg.a(libc_a-impure.o)
+                                                  /home/giacomo/arm-gnu-toolchain-14.3.rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp/libg.a(libc_a-fflush.o)
+                                                  /home/giacomo/arm-gnu-toolchain-14.3.rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp/libg.a(libc_a-fclose.o)
+                                                  /home/giacomo/arm-gnu-toolchain-14.3.rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp/libg.a(libc_a-errno.o)
+                                                  /home/giacomo/arm-gnu-toolchain-14.3.rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp/libg.a(libc_a-reent.o)
+_init                                             /home/giacomo/arm-gnu-toolchain-14.3.rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/thumb/v7e-m/nofp/crti.o
+                                                  /home/giacomo/arm-gnu-toolchain-14.3.rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp/libg.a(libc_a-init.o)
+_lseek                                            /home/giacomo/arm-gnu-toolchain-14.3.rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp/libnosys.a(lseek.o)
+                                                  /home/giacomo/arm-gnu-toolchain-14.3.rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp/libg.a(libc_a-lseekr.o)
+_lseek_r                                          /home/giacomo/arm-gnu-toolchain-14.3.rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp/libg.a(libc_a-lseekr.o)
+                                                  /home/giacomo/arm-gnu-toolchain-14.3.rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp/libg.a(libc_a-stdio.o)
+_mainCRTStartup                                   /home/giacomo/arm-gnu-toolchain-14.3.rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp/crt0.o
+_malloc_r                                         /home/giacomo/arm-gnu-toolchain-14.3.rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp/libg.a(libc_a-mallocr.o)
+                                                  /home/giacomo/arm-gnu-toolchain-14.3.rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp/libg.a(libc_a-findfp.o)
+_malloc_trim_r                                    /home/giacomo/arm-gnu-toolchain-14.3.rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp/libg.a(libc_a-freer.o)
+_read                                             /home/giacomo/arm-gnu-toolchain-14.3.rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp/libnosys.a(read.o)
+                                                  /home/giacomo/arm-gnu-toolchain-14.3.rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp/libg.a(libc_a-readr.o)
+_read_r                                           /home/giacomo/arm-gnu-toolchain-14.3.rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp/libg.a(libc_a-readr.o)
+                                                  /home/giacomo/arm-gnu-toolchain-14.3.rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp/libg.a(libc_a-stdio.o)
+_reclaim_reent                                    /home/giacomo/arm-gnu-toolchain-14.3.rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp/libg.a(libc_a-reent.o)
+_sbrk                                             OBJFILES-AES-CW308_STM32F4/stm32f4_sysmem.o
+                                                  /home/giacomo/arm-gnu-toolchain-14.3.rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp/libg.a(libc_a-sbrkr.o)
+_sbrk_r                                           /home/giacomo/arm-gnu-toolchain-14.3.rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp/libg.a(libc_a-sbrkr.o)
+                                                  /home/giacomo/arm-gnu-toolchain-14.3.rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp/libg.a(libc_a-mallocr.o)
+                                                  /home/giacomo/arm-gnu-toolchain-14.3.rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp/libg.a(libc_a-freer.o)
+_sbss                                             OBJFILES-AES-CW308_STM32F4/stm32f4_startup.o
+_sdata                                            OBJFILES-AES-CW308_STM32F4/stm32f4_startup.o
+_sidata                                           OBJFILES-AES-CW308_STM32F4/stm32f4_startup.o
+_stack_init                                       /home/giacomo/arm-gnu-toolchain-14.3.rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp/crt0.o
+_start                                            /home/giacomo/arm-gnu-toolchain-14.3.rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp/crt0.o
+_write                                            /home/giacomo/arm-gnu-toolchain-14.3.rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp/libnosys.a(write.o)
+                                                  /home/giacomo/arm-gnu-toolchain-14.3.rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp/libg.a(libc_a-writer.o)
+_write_r                                          /home/giacomo/arm-gnu-toolchain-14.3.rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp/libg.a(libc_a-writer.o)
+                                                  /home/giacomo/arm-gnu-toolchain-14.3.rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp/libg.a(libc_a-stdio.o)
+atexit                                            /home/giacomo/arm-gnu-toolchain-14.3.rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp/libg.a(libc_a-atexit.o)
+                                                  /home/giacomo/arm-gnu-toolchain-14.3.rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp/libg.a(libc_a-__call_atexit.o)
+                                                  /home/giacomo/arm-gnu-toolchain-14.3.rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp/crt0.o
+check_version                                     OBJFILES-AES-CW308_STM32F4/simpleserial.o
+ctx                                               OBJFILES-AES-CW308_STM32F4/entrypoint.o
+done                                              OBJFILES-AES-CW308_STM32F4/entrypoint.o
+encrypt_plaintext                                 OBJFILES-AES-CW308_STM32F4/entrypoint.o
+end                                               OBJFILES-AES-CW308_STM32F4/stm32f4_sysmem.o
+errno                                             /home/giacomo/arm-gnu-toolchain-14.3.rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp/libg.a(libc_a-reent.o)
+                                                  /home/giacomo/arm-gnu-toolchain-14.3.rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp/libnosys.a(write.o)
+                                                  /home/giacomo/arm-gnu-toolchain-14.3.rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp/libnosys.a(read.o)
+                                                  /home/giacomo/arm-gnu-toolchain-14.3.rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp/libnosys.a(lseek.o)
+                                                  /home/giacomo/arm-gnu-toolchain-14.3.rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp/libnosys.a(close.o)
+                                                  /home/giacomo/arm-gnu-toolchain-14.3.rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp/libg.a(libc_a-sbrkr.o)
+                                                  /home/giacomo/arm-gnu-toolchain-14.3.rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp/libg.a(libc_a-writer.o)
+                                                  /home/giacomo/arm-gnu-toolchain-14.3.rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp/libg.a(libc_a-readr.o)
+                                                  /home/giacomo/arm-gnu-toolchain-14.3.rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp/libg.a(libc_a-lseekr.o)
+                                                  /home/giacomo/arm-gnu-toolchain-14.3.rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp/libg.a(libc_a-closer.o)
+exit                                              /home/giacomo/arm-gnu-toolchain-14.3.rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp/libg.a(libc_a-exit.o)
+                                                  /home/giacomo/arm-gnu-toolchain-14.3.rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp/crt0.o
+fclose                                            /home/giacomo/arm-gnu-toolchain-14.3.rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp/libg.a(libc_a-fclose.o)
+fflush                                            /home/giacomo/arm-gnu-toolchain-14.3.rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp/libg.a(libc_a-fflush.o)
+g_pfnVectors                                      OBJFILES-AES-CW308_STM32F4/stm32f4_startup.o
+get_rand                                          OBJFILES-AES-CW308_STM32F4/stm32f4_hal.o
+getch                                             OBJFILES-AES-CW308_STM32F4/stm32f4_hal.o
+                                                  OBJFILES-AES-CW308_STM32F4/simpleserial.o
+hardware_init_hook                                /home/giacomo/arm-gnu-toolchain-14.3.rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp/crt0.o
+hex_decode                                        OBJFILES-AES-CW308_STM32F4/simpleserial.o
+hw_key                                            OBJFILES-AES-CW308_STM32F4/stm32f4_hal.o
+init_uart                                         OBJFILES-AES-CW308_STM32F4/stm32f4_hal.o
+                                                  OBJFILES-AES-CW308_STM32F4/entrypoint.o
+led_error                                         OBJFILES-AES-CW308_STM32F4/entrypoint.o
+led_ok                                            OBJFILES-AES-CW308_STM32F4/entrypoint.o
+main                                              OBJFILES-AES-CW308_STM32F4/entrypoint.o
+                                                  OBJFILES-AES-CW308_STM32F4/stm32f4_startup.o
+                                                  /home/giacomo/arm-gnu-toolchain-14.3.rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp/crt0.o
+memset                                            /home/giacomo/arm-gnu-toolchain-14.3.rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp/libg.a(libc_a-memset.o)
+                                                  /home/giacomo/arm-gnu-toolchain-14.3.rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp/libg.a(libc_a-findfp.o)
+                                                  /home/giacomo/arm-gnu-toolchain-14.3.rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp/crt0.o
+mul_09                                            OBJFILES-AES-CW308_STM32F4/aes.o
+mul_11                                            OBJFILES-AES-CW308_STM32F4/aes.o
+mul_13                                            OBJFILES-AES-CW308_STM32F4/aes.o
+mul_14                                            OBJFILES-AES-CW308_STM32F4/aes.o
+platform_init                                     OBJFILES-AES-CW308_STM32F4/stm32f4_hal.o
+                                                  OBJFILES-AES-CW308_STM32F4/entrypoint.o
+putch                                             OBJFILES-AES-CW308_STM32F4/stm32f4_hal.o
+                                                  OBJFILES-AES-CW308_STM32F4/simpleserial.o
+return_value                                      OBJFILES-AES-CW308_STM32F4/entrypoint.o
+set_iv                                            OBJFILES-AES-CW308_STM32F4/entrypoint.o
+set_key                                           OBJFILES-AES-CW308_STM32F4/entrypoint.o
+simpleserial_addcmd                               OBJFILES-AES-CW308_STM32F4/simpleserial.o
+                                                  OBJFILES-AES-CW308_STM32F4/entrypoint.o
+simpleserial_addcmd_flags                         OBJFILES-AES-CW308_STM32F4/simpleserial.o
+simpleserial_get                                  OBJFILES-AES-CW308_STM32F4/simpleserial.o
+                                                  OBJFILES-AES-CW308_STM32F4/entrypoint.o
+simpleserial_init                                 OBJFILES-AES-CW308_STM32F4/simpleserial.o
+                                                  OBJFILES-AES-CW308_STM32F4/entrypoint.o
+simpleserial_put                                  OBJFILES-AES-CW308_STM32F4/simpleserial.o
+                                                  OBJFILES-AES-CW308_STM32F4/entrypoint.o
+software_init_hook                                /home/giacomo/arm-gnu-toolchain-14.3.rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp/crt0.o
+ss_crc                                            OBJFILES-AES-CW308_STM32F4/simpleserial.o
+ss_get_commands                                   OBJFILES-AES-CW308_STM32F4/simpleserial.o
+ss_num_commands                                   OBJFILES-AES-CW308_STM32F4/simpleserial.o
+sysconf                                           /home/giacomo/arm-gnu-toolchain-14.3.rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp/libg.a(libc_a-sysconf.o)
+                                                  /home/giacomo/arm-gnu-toolchain-14.3.rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp/libg.a(libc_a-mallocr.o)
+                                                  /home/giacomo/arm-gnu-toolchain-14.3.rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp/libg.a(libc_a-freer.o)
+trigger_high                                      OBJFILES-AES-CW308_STM32F4/stm32f4_hal.o
+trigger_low                                       OBJFILES-AES-CW308_STM32F4/stm32f4_hal.o
+trigger_setup                                     OBJFILES-AES-CW308_STM32F4/stm32f4_hal.o
