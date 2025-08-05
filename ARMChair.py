@@ -21,8 +21,14 @@ from armchair.targets.keccak.keccak_input_parser import KeccakHashInputParser
 from armchair.utils.helpers import check_environment, parse_args, err_t
 
 from argparse import Namespace
+from term_image.image import from_file
+from datetime import date
 
 if __name__ == "__main__":
+
+    image=from_file('art/CPU1.jpeg')
+    image.draw()
+
     # Parse command-line arguments
     args: Namespace = parse_args()
 
