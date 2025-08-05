@@ -1,0 +1,39 @@
+# Ignore Python cache files
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+
+# Ignore virtual environments and Traces folder
+venv/
+ENV/
+env/
+.dep/
+.venv/
+.ENV/
+.env/
+.VENV/
+Traces/
+RandomStuff/
+
+# Byte-compiled / optimized / DLL files
+*.pyc
+*.pyo
+*.pyd
+*.ipynb
+*.csv
+
+# C build obj
+*.lst
+*.o
+
+# Ignore virtualenv in case it's in the project root
+pip-selfcheck.json
+
+# Ignore editor files
+.vscode/
+.idea/
+
+# Ignore profiler stuff
+profile.html
+profile.json
