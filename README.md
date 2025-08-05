@@ -1,6 +1,8 @@
 
 ## ARMChair: Cryptographic Simulation and Analysis Tool
 
+![ARMChair](art/CPU1.jpeg)
+
 ### Warning ⚠️
 
 There is currently a critical bug that prevents the right instructions from being recorded. In particular, we were seeing different branching while comparing traces captured by ARMChair, leading to an incorrect intersection of the intermediates.
