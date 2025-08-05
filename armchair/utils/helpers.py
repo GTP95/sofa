@@ -64,7 +64,7 @@ def parse_args() -> Namespace:
         "--input",
         choices=["user", "user-csv", "auto", "user-raw"],
         required=True,
-        help="Choose between commmand line user-provided, user-provided file, auto-generated input or in code not validated input.",
+        help="Choose between command line user-provided, user-provided file, auto-generated input or in code not validated input.",
     )
 
     parser.add_argument(
