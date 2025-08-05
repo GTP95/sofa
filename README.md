@@ -115,34 +115,33 @@ Once the project is built, you can run the cryptographic analysis using the Pyth
 
 ##### Command-Line Arguments
 
-| Argument         | Description                                                  |
-|------------------|--------------------------------------------------------------|
-| `--debug`        | Enable debug mode for verbose output.                        |
-| `--input`        | Choose between `user` or `auto` input mode.                  |
-| `--count`        | Number of auto-generated inputs (required for `auto` mode).  |
-| `--target`       | Specify the cryptographic algorithm: `AES`, `ASCON`, `KECCAK`.|
+| Argument         | Description                                              |
+|------------------|----------------------------------------------------------|
+| `--debug`        | Enable debug mode for verbose output.                    |
+| `--input`        | Choose between `user` or `auto` input mode.<br/>Specify the cryptographic algorithm: `AES`, `ASCON`, `KECCAK`.|
+| `--count`        | Number of auto-generated inputs (required for `auto` mode). |
 | `--key`          | The cryptographic key (hex string) for `AES`, `ASCON`, `KECCAK`.|
-| `--plaintext`    | The plaintext (hex string) to encrypt.                       |
-| `--iv`           | Initialization vector (hex string) for `AES`, `ASCON`.       |
-| `--rounds`       | Number of rounds for the `ASCON` algorithm.                  |
-| `--capacity`     | Capacity for `KECCAK` sponge function.                       |
+| `--plaintext`    | The plaintext (hex string) to encrypt.                   |
+| `--iv`           | Initialization vector (hex string) for `AES`, `ASCON`.   |
+| `--rounds`       | Number of rounds for the `ASCON` algorithm.              |
+| `--capacity`     | Capacity for `KECCAK` sponge function.                   |
 
 ##### Example 1: Running AES with user-provided input
 
 ```bash
-python main.py --target AES --input user --key "00112233445566778899aabbccddeeff" --plaintext "00112233445566778899aabbccddeeff" --iv "000102030405060708090a0b0c0d0e0f"
+python main.py --input user AES --key "00112233445566778899aabbccddeeff" --plaintext "00112233445566778899aabbccddeeff" --iv "000102030405060708090a0b0c0d0e0f"
 ```
 
 ##### Example 2: Running AES with auto-generated inputs
 
 ```bash
-python main.py --target AES --input auto --count 10
+python main.py --input auto AES --count 10
 ```
 
 ##### Example 3: Running KECCAK with user-provided input
 
 ```bash
-python main.py --target KECCAK --input user --key "00112233445566778899aabbccddeeff" --plaintext "00112233445566778899aabbccddeeff" --capacity 1600
+python main.py --input user KECCAK --key "00112233445566778899aabbccddeeff" --plaintext "00112233445566778899aabbccddeeff" --capacity 1600
 ```
 
 ### How It Works
