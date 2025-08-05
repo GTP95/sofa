@@ -135,9 +135,10 @@ python main.py --input user AES --key "00112233445566778899aabbccddeeff" --plain
 ##### Example 2: Running AES with auto-generated inputs
 
 ```bash
-python main.py --input auto AES --count 10
+python main.py --input auto --count 10 AES
 ```
-
+Note the ordering of the arguments. The `--input` argument must be specified before the cryptographic algorithm.
+This is due to AES being a subcommand.
 ##### Example 3: Running KECCAK with user-provided input
 
 ```bash
