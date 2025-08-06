@@ -18,13 +18,13 @@ To fix the issue, after installing `qiling`, make sure to run the script `apply_
 1. **On Windows**:
    - Run the following command in **Command Prompt** or **PowerShell**:
      ```bash
-     python apply_qiling_patch.py
+     python tools/apply_qiling_patch.py
      ```
 
-2. **On Linux/macOS**:
+2. **On Debian-based Linux distros or macOS**:
    - Run the following command in the terminal:
      ```bash
-     python3 apply_qiling_patch.py
+     python3 tools/apply_qiling_patch.py
      ```
 
 This will copy the content of the `qilingpatch` folder into the `qiling/extensions` directory. The location of this directory will depend on where your `qiling` package is installed.
@@ -57,9 +57,17 @@ ARMChair begins by building the project using `make` before executing Python scr
 1. Clone the repository:
 
    ```bash
-   git clone https://github.com/Paul2803k/ARMChair.git
+   git clone git@gitlab.science.ru.nl:scalab/sca-code/armchair.git
    cd armchair
    ```
+   
+    1. Recommended but not mandatory: create and activate a Python virtual environment:
+        
+        ```bash
+        python -m venv venv
+        source venv/bin/activate  # On Windows use `venv\Scripts\activate`
+        ```
+
 
 2. Install the required dependencies using the provided `requirements.txt`:
 
@@ -73,7 +81,7 @@ ARMChair begins by building the project using `make` before executing Python scr
    python --version
    ```
 
-4. Install `make` for your platform if it isn't already installed. On Ubuntu:
+4. Install `make` for your platform if it isn't already installed. On Debian-based Linux distributions, you can install it using:
 
    ```bash
    sudo apt-get install make
