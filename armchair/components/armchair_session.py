@@ -102,7 +102,7 @@ class ARMChairSession:
 
         elif self.mode == ARMChairSessionMode.USER_CSV:
             print(
-                f"{warn_t} Behavare, {self.mode.value} mode has no validation of any kind, use the debug flag if the run fails and make sure that the csv you provided matches what the C code expects"
+                f"{warn_t} Beware, {self.mode.value} mode has no validation of any kind, use the debug flag if the run fails and make sure that the csv you provided matches what the C code expects"
             )
 
             csv_path: str = self.input_csv_path
@@ -121,7 +121,7 @@ class ARMChairSession:
 
         elif self.mode == ARMChairSessionMode.USER_RAW:
             print(
-                f'{warn_t} Behavare, {self.mode.value} mode has no validation of any kind, use the debug flag if the run fails and make sure that the inputs that you provided matches what the C code expects and is structured this way ["value1", "value2", etc] where the values match the order that the QilingProfile expects'
+                f'{warn_t} Beware, {self.mode.value} mode has no validation of any kind, use the debug flag if the run fails and make sure that the inputs that you provided matches what the C code expects and is structured this way ["value1", "value2", etc] where the values match the order that the QilingProfile expects'
             )
 
             self.target_data.append(self.raw_target_data)
