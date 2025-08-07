@@ -141,6 +141,9 @@ def parse_args() -> Namespace:
         "--plaintext", type=str, help="User provided plaintext (hex string)."
     )
 
+    keccak_parser.add_argument("--key", type=str, help="User provided key (hex string).")
+    keccak_parser.add_argument("--capacity", type=int, default=1600, help="KECCAK capacity in bits (default: 1600).")
+
     # Parse the arguments
     args = parser.parse_args()
 
