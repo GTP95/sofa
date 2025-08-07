@@ -157,6 +157,12 @@ This is due to AES being a subcommand.
 python main.py --input auto --count 10 --leakage_model "HW" AES
 ```
 
+##### Example 4: Running KECCAK with user-provided input
+
+```bash
+python main.py --input user KECCAK --key "00112233445566778899aabbccddeeff" --plaintext "00112233445566778899aabbccddeeff" --capacity 1600
+```
+
 ### How It Works
 
 1. **Makefile-based Firmware Compilation**: 
