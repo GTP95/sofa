@@ -810,10 +810,10 @@ def create_opt_HW_trace(filename, cols=['r0','r1','r2','r3','r4','r5','r6','r7',
     df.fillna('', inplace=True)
 
     # Convert selected register columns from hex to integer
-    reg_int = df[cols].applymap(lambda x: int(x[2:], 16) if x else 0)
+    reg_int = df[cols].map(lambda x: int(x[2:], 16) if x else 0)
 
     # Compute the Hamming weights
-    hw_ref = reg_int.applymap(HW).values
+    hw_ref = reg_int.map(HW).values
     return np.sum(hw_ref, axis=1)
 
 
@@ -821,7 +821,6 @@ def create_opt_HW_trace(filename, cols=['r0','r1','r2','r3','r4','r5','r6','r7',
 def create_opt_HD_trace(filename, cols=['r0','r1','r2','r3','r4','r5','r6','r7','r8','r9','r10','r11','r12','sp','lr','pc']):
     df = pd.read_csv(filename)
     df.fillna('', inplace=True)
-    # reg_int = df[cols].applymap(lambda x: int(x[2:], 16) if x else 0)
     reg_int = df[cols].apply(lambda col: col.map(lambda x: int(x[2:], 16) if x else 0))
     NUM_ROWS, NUM_COLS = reg_int.shape
 

@@ -1,29 +1,25 @@
+from argparse import Namespace
+
+from term_image.image import from_file
+
 from armchair.components.armchair_session import ARMChairSession
 from armchair.components.power_trace_generator import generate_power_traces, show_power_traces
-
-from armchair.targets.aes.aes_qiling_profile import AesQilingProfile
 from armchair.targets.aes.aes_input_generator import AesInputsGenerator
-from armchair.targets.aes.aes_input_validator import AesInputValidator
-from armchair.targets.aes.aes_settings_loader import AesSettingsLoader
 from armchair.targets.aes.aes_input_parser import AesInputParser
-
-from armchair.targets.ascon.ascon_qiling_profile import AsconQilingProfile
+from armchair.targets.aes.aes_input_validator import AesInputValidator
+from armchair.targets.aes.aes_qiling_profile import AesQilingProfile
+from armchair.targets.aes.aes_settings_loader import AesSettingsLoader
 from armchair.targets.ascon.ascon_input_generator import AsconInputsGenerator
-from armchair.targets.ascon.ascon_input_validator import AsconInputValidator
-from armchair.targets.ascon.ascon_settings_loader import AsconSettingsLoader
 from armchair.targets.ascon.ascon_input_parser import AsconInputParser
-
+from armchair.targets.ascon.ascon_input_validator import AsconInputValidator
+from armchair.targets.ascon.ascon_qiling_profile import AsconQilingProfile
+from armchair.targets.ascon.ascon_settings_loader import AsconSettingsLoader
 from armchair.targets.keccak.keccak_hash_qiling_profile import KeccakHashQilingProfile
 from armchair.targets.keccak.keccak_input_generator import KeccakHashInputsGenerator
+from armchair.targets.keccak.keccak_input_parser import KeccakHashInputParser
 from armchair.targets.keccak.keccak_input_validator import KeccakHashInputValidator
 from armchair.targets.keccak.keccak_settings_loader import KeccakHashSettingsLoader
-from armchair.targets.keccak.keccak_input_parser import KeccakHashInputParser
-
-from armchair.utils.helpers import check_environment, parse_args, err_t
-
-from argparse import Namespace
-from term_image.image import from_file
-from datetime import date
+from armchair.utils.helpers import parse_args, err_t
 
 if __name__ == "__main__":
 
