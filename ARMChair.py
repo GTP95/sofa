@@ -1,4 +1,5 @@
 from armchair.components.armchair_session import ARMChairSession
+from armchair.components.power_trace_generator import generate_power_traces, show_power_traces
 
 from armchair.targets.aes.aes_qiling_profile import AesQilingProfile
 from armchair.targets.aes.aes_input_generator import AesInputsGenerator
@@ -79,3 +80,9 @@ if __name__ == "__main__":
 
     session.init_session()
     session.run_session(target_profile=tp)
+
+    #TODO: do not hardcode paths
+    generate_power_traces('Traces-AES', 'Traces-AES/power_traces_HD.npz', 'HD')
+    show_power_traces('Traces-AES/power_traces_HD.npz')
+
+
