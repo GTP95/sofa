@@ -64,6 +64,7 @@ def show_power_traces(input_file, start=0, end=None, format='npz'):
 
     plot=hv.Overlay(plot_list).opts(opts.Curve(width=800))
     show(hv.render(plot))
+    print("Power traces are displayed inside your browser.")
 
 
 
