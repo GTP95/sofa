@@ -87,6 +87,10 @@ class ARMChairSession:
             input_path: str = f"{sl.get_target()}-{sl.get_plat()}-Inputs.csv"
 
             # Generate the inputs and write them to a CSV file
+            if self.args.count <1:
+                raise ValueError(
+                    f"Invalid number of inputs provided: {self.args.count}, must be at least 1"
+                )
             ig.generate_inputs_csv(
                 target_settings=target_settings,
                 nr_of_inputs=self.args.count,
