@@ -50,7 +50,7 @@ class ARMChairSession:
 
         if self.elf_path == None:
             raise ValueError(
-                f"No path to the .elf file was provided either by the user or by the settings loader, cannot continue."
+                "No path to the .elf file was provided either by the user or by the settings loader, cannot continue."
             )
 
         if self.mode == ARMChairSessionMode.USER:
