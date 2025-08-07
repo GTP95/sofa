@@ -82,7 +82,7 @@ if __name__ == "__main__":
     session.run_session(target_profile=tp)
 
     #TODO: do not hardcode paths
-    generate_power_traces('Traces-AES', 'Traces-AES/power_traces_HD.npz', 'HD')
-    show_power_traces('Traces-AES/power_traces_HD.npz')
+    generate_power_traces('Traces-AES', 'Traces-AES/power_traces.npz', args.leakage_model)
+    show_power_traces('Traces-AES/power_traces.npz')
 
 

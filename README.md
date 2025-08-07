@@ -125,16 +125,17 @@ Once the project is built, you can run the cryptographic analysis using the Pyth
 
 ##### Command-Line Arguments
 
-| Argument         | Description                                              |
-|------------------|----------------------------------------------------------|
-| `--debug`        | Enable debug mode for verbose output.                    |
-| `--input`        | Choose between `user` or `auto` input mode.<br/>Specify the cryptographic algorithm: `AES`, `ASCON`, `KECCAK`.|
-| `--count`        | Number of auto-generated inputs (required for `auto` mode). |
-| `--key`          | The cryptographic key (hex string) for `AES`, `ASCON`, `KECCAK`.|
-| `--plaintext`    | The plaintext (hex string) to encrypt.                   |
-| `--iv`           | Initialization vector (hex string) for `AES`, `ASCON`.   |
-| `--rounds`       | Number of rounds for the `ASCON` algorithm.              |
-| `--capacity`     | Capacity for `KECCAK` sponge function.                   |
+| Argument         | Description                                                                                                    |
+|------------------|----------------------------------------------------------------------------------------------------------------|
+| `--debug`        | Enable debug mode for verbose output.                                                                          |
+| `--input`        | Choose between `user` or `auto` input mode.<br/>Specify the cryptographic algorithm: `AES`, `ASCON`, `KECCAK`. |
+| `--count`        | Number of auto-generated inputs (required for `auto` mode).                                                    |
+| `--key`          | The cryptographic key (hex string) for `AES`, `ASCON`, `KECCAK`.                                               |
+| `--plaintext`    | The plaintext (hex string) to encrypt.                                                                         |
+ |  `--leakage_model` | Leakage model to use for the analysis. Either `ID, HW`, or `HD`.<br/>Defaults to `HD`                           |
+| `--iv`           | Initialization vector (hex string) for `AES`, `ASCON`.                                                         |
+| `--rounds`       | Number of rounds for the `ASCON` algorithm.                                                                    |
+| `--capacity`     | Capacity for `KECCAK` sponge function.                                                                         |
 
 ##### Example 1: Running AES with user-provided input
 
@@ -149,10 +150,11 @@ python main.py --input auto --count 10 AES
 ```
 Note the ordering of the arguments. The `--input` argument must be specified before the cryptographic algorithm.
 This is due to AES being a subcommand.
-##### Example 3: Running KECCAK with user-provided input
+
+##### Example 3: Running AES with auto-generated inputs and a specific leakage model
 
 ```bash
-python main.py --input user KECCAK --key "00112233445566778899aabbccddeeff" --plaintext "00112233445566778899aabbccddeeff" --capacity 1600
+python main.py --input auto --count 10 --leakage_model "HW" AES
 ```
 
 ### How It Works

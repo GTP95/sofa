@@ -99,6 +99,8 @@ def parse_args() -> Namespace:
         help="Format of the inputs such as key and plaintext, either as an hex string or plaintext, hex dy default",
     )
 
+    parser.add_argument("--leakage_model", type=str, choices=["HD", "HW", "ID"], default="HD", help="Leakage model to use for power trace generation (default: HD).")
+
     # Positional argument to select the algorithm (AES, ASCON, KECCAK)
     subparsers = parser.add_subparsers(
         dest="target", required=True, help="Choose the cryptographic algorithm."
