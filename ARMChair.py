@@ -1,3 +1,5 @@
+#!/usr/bin/env python3
+
 from argparse import Namespace
 
 from term_image.image import from_file
