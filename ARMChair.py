@@ -21,10 +21,10 @@ from armchair.targets.keccak.keccak_input_generator import KeccakHashInputsGener
 from armchair.targets.keccak.keccak_input_parser import KeccakHashInputParser
 from armchair.targets.keccak.keccak_input_validator import KeccakHashInputValidator
 from armchair.targets.keccak.keccak_settings_loader import KeccakHashSettingsLoader
-from armchair.utils.helpers import parse_args, err_t
+from armchair.utils.helpers import parse_args, err_t, init
 
 if __name__ == "__main__":
-
+    init()
     image=from_file('art/CPU1.jpeg')
     image.draw()
 

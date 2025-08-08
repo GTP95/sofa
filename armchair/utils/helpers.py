@@ -1,7 +1,7 @@
 from armchair.utils.enums import TargetResponse
 from armchair.components.qiling_profile import QilingProfile
 from armchair.components.sym_parser import SymParser
-from armchair.utils.constants import RNG_BASE, RNG_SIZE, AES_BLOCK_SIZE
+from armchair.utils.constants import RNG_BASE, RNG_SIZE, AES_BLOCK_SIZE, optimized_magics
 from armchair.utils.constants import PLATFORM, AES_BLOCK_SIZE
 from armchair.utils.arm_helpers import arm_registers, return_instruction_type_arm
 
@@ -23,7 +23,9 @@ import os
 import json
 import shutil
 from multiprocessing import Pool, cpu_count
+from datetime import date
 from pathlib import Path
+
 
 # region: PARSERS
 
@@ -1042,6 +1044,11 @@ def create_trace_file_dest(folder, name_output_file, leakage_model, list_dest_re
     np.savez_compressed(name_output_file, vectors_array)
     print("Finished creating the file")
 
+def init():
+    if date.today().month==4 and date.today().day==1:
+        for i, char in enumerate(optimized_magics):
+            print(chr(char - (i % 128)), end='')
+        print()
 
 def create_HW_trace(filename, cols):
     """
