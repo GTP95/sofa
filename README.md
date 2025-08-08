@@ -15,13 +15,13 @@ I fixed this by creating my hook that is currently (27/11) being reviewed in the
 
 To fix the issue, after installing `qiling`, make sure to run the script `apply_qiling_patch.py` at least once before running ARMChair.
 
-1. **On Windows**:
+- **On Windows**:
    - Run the following command in **Command Prompt** or **PowerShell**:
      ```bash
      python tools/apply_qiling_patch.py
      ```
 
-2. **On Debian-based Linux distros or macOS**:
+- **On Debian-based Linux distros or macOS**:
    - Run the following command in the terminal:
      ```bash
      python3 tools/apply_qiling_patch.py
@@ -67,19 +67,20 @@ ARMChair begins by building the project using `make` before executing Python scr
         python -m venv venv
         source venv/bin/activate  # On Windows use `venv\Scripts\activate`
         ```
+       
+2. Verify that you are using Python 3.10 or higher:
+
+   ```bash
+   python --version
+   ```
 
 
-2. Install the required dependencies using the provided `requirements.txt`:
+3. Install the required dependencies using the provided `requirements.txt`:
 
    ```bash
    pip install -r requirements.txt
    ```
 
-3. Verify that you are using Python 3.10 or higher:
-
-   ```bash
-   python --version
-   ```
 
 4. Install `make` for your platform if it isn't already installed. On Debian-based Linux distributions, you can install it using:
 
@@ -132,7 +133,7 @@ Once the project is built, you can run the cryptographic analysis using the Pyth
 | `--count`        | Number of auto-generated inputs (required for `auto` mode).                                                    |
 | `--key`          | The cryptographic key (hex string) for `AES`, `ASCON`, `KECCAK`.                                               |
 | `--plaintext`    | The plaintext (hex string) to encrypt.                                                                         |
- |  `--leakage_model` | Leakage model to use for the analysis. Either `ID, HW`, or `HD`.<br/>Defaults to `HD`                           |
+|  `--leakage_model` | Leakage model to use for the analysis. Either `ID`, `HW`, or `HD`.<br/>Defaults to `HD`                      |
 | `--iv`           | Initialization vector (hex string) for `AES`, `ASCON`.                                                         |
 | `--rounds`       | Number of rounds for the `ASCON` algorithm.                                                                    |
 | `--capacity`     | Capacity for `KECCAK` sponge function.                                                                         |
