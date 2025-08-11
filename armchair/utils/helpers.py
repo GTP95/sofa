@@ -103,6 +103,7 @@ def parse_args() -> Namespace:
 
     parser.add_argument("--leakage_model", type=str, choices=["HD", "HW", "ID"], default="HD", help="Leakage model to use for power trace generation (default: HD).")
 
+    parser.add_argument("--no_validation", action="store_true", help="Disable input validation for user-provided inputs.")
     # Positional argument to select the algorithm (AES, ASCON, KECCAK)
     subparsers = parser.add_subparsers(
         dest="target", required=True, help="Choose the cryptographic algorithm."
@@ -362,7 +363,7 @@ def get_key_cmd(key: str, input_format: str) -> bytes:
     Prepares a command to send the AES key.
 
     If the user indicated that it is using plainttext, it will convert the string into
-    an hex string first.
+    a hex string first.
 
     Args:
         key (str): The AES key as a hex string.
@@ -400,7 +401,7 @@ def get_iv_cmd(iv: str, input_format: str) -> bytes:
     Prepares a command to send the AES initialization vector (IV).
 
     If the user indicated that it is using plainttext, it will convert the string into
-    an hex string first.
+    a hex string first.
 
     Args:
         iv (str): The IV as a hex string.
@@ -419,7 +420,7 @@ def get_ad_cmd(ad: str, input_format: str) -> bytes:
     Prepares a command to send the ASCON Associated Data.
 
     If the user indicated that it is using plainttext, it will convert the string into
-    an hex string first.
+    a hex string first.
 
     Args:
         ad (str): The AD as a hex string.
@@ -438,7 +439,7 @@ def get_nonce_cmd(nonce: str, input_format: str) -> bytes:
     Prepares a command to send the ASCON nonce.
 
     If the user indicated that it is using plainttext, it will convert the string into
-    an hex string first.
+    a hex string first.
 
     Args:
         nonce (str): The nonce as a hex string.
@@ -470,7 +471,7 @@ def load_target_config():
     """
     file_path = ""
 
-    # find the json file
+    # find the JSON file
     for file in os.listdir():
         if file.endswith(".json") and PLATFORM in file:
             file_path = file

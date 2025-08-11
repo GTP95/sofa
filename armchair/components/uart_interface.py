@@ -29,7 +29,7 @@ class UartHandler:
         Receives and parses the UART response from the emulated hardware.
 
         Returns:
-            str: The parsed response from the UART, it will always be an hex string
+            str: The parsed response from the UART, it will always be a hex string
 
         Raises:
             Exception: If there's an error while receiving or parsing the response.
@@ -43,7 +43,7 @@ class UartHandler:
             # Check if the response indicates an error
             if response == TargetResponse.ERR.value:
                 self.ql.log.error(
-                    msg=f"The data has not been received correctly received, the uart returned '{response}', stopping emulation"
+                    msg=f"The data has not been correctly received, the uart returned '{response}', stopping emulation"
                 )
                 self.ql.stop()  # Stop the emulation if an error occurred
             return response

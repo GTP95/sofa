@@ -130,13 +130,14 @@ Once the project is built, you can run the cryptographic analysis using the Pyth
 |-------------------|----------------------------------------------------------------------------------------------------------------|
 | `--debug`         | Enable debug mode for verbose output.                                                                          |
 | `--input`         | Choose between `user` or `auto` input mode.<br/>Specify the cryptographic algorithm: `AES`, `ASCON`, `KECCAK`. |
+| `--no_validation` | Disable input validation for user-provided inputs.                                                             |
 | `--count`         | Number of auto-generated inputs (required for `auto` mode).                                                    |
 | `--path`          | Path to the input .csv file (required for user-csv mode).                                                      |
 | `--elf_path`      | Path to the .elf file (required if no SettingsLoader is implemented for user-csv and user-raw mode).           |
-| `--input_format`  | Format of the inputs such as key and plaintext, either as an hex string or plaintext, hex dy default           |
+| `--input_format`  | Format of the inputs such as key and plaintext, either as an hex string or plaintext, hex dy default.          |
 | `--key`           | The cryptographic key (hex string) for `AES`, `ASCON`, `KECCAK`.                                               |
 | `--plaintext`     | The plaintext (hex string) to encrypt.                                                                         |
-| `--leakage_model` | Leakage model to use for the analysis. Either `ID`, `HW`, or `HD`.<br/>Defaults to `HD`                        |
+| `--leakage_model` | Leakage model to use for the analysis. Either `ID`, `HW`, or `HD`.<br/>Defaults to `HD`.                       |
 | `--iv`            | Initialization vector (hex string) for `AES`, `ASCON`.                                                         |
 | `--rounds`        | Number of rounds for the `ASCON` algorithm.                                                                    |
 | `--capacity`      | Capacity for `KECCAK` sponge function.                                                                         |

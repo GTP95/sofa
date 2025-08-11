@@ -69,9 +69,10 @@ class ARMChairSession:
             )
 
             # Validate the user-provided data against the expected settings
-            iv.validate_inputs(
-                target_data=self.target_data[0], target_settings=target_settings
-            )
+            if not self.args.no_validation:
+                iv.validate_inputs(
+                    target_data=self.target_data[0], target_settings=target_settings
+                )
 
         elif self.mode == ARMChairSessionMode.AUTO:
             # Check that the required components have been passed
