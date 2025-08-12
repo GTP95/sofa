@@ -49,7 +49,7 @@ def show_power_traces(input_file, start=0, end=None, format='npz'):
 
     # Load traces
 
-    traces = np.load(input_file, allow_pickle=True)['arr_0']
+    traces = np.load(input_file)['arr_0']
 
 
 
