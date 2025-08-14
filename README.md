@@ -24,7 +24,7 @@ To fix the issue, after installing `qiling`, make sure to run the script `apply_
 - **On Debian-based Linux distros or macOS**:
    - Run the following command in the terminal:
      ```bash
-     python3 tools/apply_qiling_patch.py
+     python3 armchair/tools/apply_qiling_patch.py
      ```
 
 This will copy the content of the `qilingpatch` folder into the `qiling/extensions` directory. The location of this directory will depend on where your `qiling` package is installed.
@@ -47,7 +47,8 @@ ARMChair begins by building the project using `make` before executing Python scr
 
 ### Requirements
 
-- Python 3.10 or higher (for compatibility with some of the libraries used).
+- Python 3.10 or higher (for compatibility with some of the libraries used). Tested on Python 3.12.  
+    At the time of writing, it fails on Python 3.13, but it could be due to outdated wheels that may be updated in the future.
 - The `make` build system (required for compiling the firmware).
 - Qiling for ARM emulation.
 - Required Python packages (installable via `requirements.txt`).
