@@ -33,7 +33,7 @@ def generate_power_traces(input_dir, output_file, leakage_model, selected_regist
         create_npy_file(output_file, input_dir, leakage_model, selected_registers)
 
 
-def show_power_traces(input_file, start=0, end=None, format='npz'):
+def show_power_traces(input_file, start=0, end=None, format='npz'): #TODO: add --nobrowser option to render them in the terminal instead. Useful when running inside a container.
     """
     Display power traces from the specified input file using Holoviews.
 

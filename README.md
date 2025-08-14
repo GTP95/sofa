@@ -45,16 +45,18 @@ ARMChair begins by building the project using `make` before executing Python scr
 - **Compilation of firmware using multiple Makefiles** to support diverse platforms and algorithms.
 - **Customizable input validation and padding for cryptographic algorithms.**
 
-### Requirements
+### Requirements (can be ignored if using the Docker image)
 
 - Python 3.10 or higher (for compatibility with some of the libraries used). Tested on Python 3.12.  
     At the time of writing, it fails on Python 3.13, but it could be due to outdated wheels that may be updated in the future.
 - The `make` build system (required for compiling the firmware).
 - Qiling for ARM emulation.
 - Required Python packages (installable via `requirements.txt`).
+- Optional: [arm-none-eabi](https://developer.arm.com/downloads/-/arm-gnu-toolchain-downloads) toolchain for building the default targets.
 
 ### Installation
 
+#### Bare metal
 1. Clone the repository:
 
    ```bash
@@ -89,13 +91,25 @@ ARMChair begins by building the project using `make` before executing Python scr
    sudo apt-get install make
    ```
 
+#### Docker
+You can build this Docker image with:
+``` bash
+docker build -t armchair .
+```
+And run it with various arguments, for example:
+``` bash
+docker run armchair --input auto --count 10 AES
+```
+See the [Usage](#usage) section for more details on how to run the tool.
+
 ### Usage
 
 Before running the cryptographic analysis, **build the project** using `make`. This is necessary for preparing the firmware and associated cryptographic targets.
 
-#### Step 1: Building the Project
+#### Step 1: Building the Project (go to step 2 if using Docker)
 
-The build system is managed using multiple Makefiles. Start by building the project with the appropriate target, which can be AES, ASCON, or KECCAK.
+The build system is managed using multiple Makefiles. Start by building the project with the appropriate target, which can be AES, ASCON, or KECCAK. 
+You will need the `arm-none-eabi` toolchain.
 
 ```bash
 make TARGET=AES
@@ -104,8 +118,10 @@ make TARGET=AES
 You can also build for ASCON or KECCAK by adjusting the `TARGET` parameter:
 
 ```bash
-make TARGET=ASCON
+make TARGET=KECCAK
 ```
+At the time of writing, ASCON compilation fails with a `dangerous relocation: unsupported relocation` during the linking stage. 
+Maybe it can be fixed by using some flag, will look into this in the future.
 
 The `Makefile` also provides options for cleaning the build or compiling for specific platforms.
 
