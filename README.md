@@ -40,10 +40,19 @@ ARMChair begins by building the project using `make` before executing Python scr
 ### Features
 
 - **Support for multiple cryptographic algorithms:** AES, ASCON, KECCAK.
+- **Support for multiple leakage models:** Identity (ID), Hamming Weight (HW), Hamming Distance (HD).
 - **User-provided or auto-generated input modes** for cryptographic testing.
 - **Integration with Qiling** for ARM-based platform simulation.
 - **Compilation of firmware using multiple Makefiles** to support diverse platforms and algorithms.
 - **Customizable input validation and padding for cryptographic algorithms.**
+
+#### Clarification on leakage models
+Under the identity (ID) model, the power consumption of each instruction is computed as the sum of the values of *all* the registers.  
+Under the Hamming weight (HW) model, the power consumption of each instruction is computed as the sum of the Hamming weights of *all* registers' values.  
+Under the Hamming distance (HD) model, the power consumption of each instruction is computed as the sum of the Hamming distances of *all* the registers between their value in the current state and their value in the next state.  
+
+This implementation *does not* differentiate between registers that are accessed by the current instruction and those that aren't. Therefore, the generated power traces are usable
+for statistical testing to find data-dependent leakage, but aren't an accurate power simulation on their own.
 
 ### Requirements (can be ignored if using the Docker image)
 

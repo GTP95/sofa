@@ -13,7 +13,7 @@ from multiprocessing import Pool, cpu_count
 from pathlib import Path
 from armchair.utils.helpers import extract_number, HD, HD_bin, HW, binstr, extract_number, create_ID_trace, create_opt_HW_trace, create_opt_HD_trace, create_npz_file, create_npy_file, load_trace_file
 
-def generate_power_traces(input_dir, output_file, leakage_model, selected_registers=['r0','r1','r2','r3','r4','r5','r6','r7','r8','r9','r10','r11','r12','sp','lr','pc'], format='npz'):
+def generate_power_traces(input_dir, output_file, leakage_model: str, selected_registers=['r0','r1','r2','r3','r4','r5','r6','r7','r8','r9','r10','r11','r12','sp','lr','pc'], format='npz'):
     """
     Generate power traces from the CSV execution traces in the given input directory and save them to the specified output file.
     Args:
@@ -33,18 +33,19 @@ def generate_power_traces(input_dir, output_file, leakage_model, selected_regist
         create_npy_file(output_file, input_dir, leakage_model, selected_registers)
 
 
-def show_power_traces(input_file, start=0, end=None, format='npz'): #TODO: add --nobrowser option to render them in the terminal instead. Useful when running inside a container.
+def show_power_traces(input_file, leakage_model, start=0, end=None, format='npz'): #TODO: add --nobrowser option to render them in the terminal instead. Useful when running inside a container.
     """
     Display power traces from the specified input file using Holoviews.
 
     Args:
         input_file: the NPZ or NPY file containing the power traces.
+        leakage_model: one of the supported leakage models. Currently, can be 'HD', 'HW', or 'ID'.
         start: the starting index of the traces to display (default is 0).
         end: the ending index of the traces to display (default is None, which means all traces).
         format: the format of the input file, either 'npz' or 'npy'.
 
     Returns:
-        A Holoviews plot of the power traces.
+        None
     """
 
     # Load traces
@@ -61,8 +62,40 @@ def show_power_traces(input_file, start=0, end=None, format='npz'): #TODO: add -
         curve = hv.Curve(trace, label=f'Trace {start + i}')
 
         plot_list.append(curve)
+        
+    match leakage_model:
+        case 'ID':
+            plot = hv.Overlay(plot_list).opts(opts.Curve(width=800), 
+            opts.Overlay(
+                xlabel='Time samples', 
+                ylabel='Power consumption',
+                legend_position='right',
+                legend_title='Power consumption under ID model'
+            ))
+        
+        case 'HD':
+            plot=hv.Overlay(plot_list).opts(opts.Curve(width=800),
+                                            opts.Overlay(
+                                                xlabel='Instruction',
+                                                ylabel='Power consumption',
+                                                legend_position='right',
+                                                title='Power consumption under HD model'
+                                            ))
 
-    plot=hv.Overlay(plot_list).opts(opts.Curve(width=800))
+        case 'HW':
+            plot=hv.Overlay(plot_list).opts(opts.Curve(width=800),
+                                            opts.Overlay(
+                                                xlabel='Instruction',
+                                                ylabel='Power consumption',
+                                                legend_position='right',
+                                                title='Power consumption under HW model'
+                                            )
+            )
+
+        case _ :
+            plot = hv.Overlay(plot_list).opts(opts.Curve(width=800))
+
+
     show(hv.render(plot))
     print("Power traces are displayed inside your browser.")
 
