@@ -118,7 +118,7 @@ class AesQilingProfile(QilingProfile):
         """
         # Determine if an IV is used
         use_iv: bool = (
-            len([item for item in target_data if (item != None and item != "")]) > 2
+                len([item for item in target_data if (item is not None and item != "")]) > 2
         )
 
         # Prepare the target data as a dictionary

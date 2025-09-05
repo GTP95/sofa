@@ -1,17 +1,12 @@
-#Code adapted from one of ARCHER's infamous Jupyter notebooks
+#This files contains some code adapted from one of ARCHER's infamous Jupyter notebooks
 
-import csv
-import sys
-import re
-import pandas as pd
-import numpy as np
 import holoviews as hv
-from holoviews import opts
+import numpy as np
 from bokeh.plotting import show
+from holoviews import opts
 
-from multiprocessing import Pool, cpu_count
-from pathlib import Path
-from armchair.utils.helpers import extract_number, HD, HD_bin, HW, binstr, extract_number, create_ID_trace, create_opt_HW_trace, create_opt_HD_trace, create_npz_file, create_npy_file, load_trace_file
+from armchair.utils.helpers import create_npz_file, create_npy_file
+
 
 def generate_power_traces(input_dir, output_file, leakage_model: str, selected_registers=['r0','r1','r2','r3','r4','r5','r6','r7','r8','r9','r10','r11','r12','sp','lr','pc'], format='npz'):
     """
