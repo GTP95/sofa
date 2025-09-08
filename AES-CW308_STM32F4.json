@@ -1,6 +1,7 @@
 {
   "platform": "CW308_STM32F4",
   "__platform__comment": "The hardware platform used for this operation (e.g., CW308_STM32F4)",
+
   "target": "AES",
   "__target__comment": "The specific target profile or algorithm being used (e.g., AES, ASCON, KECCAK)",
   "key_length": "128",
@@ -10,5 +11,15 @@
   "use_iv": "false",
   "__use_iv__comment": "Boolean value indicating whether an initialization vector (IV) is used; false for ECB mode, true otherwise",
   "masked": "false",
-  "__masked__comment": "Boolean value indicating whether masking is enabled for side-channel resistance (true if masked, false otherwise)"
+  "__masked__comment": "Boolean value indicating whether masking is enabled for side-channel resistance (true if masked, false otherwise)",
+
+  "add_cmd": "simpleserial_addcmd",
+  "__add_cmd_comment": "Name of the function used to add a command to the SimpleSerial interface (e.g., simpleserial_addcmd), or equivalent. Leave empty if not applicable",
+  "get_cmd": "simpleserial_get",
+  "__get_cmd_comment": "Name of the function used to get data from the SimpleSerial interface (e.g., simpleserial_get), or equivalent. Leave empty if not applicable",
+  "key_cmd": "set_key",
+  "__key_cmd_comment": "Name of the function used to set the encryption key (e.g., set_key), or equivalent. Leave empty if not applicable",
+  "enc_cmd": "encrypt_plaintext",
+  "__enc_cmd_comment": "Name of the function used to perform encryption (e.g., encrypt_plaintext), or equivalent. Leave empty if not applicable",
+  "iv_cmd": "set_iv"
 }

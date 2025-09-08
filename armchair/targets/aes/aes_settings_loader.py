@@ -36,6 +36,10 @@ class AesSettingsLoader(SettingsLoader):
             plaintext_length: int = int(self._settings["plaintext_length"])
             use_iv: bool = self._settings["use_iv"].lower() == "true"
             masked: bool = self._settings["masked"].lower() == "true"
+            add_cmd: str = self._settings["add_cmd"]
+            get_cmd: str = self._settings["get_cmd"]
+            key_cmd: str = self._settings["key_cmd"]
+            enc_cmd: str = self._settings["enc_cmd"]
 
             # Store the parsed settings in the _parsed_settings dictionary
             self._parsed_settings = {
@@ -45,6 +49,10 @@ class AesSettingsLoader(SettingsLoader):
                 "plaintext_length": plaintext_length,
                 "use_iv": use_iv,
                 "masked": masked,
+                "add_cmd": add_cmd,
+                "get_cmd": get_cmd,
+                "key_cmd": key_cmd,
+                "enc_cmd": enc_cmd
             }
         except Exception as e:
             raise Exception(

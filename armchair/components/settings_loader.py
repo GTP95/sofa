@@ -3,6 +3,8 @@ from armchair.utils.constants import PLATFORM
 import os
 import json
 
+from armchair.utils.helpers import info_t
+
 
 class SettingsLoader:
     """
@@ -37,6 +39,7 @@ class SettingsLoader:
         for file in os.listdir():
             if file.endswith(".json") and PLATFORM in file and target in file:
                 file_path = file
+                print(f"{info_t} Loaded configuration from {file_path}")
                 break
 
         # Raise an error if no file is found

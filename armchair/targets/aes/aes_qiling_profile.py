@@ -1,8 +1,11 @@
+from dill import settings
+
 from armchair.components.qiling_profile import QilingProfile
 from armchair.components.sym_parser import SymParser
 from armchair.targets.aes.aes_uart_interface import AesUartHandler
 from armchair.utils.enums import AesQilingStatus
-from armchair.utils.helpers import log_data_received, get_command_received
+from armchair.utils.helpers import log_data_received, get_command_received, info_t
+from armchair.targets.aes.aes_settings_loader import AesSettingsLoader
 
 from qiling import Qiling
 
@@ -24,6 +27,7 @@ class AesQilingProfile(QilingProfile):
         """
         super().__init__()
         self.__status: list[AesQilingStatus] = [AesQilingStatus.INIT]
+        self.settings=AesSettingsLoader().get_target_settings()
 
     def __hook_function_get_cmd_reached(self, ql: Qiling, user_data: dict) -> None:
         """
@@ -108,7 +112,7 @@ class AesQilingProfile(QilingProfile):
         log_data_received(ql=ql, description="plaintext")
         self.__status[0] = AesQilingStatus.ENC_DONE
 
-    def hook_cmds(self, ql: Qiling, sym_parser: SymParser, target_data: list) -> None:
+    def hook_cmds(self, ql: Qiling, sym_parser: SymParser, target_data: list) -> None:  #TODO: what about the function to get the plaintext?
         """
         Hooks AES-related commands to their respective functions within Qiling.
 
@@ -128,14 +132,15 @@ class AesQilingProfile(QilingProfile):
             "iv": target_data[2] if use_iv else None,
         }
 
-        # Retrieve the symbol addresses from the ELF file
-        add_cmd = sym_parser.get_symbol_by_name(name="simpleserial_addcmd")
-        get_cmd = sym_parser.get_symbol_by_name(name="simpleserial_get")
-        key_cmd = sym_parser.get_symbol_by_name(name="set_key")
-        enc_cmd = sym_parser.get_symbol_by_name(name="encrypt_plaintext")
+        # Retrieve the symbol addresses from the ELF file, based on the JSON config file
+        ##TODO: take into account the case when some aren't specified in the config file due to them not baing applicable (and so shouldn't be hooked)
+        add_cmd = sym_parser.get_symbol_by_name(name=self.settings['add_cmd'])
+        get_cmd = sym_parser.get_symbol_by_name(name=self.settings['get_cmd'])
+        key_cmd = sym_parser.get_symbol_by_name(name=self.settings['key_cmd'])
+        enc_cmd = sym_parser.get_symbol_by_name(name=self.settings['enc_cmd'])
 
         if use_iv:
-            iv_cmd = sym_parser.get_symbol_by_name(name="set_iv")
+            iv_cmd = sym_parser.get_symbol_by_name(name=self.settings['iv_cmd'])
 
         # Hook the respective functions to the Qiling addresses
         ql.hook_address(self.__hook_function_add_cmd_reached, address=add_cmd)
