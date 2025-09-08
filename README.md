@@ -194,6 +194,12 @@ python main.py --input auto --count 10 --leakage_model "HW" AES
 python main.py --input user KECCAK --key "00112233445566778899aabbccddeeff" --plaintext "00112233445566778899aabbccddeeff" --capacity 1600
 ```
 
+##### Example 5: Running a user-provided ELF executable (in this case, "RP2350 Hacking Challenge 2" 's AES implementation)
+
+```bash
+python main.py --no_validation --elf_path rp2350_hacking_challenge_2/build/rp2350_hacking_challenge_2.elf --input user --input_format plaintext AES --key 66b3ca75e02ad9c8abb06c0b2d297fb660ed5c58c9029ec883f9dbcd2a16195d5e75fadfd32acb297ca03930f1ff08c6714d3f79eb3a26cdc9ef28f553983141 --plaintext "00112233445566778899aabbccddeeff"
+```
+
 ### How It Works
 
 1. **Makefile-based Firmware Compilation**: 
