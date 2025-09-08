@@ -1,6 +1,6 @@
 from armchair.utils.helpers import (
     TargetResponse,
-    parse_usart_res,
+    parse_usart_res, err_t,
 )
 
 from qiling import Qiling
@@ -46,6 +46,7 @@ class UartHandler:
                     msg=f"The data has not been correctly received, the uart returned '{response}', stopping emulation"
                 )
                 self.ql.stop()  # Stop the emulation if an error occurred
+                print(f"\n{err_t} Simulation stopped due to UART error")
             return response
         except Exception as e:
             raise Exception(
