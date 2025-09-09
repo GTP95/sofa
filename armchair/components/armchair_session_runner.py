@@ -85,6 +85,7 @@ class ARMChairSessionRunner:
                 csv_writer.writerows(traces)  # Write the rows of data
         except Exception as e:
             print(f"\n{err_t} Error processing data {row}: {e}")
+            raise e
 
     def run_session(self) -> None:
         # check that the data is there
