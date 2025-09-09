@@ -21,5 +21,7 @@
   "__key_cmd_comment": "Name of the function used to set the encryption key (e.g., set_key), or equivalent. Leave empty if not applicable",
   "enc_cmd": "encrypt_plaintext",
   "__enc_cmd_comment": "Name of the function used to perform encryption (e.g., encrypt_plaintext), or equivalent. Leave empty if not applicable",
-  "iv_cmd": "set_iv"
+  "iv_cmd": "set_iv",
+
+  "memory_mappings": [{"base_address":  1342572544, "size": 1024, "perms":  7, "info": "[RNG]"},{"base_address": 1073872896, "size":  1920, "perms": 7, "info": "Obtained by running Qiling"}]
 }

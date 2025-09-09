@@ -651,6 +651,8 @@ def initialize_qiling(
     Returns:
         Qiling: The initialized Qiling instance.
     """
+    config=load_target_config()
+
     ql = Qiling(
         argv=[elf],
         archtype=QL_ARCH.CORTEX_M,
@@ -663,8 +665,9 @@ def initialize_qiling(
     ql.hw.create("usart1")
     ql.hw.create("rcc")
 
-    # Manually map the RNG memory region, otherwise it will crash.
-    ql.mem.map(RNG_BASE, RNG_SIZE, UC_PROT_ALL, "[RNG]")
+    # Load memory mappings form config and apply them
+    for memap_obj in config['memory_mappings']:
+        ql.mem.map(memap_obj['base_address'], memap_obj['size'], memap_obj['perms'], memap_obj['info'])
 
     # Add disassembler to the Qiling object
     disassembler: Cs = ql.arch.disassembler
