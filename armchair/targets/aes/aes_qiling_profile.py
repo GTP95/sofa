@@ -132,23 +132,31 @@ class AesQilingProfile(QilingProfile):
             "iv": target_data[2] if use_iv else None,
         }
 
-        # Retrieve the symbol addresses from the ELF file, based on the JSON config file
-        ##TODO: take into account the case when some aren't specified in the config file due to them not baing applicable (and so shouldn't be hooked)
-        add_cmd = sym_parser.get_symbol_by_name(name=self.settings['add_cmd'])
-        get_cmd = sym_parser.get_symbol_by_name(name=self.settings['get_cmd'])
-        key_cmd = sym_parser.get_symbol_by_name(name=self.settings['key_cmd'])
-        enc_cmd = sym_parser.get_symbol_by_name(name=self.settings['enc_cmd'])
+        # Retrieve the symbol addresses from the ELF file, based on the JSON config file.
+        # Takes into account the case when some aren't specified in the config file due to them not being applicable (and so shouldn't be hooked)
+        add_cmd = sym_parser.get_symbol_by_name(name=self.settings['add_cmd']) if self.settings['add_cmd'] != '' else None
+        get_cmd = sym_parser.get_symbol_by_name(name=self.settings['get_cmd']) if self.settings['get_cmd'] != '' else None
+        key_cmd = sym_parser.get_symbol_by_name(name=self.settings['key_cmd']) if self.settings['key_cmd'] != '' else None
+        enc_cmd = sym_parser.get_symbol_by_name(name=self.settings['enc_cmd']) if self.settings['enc_cmd'] != '' else None
 
         if use_iv:
             iv_cmd = sym_parser.get_symbol_by_name(name=self.settings['iv_cmd'])
 
         # Hook the respective functions to the Qiling addresses
-        ql.hook_address(self.__hook_function_add_cmd_reached, address=add_cmd)
-        ql.hook_address(
-            self.__hook_function_get_cmd_reached, address=get_cmd, user_data=td
-        )
-        ql.hook_address(self.__hook_function_add_key_reached, address=key_cmd)
-        ql.hook_address(self.__hook_function_enc_reached, address=enc_cmd)
+        if add_cmd is not None:
+            ql.hook_address(self.__hook_function_add_cmd_reached, address=add_cmd)
+        if get_cmd is not None:
+            ql.hook_address(self.__hook_function_get_cmd_reached, address=get_cmd, user_data=td)
+        if key_cmd is not None:
+            ql.hook_address(self.__hook_function_add_key_reached, address=key_cmd)
+        else:
+            print(f"{info_t} Key command (key_cmd) not specified in the configuration file, or not found in the ELF file. Skipping key command hooking.\n"
+                  f"This is likely an error, how are you going to send the key to the target?")
+        if enc_cmd is not None:
+            ql.hook_address(self.__hook_function_enc_reached, address=enc_cmd)
+        else:
+            print(f"{info_t} Encryption command (enc_cmd) not specified in the configuration file, or not found in the ELF file. Skipping encryption command hooking.\n"
+                  f"This is likely an error, how are you going to send the plaintext to the target/start the encryption?")
 
         if use_iv:
             ql.hook_address(self.__hook_function_add_iv_reached, address=iv_cmd)
