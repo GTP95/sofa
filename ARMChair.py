@@ -1,5 +1,4 @@
 #!/usr/bin/env python3
-
 from argparse import Namespace
 
 from term_image.image import from_file
@@ -21,7 +20,7 @@ from armchair.targets.keccak.keccak_input_generator import KeccakHashInputsGener
 from armchair.targets.keccak.keccak_input_parser import KeccakHashInputParser
 from armchair.targets.keccak.keccak_input_validator import KeccakHashInputValidator
 from armchair.targets.keccak.keccak_settings_loader import KeccakHashSettingsLoader
-from armchair.utils.helpers import parse_args, err_t, init
+from armchair.utils.helpers import parse_args, init
 
 if __name__ == "__main__":
     init()
@@ -61,7 +60,7 @@ if __name__ == "__main__":
     else:
         # If the target is not implemented, raise an error
         raise Exception(
-            f"{err_t} This target has not been implemented yet, use the help function for available targets"
+            f"This target has not been implemented yet, use the help function for available targets"
         )
 
     session = ARMChairSession(

@@ -1,8 +1,10 @@
+import logging
+
 from armchair.targets.aes.aes_qiling_profile import QilingProfile
 from armchair.components.sym_parser import SymParser
 from armchair.utils.progress_bar import ProgressBar
 from armchair.utils.arm_helpers import headerList
-from armchair.utils.helpers import initialize_qiling, err_t, info_t
+from armchair.utils.helpers import initialize_qiling
 from armchair.utils.constants import TRACESPATH
 
 from qiling import Qiling
@@ -27,6 +29,7 @@ class ARMChairSessionRunner:
         self.target_data: list = target_data
         self.sym_parser = SymParser(elf_path=elf_path)
         self.debug: bool = debug
+        self.logger=logging.getLogger(__name__)
 
     def process_row(self, row, index) -> None:
         """
@@ -42,6 +45,7 @@ class ARMChairSessionRunner:
             - Runs the Qiling emulator and collects trace information.
             - Saves traces to a CSV file for further analysis.
         """
+        logger = logging.getLogger(__name__)
         try:
             # init traces object in memory (of the instructions are too many the hook for recording instructions could be used to write directly to csv instead)
             traces: list = []
@@ -76,7 +80,7 @@ class ARMChairSessionRunner:
             ql.run()
 
             if self.debug:
-                print(f"{info_t} Writing traces to CSV...")
+                logger.info(f"Writing traces to CSV...")
 
             # Write traces using csv module
             with open(output_path, mode="w", newline="") as file:
@@ -84,7 +88,7 @@ class ARMChairSessionRunner:
                 csv_writer.writerow(headerList)  # Write the headers
                 csv_writer.writerows(traces)  # Write the rows of data
         except Exception as e:
-            print(f"\n{err_t} Error processing data {row}: {e}")
+            logger.error(f"\nError processing data {row}: {e}")
             raise e
 
     def run_session(self) -> None:
@@ -95,7 +99,7 @@ class ARMChairSessionRunner:
             )
 
         # Notify the user that the session has started
-        print(f"{info_t} Session started")
+        self.logger.info(f"Session started")
 
         # run the session with the data provided
         if len(self.target_data) == 1:
@@ -113,4 +117,4 @@ class ARMChairSessionRunner:
             )
 
         # Notify the user that the session has completed
-        print(f"{info_t} Session completed")
+        self.logger(f"Session completed")

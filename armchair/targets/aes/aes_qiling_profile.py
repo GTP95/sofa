@@ -1,10 +1,12 @@
+import logging
+
 from dill import settings
 
 from armchair.components.qiling_profile import QilingProfile
 from armchair.components.sym_parser import SymParser
 from armchair.targets.aes.aes_uart_interface import AesUartHandler
 from armchair.utils.enums import AesQilingStatus
-from armchair.utils.helpers import log_data_received, get_command_received, info_t
+from armchair.utils.helpers import log_data_received, get_command_received
 from armchair.targets.aes.aes_settings_loader import AesSettingsLoader
 
 from qiling import Qiling
@@ -120,6 +122,7 @@ class AesQilingProfile(QilingProfile):
             ql (Qiling): The Qiling instance that controls the emulation.
             target_data (list): A list containing the AES key, plaintext, and IV (if applicable).
         """
+        logger = logging.getLogger(__name__)
         # Determine if an IV is used
         use_iv: bool = (
                 len([item for item in target_data if (item is not None and item != "")]) > 2
@@ -150,12 +153,12 @@ class AesQilingProfile(QilingProfile):
         if key_cmd is not None:
             ql.hook_address(self.__hook_function_add_key_reached, address=key_cmd)
         else:
-            print(f"{info_t} Key command (key_cmd) not specified in the configuration file, or not found in the ELF file. Skipping key command hooking.\n"
+            logger.info(f"Key command (key_cmd) not specified in the configuration file, or not found in the ELF file. Skipping key command hooking.\n"
                   f"This is likely an error, how are you going to send the key to the target?")
         if enc_cmd is not None:
             ql.hook_address(self.__hook_function_enc_reached, address=enc_cmd)
         else:
-            print(f"{info_t} Encryption command (enc_cmd) not specified in the configuration file, or not found in the ELF file. Skipping encryption command hooking.\n"
+            logger.info(f"Encryption command (enc_cmd) not specified in the configuration file, or not found in the ELF file. Skipping encryption command hooking.\n"
                   f"This is likely an error, how are you going to send the plaintext to the target/start the encryption?")
 
         if use_iv:

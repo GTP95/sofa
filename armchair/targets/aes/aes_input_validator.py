@@ -1,11 +1,10 @@
 from armchair.utils.helpers import (
-    get_hex_str_bytes_nr,
-    warn_t,
+    get_hex_str_bytes_nr
 )
 
 from armchair.utils.constants import AES_BLOCK_SIZE
 from armchair.components.input_validator import InputValidator
-
+import logging
 
 class AesInputValidator(InputValidator):
     """
@@ -31,6 +30,7 @@ class AesInputValidator(InputValidator):
         """
         super().__init__()
         self.__iv_len: int = AES_BLOCK_SIZE  # this is always the same
+        self.logger=logging.getLogger(__name__)
 
     def validate_inputs(self, target_data, target_settings) -> None:
         """
@@ -84,5 +84,5 @@ class AesInputValidator(InputValidator):
                 )
 
         # Validate if IV were not expected
-        if not s_use_iv and iv != None:
-            f"{warn_t} IVs were provided even if not needed therefore that input will be ignored"
+        if not s_use_iv and iv is not None:
+            self.logger.warning("IVs were provided even if not needed therefore that input will be ignored")

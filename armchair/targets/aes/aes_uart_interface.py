@@ -1,10 +1,11 @@
 from armchair.utils.helpers import (
     get_iv_cmd,
     get_key_cmd,
-    get_pt_cmd, info_t,
+    get_pt_cmd,
 )
 
 from qiling import Qiling
+import logging
 
 from armchair.components.uart_interface import UartHandler
 
@@ -28,12 +29,13 @@ class AesUartHandler(UartHandler):
         Raises:
             Exception: If there's an error while sending the key.
         """
+        logger = logging.getLogger(__name__)
         try:
             # Convert the key string into a command
             key_cmd: bytes = get_key_cmd(key=key, input_format=self.input_format)
             # Send the command using the inherited method
             self._send_cmd(cmd=key_cmd)
-            print(f"{info_t} Sent the following key command over UART: {key_cmd}")
+            logger.info(f"Sent the following key command over UART: {key_cmd}")
         except Exception as e:
             raise Exception(
                 f"Error: something went wrong while sending the key: {e.args[0]}."

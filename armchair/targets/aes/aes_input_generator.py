@@ -1,4 +1,5 @@
-from armchair.utils.helpers import info_t
+import logging
+
 from armchair.utils.constants import (
     AES_BLOCK_SIZE,
     DEFAULT_INPUT_CSV_PATH,
@@ -23,6 +24,7 @@ class AesInputsGenerator(InputsGenerator):
     def __init__(self) -> None:
         super().__init__()
         self.__iv_len: int = AES_BLOCK_SIZE  # this is always the same
+        self.logger=logging.getLogger(__name__)
 
     def generate_inputs_csv(
         self,
@@ -49,6 +51,6 @@ class AesInputsGenerator(InputsGenerator):
                     writer.writerow([key, plaintext, iv])
                 else:
                     writer.writerow([key, plaintext])
-        print(
-            f"{info_t} AES CSV file '{input_path}' created with {nr_of_inputs} entries."
+        self.logger.info(
+            f"AES CSV file '{input_path}' created with {nr_of_inputs} entries."
         )

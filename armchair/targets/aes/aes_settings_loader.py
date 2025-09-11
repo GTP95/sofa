@@ -1,3 +1,5 @@
+import logging
+
 from armchair.components.settings_loader import SettingsLoader
 
 
@@ -40,6 +42,7 @@ class AesSettingsLoader(SettingsLoader):
             get_cmd: str = self._settings["get_cmd"]
             key_cmd: str = self._settings["key_cmd"]
             enc_cmd: str = self._settings["enc_cmd"]
+            memory_mappings = self._settings["memory_mappings"]
 
             # Store the parsed settings in the _parsed_settings dictionary
             self._parsed_settings = {
@@ -52,7 +55,8 @@ class AesSettingsLoader(SettingsLoader):
                 "add_cmd": add_cmd,
                 "get_cmd": get_cmd,
                 "key_cmd": key_cmd,
-                "enc_cmd": enc_cmd
+                "enc_cmd": enc_cmd,
+                "memory_mappings": memory_mappings
             }
         except Exception as e:
             raise Exception(

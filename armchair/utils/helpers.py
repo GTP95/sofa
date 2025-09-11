@@ -1,30 +1,31 @@
-from armchair.utils.enums import TargetResponse
-from armchair.components.qiling_profile import QilingProfile
-from armchair.components.sym_parser import SymParser
-from armchair.utils.constants import RNG_BASE, RNG_SIZE, AES_BLOCK_SIZE, optimized_magics
-from armchair.utils.constants import PLATFORM, AES_BLOCK_SIZE
-from armchair.utils.arm_helpers import arm_registers, return_instruction_type_arm
-
-from qiling import Qiling
-from qiling.extensions.mcu.stm32f4 import stm32f415
-from qiling.extensions.hookswitch.hook_switch import hook_switch
-from qiling.const import QL_ARCH, QL_OS, QL_VERBOSE
-from qiling.os.memory import UC_PROT_ALL
-
-from capstone import Cs
+import json
+import os
+import re
+import shutil
 from argparse import Namespace, ArgumentParser
-from colorama import Fore, Style
-import pandas as pd
+from datetime import date
+from multiprocessing import Pool, cpu_count
+from pathlib import Path
+import logging
+
 import numpy as np
+import pandas as pd
+from capstone import Cs
+from qiling import Qiling
+from qiling.const import QL_ARCH, QL_OS, QL_VERBOSE
+from qiling.extensions.hookswitch.hook_switch import hook_switch
+from qiling.extensions.mcu.stm32f4 import stm32f415
 from tqdm import tqdm
 
-import re
-import os
-import json
-import shutil
-from multiprocessing import Pool, cpu_count
-from datetime import date
-from pathlib import Path
+from armchair.components.qiling_profile import QilingProfile
+from armchair.components.sym_parser import SymParser
+from armchair.targets.aes.aes_settings_loader import AesSettingsLoader
+from armchair.targets.ascon.ascon_settings_loader import AsconSettingsLoader
+from armchair.targets.keccak.keccak_settings_loader import KeccakHashSettingsLoader
+from armchair.utils.arm_helpers import arm_registers, return_instruction_type_arm
+from armchair.utils.constants import PLATFORM
+from armchair.utils.constants import optimized_magics
+from armchair.utils.enums import TargetResponse
 
 
 # region: PARSERS
@@ -61,6 +62,7 @@ def parse_args() -> Namespace:
     Returns:
         Namespace: Parsed arguments as a namespace object.
     """
+    logger=logging.getLogger(__name__)
     parser = ArgumentParser(description="Welcome to ARMChair!")
 
     # Global argument for debugging
@@ -154,9 +156,9 @@ def parse_args() -> Namespace:
 
     # Debug mode
     if args.debug:
-        print(f"{info_t} Verbose mode is enabled")
+        logger.info("Verbose mode is enabled")
 
-    print(f"{info_t} Expected input in {args.input_format} format")
+    logger.info(f"Expected input in {args.input_format} format")
 
     # Conditional requirements for --input
     if args.input == "user":
@@ -183,62 +185,62 @@ def parse_args() -> Namespace:
                 "--path, --path of the .csv file is required when --input is 'user-csv'"
             )
         if not args.elf_path:
-            print(
-                f"{warn_t} No --elf_path argument provided, in this case the SettingsLoader component needs to be created and used for the {args.target} session"
+            logger.warning(
+                f"No --elf_path argument provided, in this case the SettingsLoader component needs to be created and used for the {args.target} session"
             )
 
     if args.input == "user-raw":
         if not args.elf_path:
-            print(
-                f"{warn_t} No --elf_path argument provided, in this case the SettingsLoader component needs to be created and used for the {args.target} session"
+            logger.warning(
+                f"No --elf_path argument provided, in this case the SettingsLoader component needs to be created and used for the {args.target} session"
             )
 
     # Process based on the algorithm (determined by the invoked subparser)
     if args.target == "AES":
         if args.input == "user" and args.debug:
-            print(f"{info_t} AES with user-provided input:")
-            print(f"{info_t} Key: {args.key}")
-            print(f"{info_t} Plaintext: {args.plaintext}")
-            print(f"{info_t} IV: {args.iv}")
+            logger.info(f"AES with user-provided input:")
+            logger.info(f"Key: {args.key}")
+            logger.info(f"Plaintext: {args.plaintext}")
+            logger.info(f"IV: {args.iv}")
         elif args.input == "auto" and args.debug:
             count = args.count if args.count else 1
-            print(
-                f"{info_t} AES with auto-generated input. {count} inputs will be generated."
+            logger.info(
+                f"AES with auto-generated input. {count} inputs will be generated."
             )
         elif args.input == "user-csv" and args.debug:
-            print(
-                f"{info_t} AES with user provided file. All the inputs in the file will be processed."
+            logger.info(
+                f"AES with user provided file. All the inputs in the file will be processed."
             )
 
     elif args.target == "ASCON":
         if args.input == "user" and args.debug:
-            print(f"{info_t} ASCON with user-provided input:")
-            print(f"{info_t} Key: {args.key}")
-            print(f"{info_t} Plaintext: {args.plaintext}")
-            print(f"{info_t} Nonce: {args.nonce}")
-            print(f"{info_t} Associated Data: {args.ad}")
+            logger.info(f"ASCON with user-provided input:")
+            logger.info(f"Key: {args.key}")
+            logger.info(f"Plaintext: {args.plaintext}")
+            logger.info(f"Nonce: {args.nonce}")
+            logger.info(f"Associated Data: {args.ad}")
         elif args.input == "auto" and args.debug:
             count = args.count if args.count else 1
-            print(
-                f"{info_t} ASCON with auto-generated input. Generating {count} inputs..."
+            logger.info(
+                f"ASCON with auto-generated input. Generating {count} inputs..."
             )
         elif args.input == "user-csv" and args.debug:
-            print(
-                f"{info_t} ASCON with user provided file. All the inputs in the file will be processed."
+            logger.info(
+                f"ASCON with user provided file. All the inputs in the file will be processed."
             )
 
     elif args.target == "KECCAK":
         if args.input == "user" and args.debug:
-            print(f"{info_t} KECCAK with user-provided input:")
-            print(f"{info_t} Plaintext: {args.plaintext}")
+            logger.info(f"KECCAK with user-provided input:")
+            logger.info(f"Plaintext: {args.plaintext}")
         elif args.input == "auto" and args.debug:
             count = args.count if args.count else 1
-            print(
-                f"{info_t} KECCAK with auto-generated input. Generating {count} inputs..."
+            logger.info(
+                f"KECCAK with auto-generated input. Generating {count} inputs..."
             )
         elif args.input == "user-csv" and args.debug:
-            print(
-                f"{info_t} KECCAK with user provided file. All the inputs in the file will be processed."
+            logger.info(
+                f"KECCAK with user provided file. All the inputs in the file will be processed."
             )
 
     return args
@@ -455,46 +457,6 @@ def get_nonce_cmd(nonce: str, input_format: str) -> bytes:
 
 # endregion
 
-# region: LOADERS
-
-
-def load_target_config():
-    """
-    Loads the target configuration from a JSON file based on the platform.
-
-    Returns:
-        dict: The configuration settings loaded from the file.
-
-    Raises:
-        FileNotFoundError: If the configuration file is not found.
-        JSONDecodeError: If there is an error parsing the JSON file.
-    """
-    file_path = ""
-
-    # find the JSON file
-    for file in os.listdir():
-        if file.endswith(".json") and PLATFORM in file:
-            file_path = file
-
-    if file_path == "":
-        raise FileNotFoundError(f"Error: The target configuration file does not exist.")
-
-    try:
-        with open(file_path, "r") as file:
-            data = json.load(file)
-            return data
-    except json.JSONDecodeError as e:
-        raise json.JSONDecodeError(
-            f"Error: Failed to decode JSON from {file_path}. Error: {e}"
-        )
-    except Exception as e:
-        raise Exception(
-            f"An unexpected error occurred while parsing the json config file: {e}"
-        )
-
-
-# endregion
-
 # region: QILING UTILS
 
 
@@ -651,7 +613,15 @@ def initialize_qiling(
     Returns:
         Qiling: The initialized Qiling instance.
     """
-    config=load_target_config()
+
+    match profile.get_algorithm_name():
+        case 'AES':
+            config = AesSettingsLoader().get_target_settings()
+        case 'ASCON':
+            config = AsconSettingsLoader().get_target_settings()
+        case 'KECCAK':
+            config = KeccakHashSettingsLoader().get_target_settings()
+
 
     ql = Qiling(
         argv=[elf],
@@ -744,27 +714,6 @@ def get_command_received(ql: Qiling):
     """
     cmd, size = get_current_function_args(ql=ql, num_args=2)
     return [chr(cmd), size]
-
-
-# endregion
-
-# region: PRETTIFIERS
-
-
-err_t: str = f"{Fore.RED}{'[err]:'}{Style.RESET_ALL}"
-"""
-err_t (str): Red-colored error message prefix.
-"""
-
-warn_t: str = f"{Fore.YELLOW}{'[warn]:'}{Style.RESET_ALL}"
-"""
-warn_t (str): Yellow-colored warning message prefix.
-"""
-
-info_t: str = f"{Fore.BLUE}{'[info]:'}{Style.RESET_ALL}"
-"""
-info_t (str): Blue-colored informational message prefix.
-"""
 
 
 # endregion

@@ -1,9 +1,9 @@
-from armchair.utils.constants import PLATFORM
-
 import os
 import json
 
-from armchair.utils.helpers import info_t
+import logging
+
+from armchair.utils.constants import PLATFORM
 
 
 class SettingsLoader:
@@ -21,7 +21,9 @@ class SettingsLoader:
         """
         self._settings = None
         self._parsed_settings: dict = {}
+        self._logger = logging.getLogger(__name__)
         self.__load_target_config(target=target)
+
 
     def __load_target_config(self, target: str) -> None:
         """
@@ -39,7 +41,7 @@ class SettingsLoader:
         for file in os.listdir():
             if file.endswith(".json") and PLATFORM in file and target in file:
                 file_path = file
-                print(f"{info_t} Loaded configuration from {file_path}")
+                self._logger.info(f"Loaded configuration from {file_path}")
                 break
 
         # Raise an error if no file is found

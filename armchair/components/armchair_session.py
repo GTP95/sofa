@@ -6,11 +6,11 @@ from armchair.components.input_parser import InputParser
 from armchair.components.qiling_profile import QilingProfile
 
 from armchair.utils.enums import ARMChairSessionMode
-from armchair.utils.helpers import err_t, warn_t
 
 from argparse import Namespace
 
 import csv
+import logging
 
 
 class ARMChairSession:
@@ -35,6 +35,7 @@ class ARMChairSession:
         self.input_parser: InputParser = input_parser
         self.input_validator: InputValidator = input_validator
         self.settings_loader: SettingsLoader = settings_loader
+        self.logger=logging.getLogger(__name__)
 
     def init_session(self) -> None:
         # Initialize (or not) the classes
@@ -106,8 +107,8 @@ class ARMChairSession:
                 self.target_data.extend(rows)
 
         elif self.mode == ARMChairSessionMode.USER_CSV:
-            print(
-                f"{warn_t} Beware, {self.mode.value} mode has no validation of any kind, use the debug flag if the run fails and make sure that the csv you provided matches what the C code expects"
+            self.logger.warning(
+                f"Beware, {self.mode.value} mode has no validation of any kind, use the debug flag if the run fails and make sure that the csv you provided matches what the C code expects"
             )
 
             csv_path: str = self.input_csv_path
@@ -125,15 +126,15 @@ class ARMChairSession:
                 self.target_data.extend(rows)
 
         elif self.mode == ARMChairSessionMode.USER_RAW:
-            print(
-                f'{warn_t} Beware, {self.mode.value} mode has no validation of any kind, use the debug flag if the run fails and make sure that the inputs that you provided matches what the C code expects and is structured this way ["value1", "value2", etc] where the values match the order that the QilingProfile expects'
+            self.logger.warning(
+                f'Beware, {self.mode.value} mode has no validation of any kind, use the debug flag if the run fails and make sure that the inputs that you provided matches what the C code expects and is structured this way ["value1", "value2", etc] where the values match the order that the QilingProfile expects'
             )
 
             self.target_data.append(self.raw_target_data)
 
         else:
             raise Exception(
-                f"{err_t} Mode {self.mode} has not been implemented yet, use the help function for available user input modes"
+                f"Mode {self.mode} has not been implemented yet, use the help function for available user input modes"
             )
 
     def run_session(self, target_profile: QilingProfile) -> None:

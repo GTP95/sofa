@@ -1,4 +1,4 @@
-from armchair.utils.helpers import info_t
+import logging
 
 from tqdm import tqdm
 from colorama import Fore, Style
@@ -29,11 +29,12 @@ class ProgressBar(tqdm):
             *args: Variable-length argument list passed to the tqdm superclass.
             **kwargs: Arbitrary keyword arguments passed to the tqdm superclass.
         """
+        logger = logging.getLogger(__name__)
         super().__init__(
             *args,
             **kwargs,
             bar_format=(
-                f"{info_t} Creating traces.."  # Informative prefix
+                f"Creating traces.."
                 f"{Fore.WHITE}{{l_bar}}{Style.RESET_ALL}"  # Left part of the progress bar (white)
                 f"{Fore.GREEN}{{bar}}{Style.RESET_ALL}"  # The progress bar itself (green)
                 f" {Fore.WHITE}{{n_fmt}}/{Fore.WHITE}{{total_fmt}}{Style.RESET_ALL}"  # Progress numbers

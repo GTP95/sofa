@@ -1,6 +1,5 @@
-import csv
+import csv, logging
 
-from armchair.utils.helpers import info_t
 from armchair.utils.constants import (
     ASCON_KEY_SIZE,
     ASCON_NONCE_SIZE,
@@ -16,6 +15,7 @@ class AsconInputsGenerator(InputsGenerator):
         super().__init__()
         self.__k_len: int = ASCON_KEY_SIZE
         self.__n_len: int = ASCON_NONCE_SIZE
+        self.logger=logging.getLogger(__name__)
 
     def generate_inputs_csv(
         self,
@@ -40,6 +40,6 @@ class AsconInputsGenerator(InputsGenerator):
                     writer.writerow([key, plaintext, nonce, ad])
                 else:
                     writer.writerow([key, plaintext, nonce])
-        print(
-            f"{info_t} ASCON CSV file '{input_path}' created with {nr_of_inputs} entries."
+        self.logger.info(
+            f"ASCON CSV file '{input_path}' created with {nr_of_inputs} entries."
         )

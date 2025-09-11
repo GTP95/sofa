@@ -1,9 +1,10 @@
 from armchair.utils.helpers import (
     TargetResponse,
-    parse_usart_res, err_t,
+    parse_usart_res,
 )
 
 from qiling import Qiling
+import logging
 
 
 class UartHandler:
@@ -65,7 +66,7 @@ class UartHandler:
         """
         try:
             # Log the command being sent, represented as the first byte's ASCII character
-            self.ql.log.info(msg=f"Sending '{chr(cmd[0])}' command..")
+            self.ql.log.info(msg=f"Sending '{chr(cmd[0])}' command... Full command is: {cmd}")
             # Send the command over USART1
             self.ql.hw.usart1.send(cmd)
         except Exception as e:
