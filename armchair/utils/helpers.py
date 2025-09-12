@@ -154,10 +154,14 @@ def parse_args() -> Namespace:
     # Parse the arguments
     args = parser.parse_args()
 
-    # Debug mode
-    if args.debug:
-        logger.info("Verbose mode is enabled")
+    # Configure global logging level based on --debug
+    log_level = logging.DEBUG if args.debug else logging.INFO
+    logging.basicConfig(level=log_level, format="[%(levelname)s] %(name)s: %(message)s")
+    # Also set this module's logger to the chosen level
+    logger.setLevel(log_level)
 
+    # Debug/info messages rely on configured log level
+    logger.debug("Debug mode enabled; log level set to DEBUG")
     logger.info(f"Expected input in {args.input_format} format")
 
     # Conditional requirements for --input
@@ -197,49 +201,49 @@ def parse_args() -> Namespace:
 
     # Process based on the algorithm (determined by the invoked subparser)
     if args.target == "AES":
-        if args.input == "user" and args.debug:
-            logger.info(f"AES with user-provided input:")
-            logger.info(f"Key: {args.key}")
-            logger.info(f"Plaintext: {args.plaintext}")
-            logger.info(f"IV: {args.iv}")
-        elif args.input == "auto" and args.debug:
+        if args.input == "user":
+            logger.debug("AES with user-provided input:")
+            logger.debug(f"Key: {args.key}")
+            logger.debug(f"Plaintext: {args.plaintext}")
+            logger.debug(f"IV: {args.iv}")
+        elif args.input == "auto":
             count = args.count if args.count else 1
-            logger.info(
+            logger.debug(
                 f"AES with auto-generated input. {count} inputs will be generated."
             )
-        elif args.input == "user-csv" and args.debug:
-            logger.info(
+        elif args.input == "user-csv":
+            logger.debug(
                 f"AES with user provided file. All the inputs in the file will be processed."
             )
 
     elif args.target == "ASCON":
-        if args.input == "user" and args.debug:
-            logger.info(f"ASCON with user-provided input:")
-            logger.info(f"Key: {args.key}")
-            logger.info(f"Plaintext: {args.plaintext}")
-            logger.info(f"Nonce: {args.nonce}")
-            logger.info(f"Associated Data: {args.ad}")
-        elif args.input == "auto" and args.debug:
+        if args.input == "user":
+            logger.debug("ASCON with user-provided input:")
+            logger.debug(f"Key: {args.key}")
+            logger.debug(f"Plaintext: {args.plaintext}")
+            logger.debug(f"Nonce: {args.nonce}")
+            logger.debug(f"Associated Data: {args.ad}")
+        elif args.input == "auto":
             count = args.count if args.count else 1
-            logger.info(
+            logger.debug(
                 f"ASCON with auto-generated input. Generating {count} inputs..."
             )
-        elif args.input == "user-csv" and args.debug:
-            logger.info(
+        elif args.input == "user-csv":
+            logger.debug(
                 f"ASCON with user provided file. All the inputs in the file will be processed."
             )
 
     elif args.target == "KECCAK":
-        if args.input == "user" and args.debug:
-            logger.info(f"KECCAK with user-provided input:")
-            logger.info(f"Plaintext: {args.plaintext}")
-        elif args.input == "auto" and args.debug:
+        if args.input == "user":
+            logger.debug("KECCAK with user-provided input:")
+            logger.debug(f"Plaintext: {args.plaintext}")
+        elif args.input == "auto":
             count = args.count if args.count else 1
-            logger.info(
+            logger.debug(
                 f"KECCAK with auto-generated input. Generating {count} inputs..."
             )
-        elif args.input == "user-csv" and args.debug:
-            logger.info(
+        elif args.input == "user-csv":
+            logger.debug(
                 f"KECCAK with user provided file. All the inputs in the file will be processed."
             )
 
@@ -599,7 +603,6 @@ def initialize_qiling(
     elf: str,
     traces: list,
     cache: dict,
-    debug: bool = False,
 ) -> Qiling:
     """
     Initializes Qiling with the given profile, ELF file, and disassembler hooks.
@@ -608,7 +611,6 @@ def initialize_qiling(
         profile (QilingProfile): The profile to use in the emulation.
         elf (str): The path to the ELF file.
         traces (list): A list to store disassembled traces.
-        debug (bool): Enable verbose output if True.
 
     Returns:
         Qiling: The initialized Qiling instance.
@@ -628,7 +630,7 @@ def initialize_qiling(
         archtype=QL_ARCH.CORTEX_M,
         ostype=QL_OS.MCU,
         env=stm32f415,
-        verbose=QL_VERBOSE.DEBUG if debug else QL_VERBOSE.DISABLED,
+        verbose=QL_VERBOSE.DEBUG if logging.getLogger().isEnabledFor(logging.DEBUG) else QL_VERBOSE.DISABLED,
     )
 
     # Create peripherals as needed

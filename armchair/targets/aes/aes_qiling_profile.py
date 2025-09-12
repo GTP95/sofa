@@ -123,6 +123,7 @@ class AesQilingProfile(QilingProfile):
             target_data (list): A list containing the AES key, plaintext, and IV (if applicable).
         """
         logger = logging.getLogger(__name__)
+        logger.setLevel(logging.getLogger().level)
         # Determine if an IV is used
         use_iv: bool = (
                 len([item for item in target_data if (item is not None and item != "")]) > 2

@@ -16,6 +16,7 @@ class AsconInputsGenerator(InputsGenerator):
         self.__k_len: int = ASCON_KEY_SIZE
         self.__n_len: int = ASCON_NONCE_SIZE
         self.logger=logging.getLogger(__name__)
+        self.logger.setLevel(logging.getLogger().level)
 
     def generate_inputs_csv(
         self,

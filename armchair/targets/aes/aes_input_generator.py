@@ -25,6 +25,7 @@ class AesInputsGenerator(InputsGenerator):
         super().__init__()
         self.__iv_len: int = AES_BLOCK_SIZE  # this is always the same
         self.logger=logging.getLogger(__name__)
+        self.logger.setLevel(logging.getLogger().level)
 
     def generate_inputs_csv(
         self,

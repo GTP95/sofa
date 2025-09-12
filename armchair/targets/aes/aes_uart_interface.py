@@ -30,6 +30,7 @@ class AesUartHandler(UartHandler):
             Exception: If there's an error while sending the key.
         """
         logger = logging.getLogger(__name__)
+        logger.setLevel(logging.getLogger().level)
         try:
             # Convert the key string into a command
             key_cmd: bytes = get_key_cmd(key=key, input_format=self.input_format)

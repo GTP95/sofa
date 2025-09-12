@@ -12,6 +12,7 @@ class KeccakHashInputsGenerator(InputsGenerator):
     def __init__(self) -> None:
         super().__init__()
         self.logger=logging.getLogger(__name__)
+        self.logger.setLevel(logging.getLogger().level)
 
     def generate_inputs_csv(
         self,

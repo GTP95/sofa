@@ -22,6 +22,7 @@ class SettingsLoader:
         self._settings = None
         self._parsed_settings: dict = {}
         self._logger = logging.getLogger(__name__)
+        self._logger.setLevel(logging.getLogger().level)
         self.__load_target_config(target=target)
 
 

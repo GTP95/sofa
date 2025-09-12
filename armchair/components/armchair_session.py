@@ -27,6 +27,7 @@ class ARMChairSession:
         self.mode = ARMChairSessionMode(value=args.input)
         self.input_csv_path: str = args.path
         self.input_format: str = args.input_format
+        # Use global logging configuration; avoid storing a debug boolean
         self.debug: bool = args.debug
         self.elf_path: str = None
         self.target_data: list = []
@@ -36,6 +37,8 @@ class ARMChairSession:
         self.input_validator: InputValidator = input_validator
         self.settings_loader: SettingsLoader = settings_loader
         self.logger=logging.getLogger(__name__)
+        # Set logger level after instantiation to follow global configuration
+        self.logger.setLevel(logging.getLogger().level)
 
     def init_session(self) -> None:
         # Initialize (or not) the classes
@@ -143,6 +146,5 @@ class ARMChairSession:
             input_format=self.input_format,
             target_data=self.target_data,
             target_profile=target_profile,
-            debug=self.debug,
         )
         session.run_session()

@@ -21,14 +21,12 @@ class ARMChairSessionRunner:
         input_format,
         target_profile: QilingProfile,
         target_data: list,
-        debug: bool = False,
     ) -> None:
         self.elf_path: str = elf_path
         self.input_format: str = input_format
         self.target_profile: QilingProfile = target_profile
         self.target_data: list = target_data
         self.sym_parser = SymParser(elf_path=elf_path)
-        self.debug: bool = debug
         self.logger=logging.getLogger(__name__)
 
     def process_row(self, row, index) -> None:
@@ -58,7 +56,6 @@ class ARMChairSessionRunner:
                 profile=self.target_profile,
                 traces=traces,
                 cache=cache,
-                debug=self.debug,
             )
 
             self.target_profile.init_uart(ql=ql, input_format=self.input_format)
@@ -79,8 +76,8 @@ class ARMChairSessionRunner:
             ql.log.info("Starting Qiling..")
             ql.run()
 
-            if self.debug:
-                logger.info(f"Writing traces to CSV...")
+            if logging.getLogger().isEnabledFor(logging.DEBUG):
+                logger.debug("Writing traces to CSV...")
 
             # Write traces using csv module
             with open(output_path, mode="w", newline="") as file:
@@ -117,4 +114,4 @@ class ARMChairSessionRunner:
             )
 
         # Notify the user that the session has completed
-        self.logger(f"Session completed")
+        self.logger.info("Session completed")

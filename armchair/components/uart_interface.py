@@ -25,6 +25,7 @@ class UartHandler:
         self.ql: Qiling = ql
         self.input_format: str = input_format
         self.logger: logging.Logger = logging.getLogger(__name__)
+        self.logger.setLevel(logging.getLogger().level)
 
     def get_response(self) -> str:
         """

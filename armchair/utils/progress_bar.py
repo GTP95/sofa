@@ -30,6 +30,7 @@ class ProgressBar(tqdm):
             **kwargs: Arbitrary keyword arguments passed to the tqdm superclass.
         """
         logger = logging.getLogger(__name__)
+        logger.setLevel(logging.getLogger().level)
         super().__init__(
             *args,
             **kwargs,
