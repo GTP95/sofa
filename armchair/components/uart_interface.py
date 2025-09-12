@@ -24,6 +24,7 @@ class UartHandler:
         """
         self.ql: Qiling = ql
         self.input_format: str = input_format
+        self.logger: logging.Logger = logging.getLogger(__name__)
 
     def get_response(self) -> str:
         """
@@ -43,16 +44,17 @@ class UartHandler:
 
             # Check if the response indicates an error
             if response == TargetResponse.ERR.value:
-                self.ql.log.error(
-                    msg=f"The data has not been correctly received, the uart returned '{response}', stopping emulation"
+                self.logger.error(
+                    f"The data has not been correctly received, the uart returned '{response}', stopping emulation"
                 )
                 self.ql.stop()  # Stop the emulation if an error occurred
                 raise Exception("Simulation stopped due to UART error")
             return response
         except Exception as e:
-            raise Exception(
+            self.logger.error(
                 f"Error: something went wrong while getting or parsing the uart response: {e}."
             )
+            raise e
 
     def _send_cmd(self, cmd: bytes) -> Exception | None:
         """
@@ -66,7 +68,7 @@ class UartHandler:
         """
         try:
             # Log the command being sent, represented as the first byte's ASCII character
-            self.ql.log.info(msg=f"Sending '{chr(cmd[0])}' command... Full command is: {cmd}")
+            self.logger.info(msg=f"Sending '{chr(cmd[0])}' command... Full command is: {cmd}")
             # Send the command over USART1
             self.ql.hw.usart1.send(cmd)
         except Exception as e:
