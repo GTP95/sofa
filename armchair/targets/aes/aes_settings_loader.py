@@ -15,7 +15,7 @@ class AesSettingsLoader(SettingsLoader):
         get_pt_len: Returns the plaintext length.
     """
 
-    def __init__(self) -> None:
+    def __init__(self, json_path=None) -> None:
         """
         Initializes the AesSettingsLoader by calling the parent class's __init__ method and then parsing the configuration.
         """

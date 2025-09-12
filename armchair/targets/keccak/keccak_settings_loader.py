@@ -2,8 +2,8 @@ from armchair.components.settings_loader import SettingsLoader
 
 
 class KeccakHashSettingsLoader(SettingsLoader):
-    def __init__(self) -> None:
-        super().__init__(target="KECCAK")
+    def __init__(self, json_path=None) -> None:
+        super().__init__(target="KECCAK", json_path=json_path)
         self._parse_target_config()
 
     def _parse_target_config(self) -> None:

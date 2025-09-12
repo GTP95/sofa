@@ -90,6 +90,12 @@ def parse_args() -> Namespace:
     )
 
     parser.add_argument(
+        "--config",
+        type=str,
+        help="Path to the JSON configuration file (will attempt to autodetect if not specified)"
+    )
+
+    parser.add_argument(
         "--elf_path",
         type=str,
         help="Path to the .elf file (required if no SettingsLoader is implemented for user-csv and user-raw mode).",

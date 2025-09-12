@@ -15,7 +15,7 @@ class SettingsLoader:
         _parsed_settings (dict): A dictionary that holds parsed target-specific settings.
     """
 
-    def __init__(self, target) -> None:
+    def __init__(self, target, json_path=None) -> None:
         """
         Initializes the SettingsLoader by loading the target configuration via __load_target_config.
         """
@@ -23,7 +23,10 @@ class SettingsLoader:
         self._parsed_settings: dict = {}
         self._logger = logging.getLogger(__name__)
         self._logger.setLevel(logging.getLogger().level)
+        self._json_path = json_path
+
         self.__load_target_config(target=target)
+
 
 
     def __load_target_config(self, target: str) -> None:
@@ -36,20 +39,21 @@ class SettingsLoader:
             JSONDecodeError: If there is an error parsing the JSON.
             Exception: For any other issues during the file loading process.
         """
-        file_path = ""
+        file_path = self._json_path
 
-        # Look for a JSON file that contains the platform name
-        for file in os.listdir():
-            if file.endswith(".json") and PLATFORM in file and target in file:
-                file_path = file
-                self._logger.info(f"Loaded configuration from {file_path}")
-                break
+        # If no JSON config file is specified, try to autodetect it based on the platform name
+        if file_path == None:
+            for file in os.listdir():
+                if file.endswith(".json") and PLATFORM in file and target in file:
+                    file_path = file
+                    self._logger.info(f"Loaded configuration from {file_path}")
+                    break
 
         # Raise an error if no file is found
-        if file_path == "":
+        if file_path == None:
             raise FileNotFoundError(
                 f"Error: The target JSON configuration file does not exist in the program base folder!\n"
-                f"Did you forget to compile the target first or move the file?"
+                f"Did you forget to compile the target first or move the file? You can also specify a path explicitly using the --config argument."
             )
 
         # Try loading the JSON file, handle possible errors

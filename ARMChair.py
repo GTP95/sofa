@@ -39,7 +39,7 @@ if __name__ == "__main__":
     if args.target == "AES":
         ig = AesInputsGenerator()
         iv = AesInputValidator()
-        sl = AesSettingsLoader()
+        sl = AesSettingsLoader(json_path=args.config)
         ip = AesInputParser()
         tp = AesQilingProfile()
 
