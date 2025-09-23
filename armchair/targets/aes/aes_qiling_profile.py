@@ -30,6 +30,8 @@ class AesQilingProfile(QilingProfile):
         super().__init__()
         self.__status: list[AesQilingStatus] = [AesQilingStatus.INIT]
         self.settings=AesSettingsLoader().get_target_settings()
+        self.logger=logging.getLogger(__name__)
+        self.logger.setLevel(logging.getLogger().level)
 
     def __hook_function_get_cmd_reached(self, ql: Qiling, user_data: dict) -> None:
         """
@@ -77,9 +79,9 @@ class AesQilingProfile(QilingProfile):
         command, data_length = get_command_received(ql=ql)
         if command == "q":
             self.__status[0] = AesQilingStatus.WAIT_CMD
-            ql.log.info("All commands registered correctly!")
+            self.logger.info("All commands registered correctly!")
         else:
-            ql.log.info(f"Command registered successfully ({command}, {data_length})")
+            self.logger.info(f"Command registered successfully ({command}, {data_length})")
 
     def __hook_function_add_key_reached(self, ql: Qiling) -> None:
         """
