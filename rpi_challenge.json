@@ -23,5 +23,6 @@
   "__enc_cmd_comment": "Name of the function used to perform encryption (e.g., encrypt_plaintext), or equivalent. Leave empty if not applicable",
   "iv_cmd": "set_iv",
 
-  "memory_mappings": [{"base_address":  1342572544, "size": 1024, "perms":  7, "info": "[RNG]"}]
+  "memory_mappings": [{"base_address":  1342572544, "size": 1024, "perms":  7, "info": "[RNG]"}],
+  "__memory_mappings__comment": "Memory regions used by the target. The base address and size must be specified in decimal, as JSON does not support hexadecimal notation. 'perms' is a bitmask specifying the permissions of the region, 7 corresponds to UC_PROT_ALL. 'info' is just a user-defined label to help identify the region, it has no impact on the emulation. All these parameters are directly passed to Qiling, so you can refer to its documentation for more details."
 }
