@@ -23,13 +23,13 @@ class AesQilingProfile(QilingProfile):
         __status (list[AesQilingStatus]): Tracks the current status of the AES command execution in Qiling.
     """
 
-    def __init__(self) -> None:
+    def __init__(self, json_path) -> None:
         """
         Initializes the AesProfile with a symbol parser and sets the initial AES status to INIT.
         """
         super().__init__()
         self.__status: list[AesQilingStatus] = [AesQilingStatus.INIT]
-        self.settings=AesSettingsLoader().get_target_settings()
+        self.settings=AesSettingsLoader(json_path).get_target_settings()
         self.logger=logging.getLogger(__name__)
         self.logger.setLevel(logging.getLogger().level)
 

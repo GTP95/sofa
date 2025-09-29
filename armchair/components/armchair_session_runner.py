@@ -21,6 +21,7 @@ class ARMChairSessionRunner:
         input_format,
         target_profile: QilingProfile,
         target_data: list,
+        json_path: str
     ) -> None:
         self.elf_path: str = elf_path
         self.input_format: str = input_format
@@ -28,6 +29,7 @@ class ARMChairSessionRunner:
         self.target_data: list = target_data
         self.sym_parser = SymParser(elf_path=elf_path)
         self.logger=logging.getLogger(__name__)
+        self.json_path=json_path
 
     def process_row(self, row, index) -> None:
         """
@@ -56,6 +58,7 @@ class ARMChairSessionRunner:
                 profile=self.target_profile,
                 traces=traces,
                 cache=cache,
+                json_path=self.json_path
             )
 
             self.target_profile.init_uart(ql=ql, input_format=self.input_format)

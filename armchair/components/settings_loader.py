@@ -15,7 +15,7 @@ class SettingsLoader:
         _parsed_settings (dict): A dictionary that holds parsed target-specific settings.
     """
 
-    def __init__(self, target, json_path=None) -> None:
+    def __init__(self, json_path) -> None:
         """
         Initializes the SettingsLoader by loading the target configuration via __load_target_config.
         """
@@ -23,13 +23,12 @@ class SettingsLoader:
         self._parsed_settings: dict = {}
         self._logger = logging.getLogger(__name__)
         self._logger.setLevel(logging.getLogger().level)
-        self._json_path = json_path
 
-        self.__load_target_config(target=target)
-
+        self.__load_target_config(json_path)
 
 
-    def __load_target_config(self, target: str) -> None:
+
+    def __load_target_config(self, json_path) -> None:
         """
         Loads the target configuration from a JSON file that matches the platform name found in `PLATFORM`.
         The JSON file should be located in the same directory as the program.
@@ -39,31 +38,17 @@ class SettingsLoader:
             JSONDecodeError: If there is an error parsing the JSON.
             Exception: For any other issues during the file loading process.
         """
-        file_path = self._json_path
 
-        # If no JSON config file is specified, try to autodetect it based on the platform name
-        if file_path == None:
-            for file in os.listdir():
-                if file.endswith(".json") and PLATFORM in file and target in file:
-                    file_path = file
-                    self._logger.info(f"Loaded configuration from {file_path}")
-                    break
 
-        # Raise an error if no file is found
-        if file_path == None:
-            raise FileNotFoundError(
-                f"Error: The target JSON configuration file does not exist in the program base folder!\n"
-                f"Did you forget to compile the target first or move the file? You can also specify a path explicitly using the --config argument."
-            )
 
         # Try loading the JSON file, handle possible errors
         try:
-            with open(file_path, "r") as file:
+            with open(json_path, "r") as file:
                 self._settings = json.load(file)
         except json.JSONDecodeError as e:
             raise json.JSONDecodeError(
-                msg=f"Error: Failed to decode JSON from {file_path}. Error: {e}",
-                doc=file_path,
+                msg=f"Error: Failed to decode JSON from {json_path}. Error: {e}",
+                doc=json_path,
                 pos=e.lineno,
             )
         except Exception as e:

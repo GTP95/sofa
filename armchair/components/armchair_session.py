@@ -29,7 +29,7 @@ class ARMChairSession:
         self.input_format: str = args.input_format
         # Use global logging configuration; avoid storing a debug boolean
         self.debug: bool = args.debug
-        self.elf_path: str = None
+        self.elf_path: str = args.elf_path
         self.target_data: list = []
         self.raw_target_data: list = raw_target_data
         self.input_generator: InputsGenerator = input_generator
@@ -47,15 +47,6 @@ class ARMChairSession:
         ip: InputParser = self.input_parser
         sl: SettingsLoader = self.settings_loader
 
-        # Get the path of the target ELF (Executable and Linkable Format) file
-        self.elf_path: str = (
-            sl.get_target_file_name() if sl != None else self.args.elf_path
-        )
-
-        if self.elf_path == None:
-            raise ValueError(
-                "No path to the .elf file was provided either by the user or by the settings loader, cannot continue."
-            )
 
         if self.mode == ARMChairSessionMode.USER:
             # Check that the required components have been passed
@@ -146,5 +137,6 @@ class ARMChairSession:
             input_format=self.input_format,
             target_data=self.target_data,
             target_profile=target_profile,
+            json_path=self.args.config
         )
         session.run_session()

@@ -41,7 +41,7 @@ if __name__ == "__main__":
         iv = AesInputValidator()
         sl = AesSettingsLoader(json_path=args.config)
         ip = AesInputParser()
-        tp = AesQilingProfile()
+        tp = AesQilingProfile(json_path=args.config)
 
     elif args.target == "ASCON":
         ig = AsconInputsGenerator()

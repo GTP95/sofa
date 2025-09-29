@@ -14,6 +14,7 @@ from qiling import Qiling
 from qiling.const import QL_ARCH, QL_OS, QL_VERBOSE
 #import qiling.extensions.mcu.stm32f1.
 from qiling.extensions.hookswitch.hook_switch import hook_switch
+from qiling.extensions.mcu import stm32f1
 from qiling.extensions.mcu.stm32f1 import stm32f103
 from tqdm import tqdm
 
@@ -89,10 +90,10 @@ def parse_args() -> Namespace:
         help="Path to the input .csv file (required for user-csv mode).",
     )
 
-    parser.add_argument(
+    parser.add_argument(    #TODO: make this mandatory
         "--config",
         type=str,
-        help="Path to the JSON configuration file (will attempt to autodetect if not specified)"
+        help="Path to the JSON configuration file"
     )
 
     parser.add_argument(
@@ -609,6 +610,7 @@ def initialize_qiling(
     elf: str,
     traces: list,
     cache: dict,
+        json_path: str
 ) -> Qiling:
     """
     Initializes Qiling with the given profile, ELF file, and disassembler hooks.
@@ -624,18 +626,29 @@ def initialize_qiling(
 
     match profile.get_algorithm_name():
         case 'AES':
-            config = AesSettingsLoader().get_target_settings()
+            config = AesSettingsLoader(json_path).get_target_settings()
         case 'ASCON':
             config = AsconSettingsLoader().get_target_settings()
         case 'KECCAK':
             config = KeccakHashSettingsLoader().get_target_settings()
+        case _:
+            raise Exception(f"Algorithm {profile.get_algorithm_name()} not supported.")
 
+
+    #convert platform string into platform constant. The string comes from the JSON config file, the constant is Qiling's internal representation of that
+    match config['platform']:
+        case 'stm32f103':
+            platform=stm32f103
+        case 'stm32f1':
+            platform=stm32f1
+        case _:
+            raise ValueError(f"Platform {config['platform']} needs to be added inside 'helpers.py' in the 'initialize_qiling' function.")
 
     ql = Qiling(
         argv=[elf],
         archtype=QL_ARCH.CORTEX_M,
         ostype=QL_OS.MCU,
-        env=stm32f103,  #TODO: load from config file.
+        env=platform,
         verbose=QL_VERBOSE.DEBUG if logging.getLogger().isEnabledFor(logging.DEBUG) else QL_VERBOSE.DISABLED,
     )
 
