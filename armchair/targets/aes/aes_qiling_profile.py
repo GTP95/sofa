@@ -167,6 +167,7 @@ class AesQilingProfile(QilingProfile):
         if use_iv:
             ql.hook_address(self.__hook_function_add_iv_reached, address=iv_cmd)
 
+
     def get_profile_range(self, sym_parser: SymParser) -> tuple:
         """
         Returns a tuple representing the address range of the AES profile in Qiling.
