@@ -1,5 +1,5 @@
 {
-  "platform": "CW308_STM32F4",
+  "platform": "stm32f103",
   "__platform__comment": "The hardware platform used for this operation (e.g., CW308_STM32F4)",
 
   "target": "AES",
