@@ -1,4 +1,3 @@
-import json
 import os
 import re
 import shutil
@@ -13,8 +12,8 @@ import pandas as pd
 from capstone import Cs
 from qiling import Qiling
 from qiling.const import QL_ARCH, QL_OS, QL_VERBOSE
+from qiling.extensions import mcu
 from qiling.extensions.hookswitch.hook_switch import hook_switch
-from qiling.extensions.mcu.stm32f4 import stm32f415
 from tqdm import tqdm
 
 from armchair.components.qiling_profile import QilingProfile
@@ -635,7 +634,7 @@ def initialize_qiling(
         argv=[elf],
         archtype=QL_ARCH.CORTEX_M,
         ostype=QL_OS.MCU,
-        env=stm32f415,
+        env=mcu.stm32f415,  #TODO: load from config file.
         verbose=QL_VERBOSE.DEBUG if logging.getLogger().isEnabledFor(logging.DEBUG) else QL_VERBOSE.DISABLED,
     )
 
