@@ -56,8 +56,8 @@ for statistical testing to find data-dependent leakage, but aren't an accurate p
 
 ### Requirements (can be ignored if using the Docker image)
 
-- Python 3.10 or higher (for compatibility with some of the libraries used). Tested on Python 3.12.  
-    At the time of writing, it fails on Python 3.13, but it could be due to outdated wheels that may be updated in the future.
+- Python 3.10 or higher (for compatibility with some of the libraries used). **Tested on Python 3.12**.  
+    **At the time of writing, it fails on Python 3.13**, but it could be due to outdated wheels that may be updated in the future.
 - The `make` build system (required for compiling the firmware).
 - Qiling for ARM emulation.
 - Required Python packages (installable via `requirements.txt`).
