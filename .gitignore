@@ -18,8 +18,6 @@ RandomStuff/
 
 # Byte-compiled / optimized / DLL files
 *.pyc
-*.pyo
-*.pyd
 *.ipynb
 *.csv
 
