@@ -57,7 +57,7 @@ for statistical testing to find data-dependent leakage, but aren't an accurate p
 ### Requirements (can be ignored if using the Docker image)
 
 - Python 3.10 or higher (for compatibility with some of the libraries used). **Tested on Python 3.12**.  
-    **At the time of writing, it fails on Python 3.13**, but it could be due to outdated wheels that may be updated in the future.
+    **At the time of writing, dependency installation fails on Python 3.13**, but it could be due to outdated wheels that may be updated in the future.
 - The `make` build system (required for compiling the firmware).
 - Qiling for ARM emulation.
 - Required Python packages (installable via `requirements.txt`).
@@ -92,6 +92,8 @@ for statistical testing to find data-dependent leakage, but aren't an accurate p
    ```bash
    pip install -r requirements.txt
    ```
+    1. If there's still a warning at the top of this README, apply the mentioned patch.
+
 
 
 4. Install `make` for your platform if it isn't already installed. On Debian-based Linux distributions, you can install it using:
@@ -107,7 +109,7 @@ docker build -t armchair .
 ```
 And run it with various arguments, for example:
 ``` bash
-docker run armchair --input auto --count 10 AES
+docker run armchair --input auto --count 10 AES AES-CW308_STM32F4.elf AES-CW308_STM32F4.json
 ```
 See the [Usage](#usage) section for more details on how to run the tool.
 
@@ -152,23 +154,23 @@ Once the project is built, you can run the cryptographic analysis using the Pyth
 
 ##### Command-Line Arguments
 
-| Argument           | Description                                                                                                                       |
-|--------------------|-----------------------------------------------------------------------------------------------------------------------------------|
-| `--debug`          | Enable debug mode for verbose output.                                                                                             |
-| `--input`          | Choose between `user`, `user-csv`, `user-raw` or `auto` input mode.<br/>Specify the cryptographic algorithm: `AES`, `ASCON`, `KECCAK`.|
-| `--no_validation`  | Disable input validation for user-provided inputs.                                                                                |
-| `--count`          | Number of auto-generated inputs (required for `auto` mode).                                                                       |
-| `--path`           | Path to the input .csv file (required for user-csv mode).                                                                         |
-| `--input_format`   | Format of the inputs such as key and plaintext, either as an hex string or plaintext, hex dy default.                             |
-| `--key`            | The cryptographic key (hex string) for `AES`, `ASCON`, `KECCAK`.                                                                  |
-| `--plaintext`      | The plaintext (hex string) to encrypt.                                                                                            |
-| `--leakage_model`  | Leakage model to use for the analysis. Either `ID`, `HW`, or `HD`.<br/>Defaults to `HD`.                                          |
-| `--iv`             | Initialization vector (hex string) for `AES`, `ASCON`.                                                                            |
-| `--rounds`         | Number of rounds for the `ASCON` algorithm.                                                                                       |
-| `--capacity`       | Capacity for `KECCAK` sponge function.                                                                                            |
-| `algorithm`        |  Choose the cryptographic algorithm. Currently supported choices are `AES`, `ASCON`, `KECCAK`.
-| `elf_path`         | Path to the .elf file (this is a mandatory positional argument).                                                                  |
-| `config`           | Path to the JSON configuration file (this is a mandatory positional argument).                                                    |
+| Argument          | Description                                                                                                                            |
+|-------------------|----------------------------------------------------------------------------------------------------------------------------------------|
+| `--debug`         | Enable debug mode for verbose output.                                                                                                  |
+| `--input`         | Choose between `user`, `user-csv`, `user-raw` or `auto` input mode.<br/>Specify the cryptographic algorithm: `AES`, `ASCON`, `KECCAK`. |
+| `--no_validation` | Disable input validation for user-provided inputs.                                                                                     |
+| `--count`         | Number of auto-generated inputs (required for `auto` mode).                                                                            |
+| `--path`          | Path to the input .csv file (required for user-csv mode).                                                                              |
+| `--input_format`  | Format of the inputs such as key and plaintext, either as an hex string or plaintext, hex dy default.                                  |
+| `--key`           | The cryptographic key (hex string) for `AES`, `ASCON`, `KECCAK`.                                                                       |
+| `--plaintext`     | The plaintext (hex string) to encrypt.                                                                                                 |
+| `--leakage_model` | Leakage model to use for the analysis. Either `ID`, `HW`, or `HD`.<br/>Defaults to `HD`.                                               |
+| `--iv`            | Initialization vector (hex string) for `AES`, `ASCON`.                                                                                 |
+| `--rounds`        | Number of rounds for the `ASCON` algorithm.                                                                                            |
+| `--capacity`      | Capacity for `KECCAK` sponge function.                                                                                                 |
+| `algorithm`       | Choose the cryptographic algorithm. Currently supported choices are `AES`, `ASCON`, `KECCAK`.                                          |
+| `elf_path`        | Path to the .elf file (this is a mandatory positional argument).                                                                       |
+| `config`          | Path to the JSON configuration file (this is a mandatory positional argument).                                                         |
 
 ##### Example 1: Running bundled AES implementation with user-provided input
 

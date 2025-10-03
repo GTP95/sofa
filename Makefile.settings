@@ -1,7 +1,7 @@
 # Platform, do not change!
 PLATFORM = CW308_STM32F4
 
-# Simple serial version, behavare 2.0 and above don't work properly for some reasons, so don't change this.
+# Simple serial version, be aware that 2.0 and above doesn't work properly for some reasons, so don't change this.
 SS_VER = SS_VER_1_1
 
 # Useful definitions
