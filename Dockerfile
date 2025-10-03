@@ -26,7 +26,7 @@ RUN make TARGET=KECCAK PLATFORM=CW308_STM32F4
 # Patch Qiling
 RUN python3 armchair/tools/apply_qiling_patch.py
 
-ENTRYPOINT ["python3", "main.py"]
+ENTRYPOINT ["python3", "ARMChair.py"]
 
 # Default command (can be overridden at runtime)
 CMD ["--help"]

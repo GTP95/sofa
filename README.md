@@ -172,13 +172,13 @@ Once the project is built, you can run the cryptographic analysis using the Pyth
 ##### Example 1: Running bundled AES implementation with user-provided input
 
 ```bash
-python main.py --input user AES --key "00112233445566778899aabbccddeeff" --plaintext "00112233445566778899aabbccddeeff" --iv "000102030405060708090a0b0c0d0e0f"
+python ARMChair.py --input user AES --key "00112233445566778899aabbccddeeff" --plaintext "00112233445566778899aabbccddeeff" --iv "000102030405060708090a0b0c0d0e0f"
 ```
 
 ##### Example 2: Running bundled AES implementation with auto-generated inputs
 
 ```bash
-python main.py --input auto --count 10 AES
+python ARMChair.py --input auto --count 10 AES
 ```
 Note the ordering of the arguments. The `--input` argument must be specified before the cryptographic algorithm.
 This is due to AES being a subcommand.
@@ -186,19 +186,19 @@ This is due to AES being a subcommand.
 ##### Example 3: Running bundled AES implementation with auto-generated inputs and a specific leakage model
 
 ```bash
-python main.py --input auto --count 10 --leakage_model "HW" AES
+python ARMChair.py --input auto --count 10 --leakage_model "HW" AES
 ```
 
 ##### Example 4: Running bundled KECCAK implementation with user-provided input
 
 ```bash
-python main.py --input user KECCAK --key "00112233445566778899aabbccddeeff" --plaintext "00112233445566778899aabbccddeeff" --capacity 1600
+python ARMChair.py --input user KECCAK --key "00112233445566778899aabbccddeeff" --plaintext "00112233445566778899aabbccddeeff" --capacity 1600
 ```
 
 ##### Example 5: Running a user-provided ELF executable (in this case, "RP2350 Hacking Challenge 2" 's AES implementation)
 
 ```bash
-python main.py --no_validation --elf_path rp2350_hacking_challenge_2/build/rp2350_hacking_challenge_2.elf --input user --input_format plaintext AES --key 66b3ca75e02ad9c8abb06c0b2d297fb660ed5c58c9029ec883f9dbcd2a16195d5e75fadfd32acb297ca03930f1ff08c6714d3f79eb3a26cdc9ef28f553983141 --plaintext "00112233445566778899aabbccddeeff"
+python ARMChair.py --no_validation --elf_path rp2350_hacking_challenge_2/build/rp2350_hacking_challenge_2.elf --input user --input_format plaintext AES --key 66b3ca75e02ad9c8abb06c0b2d297fb660ed5c58c9029ec883f9dbcd2a16195d5e75fadfd32acb297ca03930f1ff08c6714d3f79eb3a26cdc9ef28f553983141 --plaintext "00112233445566778899aabbccddeeff"
 ```
 
 ### How It Works
@@ -226,7 +226,7 @@ python main.py --no_validation --elf_path rp2350_hacking_challenge_2/build/rp235
 Enable debug mode using the `--debug` flag to get verbose output of all operations, including input parsing, cryptographic operations, and Qiling interactions:
 
 ```bash
-python main.py --target AES --input user --key "..." --plaintext "..." --iv "..." --debug
+python ARMChair.py --target AES --input user --key "..." --plaintext "..." --iv "..." --debug
 ```
 
 ### Future Plans
