@@ -634,7 +634,7 @@ def initialize_qiling(
         case 'KECCAK':
             config = KeccakHashSettingsLoader().get_target_settings()
         case _:
-            raise Exception(f"Algorithm {profile.get_algorithm_name()} not supported.")
+            raise ValueError(f"Algorithm {profile.get_algorithm_name()} not supported.")
 
 
     #convert platform string into platform constant. The string comes from the JSON config file, the constant is Qiling's internal representation of that
