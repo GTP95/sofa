@@ -18,7 +18,7 @@ To fix the issue, after installing `qiling`, make sure to run the script `apply_
 - **On Windows**:
    - Run the following command in **Command Prompt** or **PowerShell**:
      ```bash
-     python tools/apply_qiling_patch.py
+     python armchair/tools/apply_qiling_patch.py
      ```
 
 - **On Debian-based Linux distros or macOS**:
