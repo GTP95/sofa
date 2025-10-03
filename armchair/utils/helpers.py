@@ -630,8 +630,10 @@ def initialize_qiling(
         case 'AES':
             config = AesSettingsLoader(json_path).get_target_settings()
         case 'ASCON':
+            logging.getLogger().warning('This part of the codebase needs refactoring and will not work.')
             config = AsconSettingsLoader().get_target_settings()
         case 'KECCAK':
+            logging.getLogger().warning('This part of the codebase needs refactoring and will not work.')
             config = KeccakHashSettingsLoader().get_target_settings()
         case _:
             raise ValueError(f"Algorithm {profile.get_algorithm_name()} not supported.")
