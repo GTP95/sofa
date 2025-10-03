@@ -152,33 +152,33 @@ Once the project is built, you can run the cryptographic analysis using the Pyth
 
 ##### Command-Line Arguments
 
-| Argument          | Description                                                                                                                          |
-|-------------------|--------------------------------------------------------------------------------------------------------------------------------------|
-| `--debug`         | Enable debug mode for verbose output.                                                                                                |
-| `--input`         | Choose between `user`, `user-csv`, `user-raw` or `auto` input mode.<br/>Specify the cryptographic algorithm: `AES`, `ASCON`, `KECCAK`.|
-| `--no_validation` | Disable input validation for user-provided inputs.                                                                                   |
-| `--count`         | Number of auto-generated inputs (required for `auto` mode).                                                                          |
-| `--path`          | Path to the input .csv file (required for user-csv mode).                                                                            |
-| `--config`        | Path to the JSON configuration file                                                   |
-| `--elf_path`      | Path to the .elf file (required if no SettingsLoader is implemented for user-csv and user-raw mode).                                 |
-| `--input_format`  | Format of the inputs such as key and plaintext, either as an hex string or plaintext, hex dy default.                                |
-| `--key`           | The cryptographic key (hex string) for `AES`, `ASCON`, `KECCAK`.                                                                     |
-| `--plaintext`     | The plaintext (hex string) to encrypt.                                                                                               |
-| `--leakage_model` | Leakage model to use for the analysis. Either `ID`, `HW`, or `HD`.<br/>Defaults to `HD`.                                             |
-| `--iv`            | Initialization vector (hex string) for `AES`, `ASCON`.                                                                               |
-| `--rounds`        | Number of rounds for the `ASCON` algorithm.                                                                                          |
-| `--capacity`      | Capacity for `KECCAK` sponge function.                                                                                               |
+| Argument          | Description                                                                                                                            |
+|-------------------|----------------------------------------------------------------------------------------------------------------------------------------|
+| `--debug`         | Enable debug mode for verbose output.                                                                                                  |
+| `--input`         | Choose between `user`, `user-csv`, `user-raw` or `auto` input mode.<br/>Specify the cryptographic algorithm: `AES`, `ASCON`, `KECCAK`. |
+| `--no_validation` | Disable input validation for user-provided inputs.                                                                                     |
+| `--count`         | Number of auto-generated inputs (required for `auto` mode).                                                                            |
+| `--path`          | Path to the input .csv file (required for user-csv mode).                                                                              |
+| `--config`        | Path to the JSON configuration file (this is  mandatory argument).                                                                     |
+| `--elf_path`      | Path to the .elf file (required if no SettingsLoader is implemented for user-csv and user-raw mode).                                   |
+| `--input_format`  | Format of the inputs such as key and plaintext, either as an hex string or plaintext, hex dy default.                                  |
+| `--key`           | The cryptographic key (hex string) for `AES`, `ASCON`, `KECCAK`.                                                                       |
+| `--plaintext`     | The plaintext (hex string) to encrypt.                                                                                                 |
+| `--leakage_model` | Leakage model to use for the analysis. Either `ID`, `HW`, or `HD`.<br/>Defaults to `HD`.                                               |
+| `--iv`            | Initialization vector (hex string) for `AES`, `ASCON`.                                                                                 |
+| `--rounds`        | Number of rounds for the `ASCON` algorithm.                                                                                            |
+| `--capacity`      | Capacity for `KECCAK` sponge function.                                                                                                 |
 
 ##### Example 1: Running bundled AES implementation with user-provided input
 
 ```bash
-python ARMChair.py --input user AES --key "00112233445566778899aabbccddeeff" --plaintext "00112233445566778899aabbccddeeff" --iv "000102030405060708090a0b0c0d0e0f"
+python ARMChair.py --input user AES --key "00112233445566778899aabbccddeeff" --plaintext "00112233445566778899aabbccddeeff" --iv "000102030405060708090a0b0c0d0e0f" AES-CW308_STM32F4.elf AES-CW308_STM32F4.json" 
 ```
 
 ##### Example 2: Running bundled AES implementation with auto-generated inputs
 
 ```bash
-python ARMChair.py --input auto --count 10 AES
+python ARMChair.py --input auto --count 10 AES AES-CW308_STM32F4.elf AES-CW308_STM32F4.json
 ```
 Note the ordering of the arguments. The `--input` argument must be specified before the cryptographic algorithm.
 This is due to AES being a subcommand.
@@ -186,7 +186,7 @@ This is due to AES being a subcommand.
 ##### Example 3: Running bundled AES implementation with auto-generated inputs and a specific leakage model
 
 ```bash
-python ARMChair.py --input auto --count 10 --leakage_model "HW" AES
+python ARMChair.py --input auto --count 10 --leakage_model "HW" AES AES-CW308_STM32F4.elf AES-CW308_STM32F4.json
 ```
 
 ##### Example 4: Running bundled KECCAK implementation with user-provided input
@@ -198,7 +198,7 @@ python ARMChair.py --input user KECCAK --key "00112233445566778899aabbccddeeff" 
 ##### Example 5: Running a user-provided ELF executable (in this case, "RP2350 Hacking Challenge 2" 's AES implementation)
 
 ```bash
-python ARMChair.py --no_validation --elf_path rp2350_hacking_challenge_2/build/rp2350_hacking_challenge_2.elf --input user --input_format plaintext AES --key 66b3ca75e02ad9c8abb06c0b2d297fb660ed5c58c9029ec883f9dbcd2a16195d5e75fadfd32acb297ca03930f1ff08c6714d3f79eb3a26cdc9ef28f553983141 --plaintext "00112233445566778899aabbccddeeff"
+python ARMChair.py --no_validation --input user --input_format plaintext AES --key 66b3ca75e02ad9c8abb06c0b2d297fb660ed5c58c9029ec883f9dbcd2a16195d5e75fadfd32acb297ca03930f1ff08c6714d3f79eb3a26cdc9ef28f553983141 --plaintext "00112233445566778899aabbccddeeff" rp2350_hacking_challenge_2/build/rp2350_hacking_challenge_2.elf rpi_challenge.json
 ```
 
 ### How It Works
@@ -226,7 +226,7 @@ python ARMChair.py --no_validation --elf_path rp2350_hacking_challenge_2/build/r
 Enable debug mode using the `--debug` flag to get verbose output of all operations, including input parsing, cryptographic operations, and Qiling interactions:
 
 ```bash
-python ARMChair.py --target AES --input user --key "..." --plaintext "..." --iv "..." --debug
+python ARMChair.py --input user --key "..." --plaintext "..." --iv "..." --debug AES AES-CW308_STM32F4.elf AES-CW308_STM32F4.json
 ```
 
 ### Future Plans

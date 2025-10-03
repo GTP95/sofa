@@ -12,10 +12,10 @@ import pandas as pd
 from capstone import Cs
 from qiling import Qiling
 from qiling.const import QL_ARCH, QL_OS, QL_VERBOSE
-#import qiling.extensions.mcu.stm32f1.
 from qiling.extensions.hookswitch.hook_switch import hook_switch
 from qiling.extensions.mcu import stm32f1
 from qiling.extensions.mcu.stm32f1 import stm32f103
+from qiling.extensions.mcu.stm32f4 import stm32f415
 from tqdm import tqdm
 
 from armchair.components.qiling_profile import QilingProfile
@@ -90,18 +90,6 @@ def parse_args() -> Namespace:
         help="Path to the input .csv file (required for user-csv mode).",
     )
 
-    parser.add_argument(    #TODO: make this mandatory
-        "--config",
-        type=str,
-        help="Path to the JSON configuration file"
-    )
-
-    parser.add_argument(
-        "--elf_path",
-        type=str,
-        help="Path to the .elf file (required if no SettingsLoader is implemented for user-csv and user-raw mode).",
-    )
-
     parser.add_argument(
         "--input_format",
         type=str,
@@ -117,6 +105,20 @@ def parse_args() -> Namespace:
     subparsers = parser.add_subparsers(
         dest="target", required=True, help="Choose the cryptographic algorithm."
     )
+
+    parser.add_argument(
+        "elf_path",
+        type=str,
+        help="Path to the elf file.",
+    )
+
+    parser.add_argument(
+        "config",
+        type=str,
+        help="Path to the JSON configuration file"
+    )
+
+
 
     # AES Subparser
     aes_parser = subparsers.add_parser("AES", help="AES algorithm options")
@@ -641,6 +643,8 @@ def initialize_qiling(
             platform=stm32f103
         case 'stm32f1':
             platform=stm32f1
+        case 'stm32f415':
+            platform=stm32f415
         case _:
             raise ValueError(f"Platform {config['platform']} needs to be added inside 'helpers.py' in the 'initialize_qiling' function.")
 
