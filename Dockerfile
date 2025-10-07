@@ -17,7 +17,8 @@ COPY . .
 # Download the ARM GNU Toolchain
 ADD https://developer.arm.com/-/media/Files/downloads/gnu/14.3.rel1/binrel/arm-gnu-toolchain-14.3.rel1-x86_64-arm-none-eabi.tar.xz arm-gnu-toolchain.tar.xz
 # Untar to /usr/local/bin
-RUN mkdir arm-gnu-toolchain && tar -xf arm-gnu-toolchain.tar.xz -C arm-gnu-toolchain  --strip-components=1 && rm arm-gnu-toolchain.tar.xz && mv arm-gnu-toolchain/bin/* /usr/local/bin/ && rm -rf arm-gnu-toolchain
+RUN mkdir arm-gnu-toolchain && tar -xf arm-gnu-toolchain.tar.xz -C arm-gnu-toolchain  --strip-components=1 && rm arm-gnu-toolchain.tar.xz
+ENV PATH="$PATH:/app/arm-gnu-toolchain/bin"
 
 #Build default targets
 RUN make TARGET=AES PLATFORM=CW308_STM32F4
