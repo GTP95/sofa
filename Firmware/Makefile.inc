@@ -224,22 +224,10 @@ lib: $(LIBNAME)
 begin:
 	@$(ECHO_BLANK)
 
+#TODO: remove generation of configuration files for all targets and directly provide examples instead, to avoid overwriting.
 create_config:
 ifeq ($(TARGET),AES)
-	@echo "{"> $(json)
-	@echo "  \"platform\": \"$(PLATFORM)\"," >> $(json)
-	@echo "  \"__platform__comment\": \"The hardware platform used for this operation (e.g., CW308_STM32F4)\"," >> $(json)
-	@echo "  \"target\": \"$(TARGET)\"," >> $(json)
-	@echo "  \"__target__comment\": \"The specific target profile or algorithm being used (e.g., AES, ASCON, KECCAK)\"," >> $(json)
-	@echo "  \"key_length\": \"$(KEYSIZE)\"," >> $(json)
-	@echo "  \"__key_length__comment\": \"The length of the encryption key in bits (e.g., 128, 192, 256)\"," >> $(json)
-	@echo "  \"plaintext_length\": \"$(PTLEN)\"," >> $(json)
-	@echo "  \"__plaintext_length__comment\": \"The length of the plaintext input in bytes (e.g., 64 bytes)\"," >> $(json)
-	@echo "  \"use_iv\": \"$$(if [ \"$(MODE)\" = \"ECB\" ]; then echo false; else echo true; fi)\"," >> $(json)
-	@echo "  \"__use_iv__comment\": \"Boolean value indicating whether an initialization vector (IV) is used; false for ECB mode, true otherwise\"," >> $(json)
-	@echo "  \"masked\": \"$$(if [ \"$(MASKED)\" = \"1\" ]; then echo true; else echo false; fi)\"," >> $(json)
-	@echo "  \"__masked__comment\": \"Boolean value indicating whether masking is enabled for side-channel resistance (true if masked, false otherwise)\"" >> $(json)
-	@echo "}" >> $(json)
+	@echo "Not generating example config file for AES as it should already be present in the repository"
 else ifeq ($(filter $(TARGET), ASCON_REF ASCON_PROTECTED ASCON_ARM), $(TARGET))
 	@echo "{"> $(json)
 	@echo "  \"platform\": \"$(PLATFORM)\"," >> $(json)
