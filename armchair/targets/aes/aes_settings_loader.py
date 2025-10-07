@@ -21,6 +21,8 @@ class AesSettingsLoader(SettingsLoader):
         """
         super().__init__(json_path)
         self._parse_target_config()
+        self._logger=logging.getLogger(__name__)
+        self._logger.setLevel(logging.getLogger().level)
 
     def _parse_target_config(self) -> None:
         """
@@ -59,9 +61,8 @@ class AesSettingsLoader(SettingsLoader):
                 "memory_mappings": memory_mappings
             }
         except Exception as e:
-            raise Exception(
-                f"An unexpected error occurred while parsing the JSON config file: {e}"
-            )
+            self._logger.error(f"An unexpected error occurred while parsing the JSON config file: {e}")
+            raise e
 
     def get_k_len(self) -> int:
         """
