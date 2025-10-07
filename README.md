@@ -201,7 +201,7 @@ python ARMChair.py --input user --key "00112233445566778899aabbccddeeff" --plain
 ##### Example 5: Running a user-provided ELF executable (in this case, "RP2350 Hacking Challenge 2" 's AES implementation)
 
 ```bash
-python ARMChair.py --no_validation --input user --input_format plaintext --key 66b3ca75e02ad9c8abb06c0b2d297fb660ed5c58c9029ec883f9dbcd2a16195d5e75fadfd32acb297ca03930f1ff08c6714d3f79eb3a26cdc9ef28f553983141 --plaintext "00112233445566778899aabbccddeeff" AES rp2350_hacking_challenge_2/build/rp2350_hacking_challenge_2.elf rpi_challenge.json
+python ARMChair.py --no_validation --input user --input_format plaintext AES --key 66b3ca75e02ad9c8abb06c0b2d297fb660ed5c58c9029ec883f9dbcd2a16195d5e75fadfd32acb297ca03930f1ff08c6714d3f79eb3a26cdc9ef28f553983141 --plaintext "00112233445566778899aabbccddeeff" rp2350_hacking_challenge_2/build/rp2350_hacking_challenge_2.elf rpi_challenge.json
 ```
 
 ### How It Works
@@ -229,7 +229,7 @@ python ARMChair.py --no_validation --input user --input_format plaintext --key 6
 Enable debug mode using the `--debug` flag to get verbose output of all operations, including input parsing, cryptographic operations, and Qiling interactions:
 
 ```bash
-python ARMChair.py --input user --key "..." --plaintext "..." --iv "..." --debug AES AES-CW308_STM32F4.elf AES-CW308_STM32F4.json
+python ARMChair.py --debug --input user AES --key "..." --plaintext "..." --iv "..." AES-CW308_STM32F4.elf AES-CW308_STM32F4.json
 ```
 
 ### Future Plans
