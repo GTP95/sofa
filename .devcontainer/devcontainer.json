@@ -2,7 +2,7 @@
 // For more customization options, see https://containers.dev/implementors/json_reference
 {
   name: "Default",
-  image: "ubuntu:latest",
+  "build": { "dockerfile": "Dockerfile" },
 
   customizations : {
     // Configure JetBrains IDE-specific properties
@@ -19,11 +19,10 @@
     }
   },
   features: {
-    "ghcr.io/devcontainers/features/git" : {},
     // Add additional features to your project using auto-completion.
   },
+  postCreateCommand: "python3 armchair/tools/apply_qiling_patch.py && make TARGET=AES PLATFORM=CW308_STM32F4",
   // Comment out to connect as the root user.
-  remoteUser: "ubuntu",
-  "postStartCommand": "git config --global --add safe.directory ${containerWorkspaceFolder}"
+  remoteUser: "ubuntu"
 }
 
