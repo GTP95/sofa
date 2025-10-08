@@ -24,7 +24,6 @@ from armchair.targets.aes.aes_settings_loader import AesSettingsLoader
 from armchair.targets.ascon.ascon_settings_loader import AsconSettingsLoader
 from armchair.targets.keccak.keccak_settings_loader import KeccakHashSettingsLoader
 from armchair.utils.arm_helpers import arm_registers, return_instruction_type_arm
-from armchair.utils.constants import PLATFORM
 from armchair.utils.constants import optimized_magics
 from armchair.utils.enums import TargetResponse
 

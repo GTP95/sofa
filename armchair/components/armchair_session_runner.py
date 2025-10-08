@@ -1,17 +1,16 @@
+import csv
 import logging
-
-from armchair.targets.aes.aes_qiling_profile import QilingProfile
-from armchair.components.sym_parser import SymParser
-from armchair.utils.progress_bar import ProgressBar
-from armchair.utils.arm_helpers import headerList
-from armchair.utils.helpers import initialize_qiling
-from armchair.utils.constants import TRACESPATH
+import os
 
 from qiling import Qiling
 from tqdm.contrib.concurrent import process_map
 
-import csv
-import os
+from armchair.components.sym_parser import SymParser
+from armchair.targets.aes.aes_qiling_profile import QilingProfile
+from armchair.utils.arm_helpers import headerList
+from armchair.utils.constants import TRACESPATH
+from armchair.utils.helpers import initialize_qiling
+from armchair.utils.progress_bar import ProgressBar
 
 
 class ARMChairSessionRunner:
