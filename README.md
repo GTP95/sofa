@@ -175,7 +175,7 @@ Once the project is built, you can run the cryptographic analysis using the Pyth
 ##### Example 1: Running bundled AES implementation with user-provided input
 
 ```bash
-python ARMChair.py --input user AES --key "00112233445566778899aabbccddeeff" --plaintext "00112233445566778899aabbccddeeff" --iv "000102030405060708090a0b0c0d0e0f" AES-CW308_STM32F4.elf AES-CW308_STM32F4.json" 
+python ARMChair.py --input user AES --key "00112233445566778899aabbccddeeff" --plaintext "00112233445566778899aabbccddeeff" --iv "000102030405060708090a0b0c0d0e0f" AES-CW308_STM32F4.elf AES-CW308_STM32F4.json 
 ```
 
 ##### Example 2: Running bundled AES implementation with auto-generated inputs
@@ -183,7 +183,7 @@ python ARMChair.py --input user AES --key "00112233445566778899aabbccddeeff" --p
 ```bash
 python ARMChair.py --input auto --count 10 AES AES-CW308_STM32F4.elf AES-CW308_STM32F4.json
 ```
-Note the ordering of the arguments. The `--input` argument must be specified before the cryptographic algorithm.
+Note the ordering of the arguments. The `--input` and `--count` arguments must be specified before the cryptographic algorithm.
 This is due to AES being a subcommand.
 
 ##### Example 3: Running bundled AES implementation with auto-generated inputs and a specific leakage model
@@ -199,7 +199,7 @@ python ARMChair.py --input user --key "00112233445566778899aabbccddeeff" --plain
 ```
 
 ##### Example 5: Running a user-provided ELF executable (in this case, "RP2350 Hacking Challenge 2" 's AES implementation)
-
+Note that this is not included in this repository, you will have to download and build it yourself.
 ```bash
 python ARMChair.py --no_validation --input user --input_format plaintext AES --key 66b3ca75e02ad9c8abb06c0b2d297fb660ed5c58c9029ec883f9dbcd2a16195d5e75fadfd32acb297ca03930f1ff08c6714d3f79eb3a26cdc9ef28f553983141 --plaintext "00112233445566778899aabbccddeeff" rp2350_hacking_challenge_2/build/rp2350_hacking_challenge_2.elf rpi_challenge.json
 ```
