@@ -199,7 +199,7 @@ python ARMChair.py --input user --key "00112233445566778899aabbccddeeff" --plain
 ```
 
 ##### Example 5: Running a user-provided ELF executable (in this case, "RP2350 Hacking Challenge 2" 's AES implementation)
-Note that this is not included in this repository, you will have to download and build it yourself.
+Note that this is not included in this repository, you will have to download and build it yourself. The Docker image does this for you.
 ```bash
 python ARMChair.py --no_validation --input user --input_format plaintext AES --key 66b3ca75e02ad9c8abb06c0b2d297fb660ed5c58c9029ec883f9dbcd2a16195d5e75fadfd32acb297ca03930f1ff08c6714d3f79eb3a26cdc9ef28f553983141 --plaintext "00112233445566778899aabbccddeeff" rp2350_hacking_challenge_2/build/rp2350_hacking_challenge_2.elf rpi_challenge.json
 ```
