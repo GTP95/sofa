@@ -7,6 +7,7 @@ RUN apt-get update && apt-get -y upgrade && apt-get install -y make cmake git gc
 
 #Copy requirements file and install them first, so that this step can be cached
 COPY requirements.txt .
+#RUN pip install https://github.com/qilingframework/qiling/archive/dev.zip # Install Qiling from dev branch, currently the version on PyPI is more than 2 years old and doesn't support a thing needed for this project
 RUN pip install --no-cache-dir -r requirements.txt
 
 # Copy the project files

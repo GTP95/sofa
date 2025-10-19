@@ -4,6 +4,11 @@
 ![ARMChair](art/CPU1.jpeg)
 
 ### Warning ⚠️
+While this tool is now in a much better shape than when I first got to work on it, this is still **not working**.
+At least, it isn't failing silently and producing a trace that doesn't capture the encryption phase anymore. 
+As I left Radboud University, this is the last commit I'm sending to this GitLab repo. Good luck.
+
+We need to use Qiling's latest version for this to work. Unfortunately, at the moment of writing, the current version on PyPI is more than two years old. For this reason, the `requirements.txt` file installs Qiling's dev branch. This can, and should, be changed once Qiling's PyPI version gets updated.
 
 There is currently a critical bug that prevents the right instructions from being recorded. In particular, we were seeing different branching while comparing traces captured by ARMChair, leading to an incorrect intersection of the intermediates.
 
@@ -133,7 +138,7 @@ make TARGET=KECCAK
 ```
 At the time of writing, ASCON compilation fails with a `dangerous relocation: unsupported relocation` during the linking stage. 
 Maybe it can be fixed by using some flag, will look into this in the future.
-
+This is my current situation:
 The `Makefile` also provides options for cleaning the build or compiling for specific platforms.
 
 - **To clean the project:**
