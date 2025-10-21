@@ -4,6 +4,7 @@ import os
 
 from qiling import Qiling
 from tqdm.contrib.concurrent import process_map
+from unicorn import UcError
 
 from sofa.components.sym_parser import SymParser
 from sofa.targets.aes.aes_qiling_profile import QilingProfile
@@ -86,6 +87,11 @@ class ARMChairSessionRunner:
                 csv_writer = csv.writer(file)
                 csv_writer.writerow(headerList)  # Write the headers
                 csv_writer.writerows(traces)  # Write the rows of data
+        except UcError as ex:
+            addr, size = ex.args
+            logger.error(f'failed to access address {addr:#010x} ({addr} in decimal). Access size: {size:d}')
+            raise ex
+
         except Exception as e:
             logger.error(f"\nError processing data {row}: {e}")
             raise e
