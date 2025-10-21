@@ -61,7 +61,7 @@ def parse_args() -> Namespace:
         Namespace: Parsed arguments as a namespace object.
     """
     logger=logging.getLogger(__name__)
-    parser = ArgumentParser(description="Welcome to ARMChair!")
+    parser = ArgumentParser(description="Welcome to Sofa!")
 
     # Global argument for debugging
     parser.add_argument(
