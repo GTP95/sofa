@@ -1,3 +1,6 @@
+#TODO: this file should go. Either convert it to a proper config file or get rid of this entirely.
+# I already moved some parameters to the JSON settings file.
+
 DEFAULT_INPUT_CSV_PATH = "input-csv.csv"
 
 DEFAULT_NR_OF_INPUTS = 10
