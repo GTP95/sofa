@@ -36,9 +36,9 @@ RUN cmake -DPICO_PLATFORM=rp2350 -DPICO_BOARD=pico2 .. && make
 WORKDIR /app
 
 # Patch Qiling
-RUN python3 armchair/tools/apply_qiling_patch.py
+RUN python3 sofa/tools/apply_qiling_patch.py
 
-ENTRYPOINT ["python3", "ARMChair.py"]
+ENTRYPOINT ["python3", "main.py"]
 
 # Default command (can be overridden at runtime)
 CMD ["--help"]

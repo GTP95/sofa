@@ -1,7 +1,7 @@
 
-## ARMChair: Cryptographic Simulation and Analysis Tool
+## Sofa: a Power Simulator for SCA analysis of ARM binaries
 
-![ARMChair](art/CPU1.jpeg)
+![Sofa](art/CPU.webp)
 
 ### Warning ⚠️
 While this tool is now in a much better shape than when I first got to work on it, this is still **not working**.
@@ -23,13 +23,13 @@ To fix the issue, after installing `qiling`, make sure to run the script `apply_
 - **On Windows**:
    - Run the following command in **Command Prompt** or **PowerShell**:
      ```bash
-     python armchair/tools/apply_qiling_patch.py
+     python sofa/tools/apply_qiling_patch.py
      ```
 
 - **On Debian-based Linux distros or macOS**:
    - Run the following command in the terminal:
      ```bash
-     python3 armchair/tools/apply_qiling_patch.py
+     python3 sofa/tools/apply_qiling_patch.py
      ```
 
 This will copy the content of the `qilingpatch` folder into the `qiling/extensions` directory. The location of this directory will depend on where your `qiling` package is installed.
@@ -74,8 +74,8 @@ for statistical testing to find data-dependent leakage, but aren't an accurate p
 1. Clone the repository:
 
    ```bash
-   git clone git@gitlab.science.ru.nl:scalab/sca-code/armchair.git
-   cd armchair
+   git clone https://github.com/GTP95/sofa.git
+   cd sofa
    ```
    
     1. Recommended but not mandatory: create and activate a Python virtual environment:
@@ -110,11 +110,11 @@ for statistical testing to find data-dependent leakage, but aren't an accurate p
 #### Docker
 You can build this Docker image with:
 ``` bash
-docker build -t armchair .
+docker build -t sofa .
 ```
 And run it with various arguments, for example:
 ``` bash
-docker run armchair --input auto --count 10 AES AES-CW308_STM32F4.elf AES-CW308_STM32F4.json
+docker run sofa --input auto --count 10 AES AES-CW308_STM32F4.elf AES-CW308_STM32F4.json
 ```
 See the [Usage](#usage) section for more details on how to run the tool.
 
@@ -180,13 +180,13 @@ Once the project is built, you can run the cryptographic analysis using the Pyth
 ##### Example 1: Running bundled AES implementation with user-provided input
 
 ```bash
-python ARMChair.py --input user AES --key "00112233445566778899aabbccddeeff" --plaintext "00112233445566778899aabbccddeeff" --iv "000102030405060708090a0b0c0d0e0f" AES-CW308_STM32F4.elf AES-CW308_STM32F4.json 
+python main.py --input user AES --key "00112233445566778899aabbccddeeff" --plaintext "00112233445566778899aabbccddeeff" --iv "000102030405060708090a0b0c0d0e0f" AES-CW308_STM32F4.elf AES-CW308_STM32F4.json 
 ```
 
 ##### Example 2: Running bundled AES implementation with auto-generated inputs
 
 ```bash
-python ARMChair.py --input auto --count 10 AES AES-CW308_STM32F4.elf AES-CW308_STM32F4.json
+python main.py --input auto --count 10 AES AES-CW308_STM32F4.elf AES-CW308_STM32F4.json
 ```
 Note the ordering of the arguments. The `--input` and `--count` arguments must be specified before the cryptographic algorithm.
 This is due to AES being a subcommand.
@@ -194,19 +194,19 @@ This is due to AES being a subcommand.
 ##### Example 3: Running bundled AES implementation with auto-generated inputs and a specific leakage model
 
 ```bash
-python ARMChair.py --input auto --count 10 --leakage_model "HW" AES AES-CW308_STM32F4.elf AES-CW308_STM32F4.json
+python sofa.py --input auto --count 10 --leakage_model "HW" AES AES-CW308_STM32F4.elf AES-CW308_STM32F4.json
 ```
 
 ##### Example 4: Running bundled KECCAK implementation with user-provided input
 
 ```bash
-python ARMChair.py --input user --key "00112233445566778899aabbccddeeff" --plaintext "00112233445566778899aabbccddeeff" --capacity 1600 KECCAK KECCAK-CW308_STM32F4.elf KECCAK-CW308_STM32F4.json
+python main.py --input user --key "00112233445566778899aabbccddeeff" --plaintext "00112233445566778899aabbccddeeff" --capacity 1600 KECCAK KECCAK-CW308_STM32F4.elf KECCAK-CW308_STM32F4.json
 ```
 
 ##### Example 5: Running a user-provided ELF executable (in this case, "RP2350 Hacking Challenge 2" 's AES implementation)
 Note that this is not included in this repository, you will have to download and build it yourself. The Docker image does this for you.
 ```bash
-python ARMChair.py --no_validation --input user --input_format plaintext AES --key 66b3ca75e02ad9c8abb06c0b2d297fb660ed5c58c9029ec883f9dbcd2a16195d5e75fadfd32acb297ca03930f1ff08c6714d3f79eb3a26cdc9ef28f553983141 --plaintext "00112233445566778899aabbccddeeff" rp2350_hacking_challenge_2/build/rp2350_hacking_challenge_2.elf rpi_challenge.json
+python main.py --no_validation --input user --input_format plaintext AES --key 66b3ca75e02ad9c8abb06c0b2d297fb660ed5c58c9029ec883f9dbcd2a16195d5e75fadfd32acb297ca03930f1ff08c6714d3f79eb3a26cdc9ef28f553983141 --plaintext "00112233445566778899aabbccddeeff" rp2350_hacking_challenge_2/build/rp2350_hacking_challenge_2.elf rpi_challenge.json
 ```
 
 ### How It Works
@@ -234,7 +234,7 @@ python ARMChair.py --no_validation --input user --input_format plaintext AES --k
 Enable debug mode using the `--debug` flag to get verbose output of all operations, including input parsing, cryptographic operations, and Qiling interactions:
 
 ```bash
-python ARMChair.py --debug --input user AES --key "..." --plaintext "..." --iv "..." AES-CW308_STM32F4.elf AES-CW308_STM32F4.json
+python main.py --debug --input user AES --key "..." --plaintext "..." --iv "..." AES-CW308_STM32F4.elf AES-CW308_STM32F4.json
 ```
 
 ### Future Plans

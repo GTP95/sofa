@@ -1,6 +1,6 @@
-from armchair.utils.constants import RNG_BASE, RNG_SIZE
-from armchair.components.sym_parser import SymParser
-from armchair.utils.helpers import str_to_bytes, parse_usart_res, string_to_hex
+from sofa.utils.constants import RNG_BASE, RNG_SIZE
+from sofa.components.sym_parser import SymParser
+from sofa.utils.helpers import str_to_bytes, parse_usart_res, string_to_hex
 
 from qiling import Qiling
 from qiling.extensions.mcu.stm32f4 import stm32f415
