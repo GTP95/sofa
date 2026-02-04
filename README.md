@@ -3,22 +3,33 @@
 
 ![Sofa](art/CPU.webp)
 
+This is an improved version of ARCHER's ARM variant (also known as ARMChair), a power simulator for side-channel analysis originally developed at 
+Radboud University, with the aim of developing a tool that is actually usable in the real world. To the best of my knowledge, 
+the original developer was Paolo Scattolin. 
+
 ### Warning ⚠️
 While this tool is now in a much better shape than when I first got to work on it, this is still **not working**.
-At least, it isn't failing silently and producing a trace that doesn't capture the encryption phase anymore. 
-As I left Radboud University, this is the last commit I'm sending to this GitLab repo. Good luck.
+At least, it isn't failing silently and producing a trace that doesn't capture the encryption phase anymore.
 
-We need to use Qiling's latest version for this to work. Unfortunately, at the moment of writing, the current version on PyPI is more than two years old. For this reason, the `requirements.txt` file installs Qiling's dev branch. This can, and should, be changed once Qiling's PyPI version gets updated.
 
-There is currently a critical bug that prevents the right instructions from being recorded. In particular, we were seeing different branching while comparing traces captured by ARMChair, leading to an incorrect intersection of the intermediates.
+We need to use Qiling's latest version for this to work. Unfortunately, at the moment of writing, the current version on 
+PyPI is more than two years old. For this reason, the `requirements.txt` file installs Qiling's dev branch. This can, and 
+should, be changed once Qiling's PyPI version gets updated.
 
-Basically, the `hook_code` function in Qiling wasn't working in the way that I was expecting. I assumed that I could define a `begin` and `end` using memory addresses and that the hook would be called from when we hit the start until we hit the end. 
+There is currently a critical bug that prevents the right instructions from being recorded. In particular, we were seeing 
+different branching while comparing traces simulated by Sofa, leading to an incorrect intersection of the intermediates.
 
-The way that hook actually works is by checking if the pc is in between the `begin` and the end of the memory space that you ask for, plus a couple of minor checks that are not relevant. The result is that by defining a range, I was recording the registers any time that some instruction in my code would have been in that range. This led to a bunch of odd recordings that should not have been there.
+Basically, the `hook_code` function in Qiling wasn't working in the way that Scattolin was expecting. He assumed that he 
+could define a `begin` and `end` using memory addresses and that the hook would be called from when we hit the start until we hit the end. 
 
-I fixed this by creating my hook that is currently (27/11) being reviewed in the Qiling repo: https://github.com/qilingframework/qiling/pull/1500.
+The way that hook actually works is by checking if the program counter is in between the `begin` and the end of the memory 
+space that you ask for, plus a couple of minor checks that are not relevant. The result is that by defining a range, he 
+was recording the registers any time that some instruction in the code under test would have been in that range. This led 
+to a bunch of odd recordings that should not have been there.
 
-To fix the issue, after installing `qiling`, make sure to run the script `apply_qiling_patch.py` at least once before running ARMChair.
+He fixed this by creating his own hook that is currently (4/2/26) being reviewed in the Qiling repo: https://github.com/qilingframework/qiling/pull/1500.
+
+To fix the issue, after installing `qiling`, make sure to run the script `apply_qiling_patch.py` at least once before running Sofa.
 
 - **On Windows**:
    - Run the following command in **Command Prompt** or **PowerShell**:
@@ -38,9 +49,11 @@ This whole section will be removed once the change is merged and published in th
 
 ### Overview
 
-ARMChair is a cryptographic analysis tool designed to simulate, test, and validate cryptographic algorithms such as AES, ASCON, and KECCAK on embedded systems using the Qiling framework. It supports multiple stages, including firmware compilation, simulation, and cryptographic analysis.
+Sofa is a cryptographic analysis tool designed to simulate, test, and validate cryptographic algorithms such as AES, ASCON, 
+and KECCAK on embedded systems using the Qiling framework. It supports multiple stages, including firmware compilation, 
+simulation, and cryptographic analysis.
 
-ARMChair begins by building the project using `make` before executing Python scripts for the cryptographic simulation and analysis.
+Sofa begins by building the project using `make` before executing Python scripts for the cryptographic simulation and analysis.
 
 ### Features
 
@@ -56,8 +69,9 @@ Under the identity (ID) model, the power consumption of each instruction is comp
 Under the Hamming weight (HW) model, the power consumption of each instruction is computed as the sum of the Hamming weights of *all* registers' values.  
 Under the Hamming distance (HD) model, the power consumption of each instruction is computed as the sum of the Hamming distances of *all* the registers between their value in the current state and their value in the next state.  
 
-This implementation *does not* differentiate between registers that are accessed by the current instruction and those that aren't. Therefore, the generated power traces are usable
-for statistical testing to find data-dependent leakage, but aren't an accurate power simulation on their own.
+This implementation *does not* differentiate between registers that are accessed by the current instruction and those that aren't. 
+Therefore, the generated power traces are usable for statistical testing to find data-dependent leakage, but aren't an accurate 
+power simulation on their own.
 
 ### Requirements (can be ignored if using the Docker image)
 
@@ -120,11 +134,13 @@ See the [Usage](#usage) section for more details on how to run the tool.
 
 ### Usage
 
-Before running the cryptographic analysis, **build the project** using `make`. This is necessary for preparing the firmware and associated cryptographic targets.
+Before running the cryptographic analysis, **build the project** using `make`. This is necessary for preparing the firmware 
+and associated cryptographic targets.
 
 #### Step 1: Building the Project (go to step 2 if using Docker)
 
-The build system is managed using multiple Makefiles. Start by building the project with the appropriate target, which can be AES, ASCON, or KECCAK. 
+The build system is managed using multiple Makefiles. Start by building the project with the appropriate target, which 
+can be AES, ASCON, or KECCAK. 
 You will need the `arm-none-eabi` toolchain.
 
 ```bash
@@ -155,7 +171,7 @@ The `Makefile` also provides options for cleaning the build or compiling for spe
 
 #### Step 2: Running the Python Cryptographic Simulation
 
-Once the project is built, you can run the cryptographic analysis using the Python scripts. ARMChair supports both user-provided and auto-generated inputs.
+Once the project is built, you can run the cryptographic analysis using the Python scripts. Sofa supports both user-provided and auto-generated inputs.
 
 ##### Command-Line Arguments
 
@@ -221,7 +237,7 @@ python main.py --no_validation --input user --input_format plaintext AES --key 6
    The Qiling framework emulates the target ARM platform and executes the compiled firmware, allowing detailed tracing of cryptographic operations, including input/output and disassembly of ARM instructions.
 
 4. **Cryptographic Analysis**: 
-   ARMChair generates traces of the encryption process, useful for debugging or cryptographic analysis, including side-channel resistance.
+   Sofa generates traces of the encryption process, useful for debugging or cryptographic analysis, including side-channel resistance.
 
 ### Supported Cryptographic Algorithms
 
