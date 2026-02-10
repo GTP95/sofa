@@ -3,9 +3,11 @@
 
 ![Sofa](art/CPU.webp)
 
+Sofa aims at identifying architectural leakage for ARM software implementations of cryptographic algorithms.
+
 This is an improved version of ARCHER's ARM variant (also known as ARMChair), a power simulator for side-channel analysis originally developed at 
 Radboud University, with the aim of developing a tool that is actually usable in the real world. To the best of my knowledge, 
-the original developer was Paolo Scattolin. 
+ARMChair's original developer was Paolo Scattolin. 
 
 ### Warning ⚠️
 While this tool is now in a much better shape than when I first got to work on it, this is still **not working**.

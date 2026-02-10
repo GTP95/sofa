@@ -7,7 +7,7 @@ from tqdm.contrib.concurrent import process_map
 from unicorn import UcError
 
 from sofa.components.sym_parser import SymParser
-from sofa.targets.aes.aes_qiling_profile import QilingProfile
+from sofa.components.qiling_profile import QilingProfile
 from sofa.utils.arm_helpers import headerList
 from sofa.utils.constants import TRACESPATH
 from sofa.utils.helpers import initialize_qiling
