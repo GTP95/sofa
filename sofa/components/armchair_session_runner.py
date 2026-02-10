@@ -90,11 +90,11 @@ class ARMChairSessionRunner:
         except UcError as ex:
             addr, size = ex.args
             logger.error(f'failed to access address {addr:#010x} ({addr} in decimal). Access size: {size:d}')
-            raise ex
+            raise
 
         except Exception as e:
             logger.error(f"\nError processing data {row}: {e}")
-            raise e
+            raise
 
     def run_session(self) -> None:
         # check that the data is there

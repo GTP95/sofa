@@ -5,6 +5,7 @@ from sofa.utils.helpers import (
 
 from qiling import Qiling
 import logging
+import time
 
 
 class UartHandler:
@@ -26,8 +27,9 @@ class UartHandler:
         self.input_format: str = input_format
         self.logger: logging.Logger = logging.getLogger(__name__)
         self.logger.setLevel(logging.getLogger().level)
+        self._rx_buf: bytearray = bytearray()
 
-    def get_response(self) -> str:
+    def get_response(self, *, timeout_s: float = 1.0, chunk_size: int = 256) -> str:
         """
         Receives and parses the UART response from the emulated hardware.
 
@@ -35,27 +37,66 @@ class UartHandler:
             str: The parsed response from the UART, it will always be a hex string
 
         Raises:
-            Exception: If there's an error while receiving or parsing the response.
+            UartError: If there's an error while receiving or parsing the response.
         """
+        start = time.monotonic()
+        raw_collected = bytearray()
         try:
-            # Receive bytes from the USART1 interface
-            res_bytes: bytes = self.ql.hw.usart1.recv(256)
-            # Parse the received bytes into a string response
-            response: str = parse_usart_res(res_bytes=res_bytes)
+            while (time.monotonic() - start) < timeout_s:
+                # Receive bytes from the USART1 interface (may be partial/empty)
+                chunk: bytes = self.ql.hw.usart1.recv(chunk_size)
+                if chunk:
+                    raw_collected.extend(chunk)
 
-            # Check if the response indicates an error
-            if response == TargetResponse.ERR.value:
-                self.logger.error(
-                    f"The data has not been correctly received, the uart returned '{response}', stopping emulation"
-                )
-                self.ql.stop()  # Stop the emulation if an error occurred
-                raise Exception("Simulation stopped due to UART error")
-            return response
-        except Exception as e:
+                    # Try parsing whatever we have so far.
+                    # parse_usart_res should be robust to extra bytes / partial frames;
+                    # if it isn't, we still gain visibility via raw logging below.
+                    response: str = parse_usart_res(res_bytes=bytes(raw_collected))
+
+                    if response == TargetResponse.ERR.value:
+                        self.logger.error(
+                            "UART returned ERR. raw=%s",
+                            bytes(raw_collected).hex(),
+                        )
+                        self.ql.stop()
+                        raise UartError(
+                            "Simulation stopped due to UART error",
+                            raw=bytes(raw_collected),
+                            parsed=response,
+                        )
+
+                    # Heuristic: if parsing yields a non-empty non-ERR string, accept it.
+                    if response:
+                        return response
+
+                # Avoid a tight busy loop if recv() returns b""
+                time.sleep(0.001)
+
+            # Timed out waiting for a valid response
             self.logger.error(
-                f"Error: something went wrong while getting or parsing the uart response: {e}."
+                "Timed out waiting for UART response after %.3fs. raw=%s",
+                timeout_s,
+                bytes(raw_collected).hex(),
             )
-            raise e
+            self.ql.stop()
+            raise UartError(
+                f"Timed out waiting for UART response after {timeout_s:.3f}s",
+                raw=bytes(raw_collected),
+                parsed=None,
+            )
+
+        except UartError:
+            raise
+        except Exception as e:
+            self.logger.exception(
+                "Error while getting/parsing UART response. raw=%s",
+                bytes(raw_collected).hex(),
+            )
+            raise UartError(
+                "Error while getting or parsing the UART response",
+                raw=bytes(raw_collected),
+                parsed=None,
+            ) from e
 
     def _send_cmd(self, cmd: bytes) -> Exception | None:
         """
@@ -74,3 +115,11 @@ class UartHandler:
             self.ql.hw.usart1.send(cmd)
         except Exception as e:
             raise Exception(f"Sending '{chr(cmd[0])}' command resulted in: {e}.")
+
+
+class UartError(RuntimeError):
+    """Raised when UART communication/parsing fails in a way that should stop the emulation."""
+    def __init__(self, message: str, *, raw: bytes = b"", parsed: str | None = None) -> None:
+        super().__init__(message)
+        self.raw = raw
+        self.parsed = parsed
