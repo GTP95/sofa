@@ -659,7 +659,7 @@ def initialize_qiling(
     ql.hw.create("usart1")
     ql.hw.create("rcc")
 
-    # Load memory mappings form config and apply them
+    # Load memory mappings from config and apply them
     for memap_obj in config['memory_mappings']:
         ql.mem.map(memap_obj['base_address'], memap_obj['size'], memap_obj['perms'], memap_obj['info'])
 
