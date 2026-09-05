@@ -205,12 +205,14 @@ Once the project is built, you can run the cryptographic analysis using the Pyth
 
 ##### Example 1: Running bundled AES implementation with user-provided input
 
+This will generate a single encryption trace using user-provided parameters.
 ```bash
-python main.py --input user AES --key "00112233445566778899aabbccddeeff" --plaintext "00112233445566778899aabbccddeeff" --iv "000102030405060708090a0b0c0d0e0f" AES-CW308_STM32F4.elf AES-CW308_STM32F4.json 
+python main.py --input user AES --key 00112233445566778899aabbccddeeff --plaintext 00112233445566778899aabbccddeeff00112233445566778899aabbccddeeff00112233445566778899aabbccddeeff00112233445566778899aabbccddeeff --iv 000102030405060708090a0b0c0d0e0f AES-CW308_STM32F4.elf AES-CW308_STM32F4.json 
 ```
 
 ##### Example 2: Running bundled AES implementation with auto-generated inputs
 
+This will generate multiple encryption traxces using randomly generated parameters.
 ```bash
 python main.py --input auto --count 10 AES AES-CW308_STM32F4.elf AES-CW308_STM32F4.json
 ```
@@ -220,7 +222,7 @@ This is due to AES being a subcommand.
 ##### Example 3: Running bundled AES implementation with auto-generated inputs and a specific leakage model
 
 ```bash
-python sofa.py --input auto --count 10 --leakage_model "HW" AES AES-CW308_STM32F4.elf AES-CW308_STM32F4.json
+python main.py --input auto --count 10 --leakage_model "HW" AES AES-CW308_STM32F4.elf AES-CW308_STM32F4.json
 ```
 
 ##### Example 4: Running bundled KECCAK implementation with user-provided input
