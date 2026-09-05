@@ -10,6 +10,7 @@ import numpy as np
 import pandas as pd
 from capstone import Cs
 from qiling import Qiling
+from qiling.arch.models import ARM_CPU_MODEL
 from qiling.const import QL_ARCH, QL_OS, QL_VERBOSE
 from qiling.extensions.hookswitch.hook_switch import hook_switch
 from qiling.extensions.mcu import stm32f1
@@ -19,6 +20,7 @@ from tqdm import tqdm
 
 from sofa.components.qiling_profile import QilingProfile
 from sofa.components.sym_parser import SymParser
+from sofa.platforms.rp2350 import RP2350, initialize_rp2350
 from sofa.targets.aes.aes_settings_loader import AesSettingsLoader
 from sofa.targets.ascon.ascon_settings_loader import AsconSettingsLoader
 from sofa.targets.keccak.keccak_settings_loader import KeccakHashSettingsLoader
@@ -636,6 +638,8 @@ def initialize_qiling(
 
 
     #convert platform string into platform constant. The string comes from the JSON config file, the constant is Qiling's internal representation of that
+    is_rp2350 = False
+    cputype = None
     match config['platform']:
         case 'stm32f103':
             platform=stm32f103
@@ -643,20 +647,31 @@ def initialize_qiling(
             platform=stm32f1
         case 'stm32f415':
             platform=stm32f415
+        case 'rp2350':
+            platform = RP2350
+            cputype = ARM_CPU_MODEL.ARM_CORTEX_M33
+            is_rp2350 = True
         case _:
             raise ValueError(f"Platform {config['platform']} needs to be added inside 'helpers.py' in the 'initialize_qiling' function.")
 
     ql = Qiling(
         argv=[elf],
         archtype=QL_ARCH.CORTEX_M,
+        cputype=cputype,
         ostype=QL_OS.MCU,
         env=platform,
         verbose=QL_VERBOSE.DEBUG if logging.getLogger().isEnabledFor(logging.DEBUG) else QL_VERBOSE.DISABLED,
     )
 
-    # Create peripherals as needed
-    ql.hw.create("usart1")
-    ql.hw.create("rcc")
+    # Create peripherals as needed by each platform.
+    if is_rp2350:
+        initialize_rp2350(ql, elf)
+        # Continuous Unicorn execution still invokes every trace hook, but
+        # avoids Qiling's costly one-instruction-at-a-time MCU scheduler.
+        ql.os.fast_mode = True
+    else:
+        ql.hw.create("usart1")
+        ql.hw.create("rcc")
 
     # Load memory mappings from config and apply them
     for memap_obj in config['memory_mappings']:

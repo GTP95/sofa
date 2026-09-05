@@ -1,7 +1,5 @@
 import logging
 
-from dill import settings
-
 from sofa.components.qiling_profile import QilingProfile
 from sofa.components.sym_parser import SymParser
 from sofa.targets.aes.aes_uart_interface import AesUartHandler
@@ -125,6 +123,10 @@ class AesQilingProfile(QilingProfile):
             ql (Qiling): The Qiling instance that controls the emulation.
             target_data (list): A list containing the AES key, plaintext, and IV (if applicable).
         """
+        if self.settings["execution_mode"] == "direct":
+            self.__prepare_direct_call(ql, sym_parser, target_data)
+            return
+
         logger = logging.getLogger(__name__)
         logger.setLevel(logging.getLogger().level)
         # Determine if an IV is used
@@ -176,12 +178,70 @@ class AesQilingProfile(QilingProfile):
         Returns:
             tuple: A tuple containing the start and end addresses of the AES commands.
         """
-        enc_cmd = sym_parser.get_symbol_by_name(name="set_key")
-        get_cmd = sym_parser.get_symbol_by_name(name="return_value")
-        return (enc_cmd, get_cmd)
+        begin = sym_parser.get_symbol_by_name(name=self.settings["trace_start"])
+        end = sym_parser.get_symbol_by_name(name=self.settings["trace_end"])
+        return (begin, end)
 
     def init_uart(self, ql, input_format) -> None:
+        self.input_format = input_format
+        if self.settings["execution_mode"] == "direct":
+            return
         self._uart = AesUartHandler(ql=ql, input_format=input_format)
+
+    def __prepare_direct_call(
+        self, ql: Qiling, sym_parser: SymParser, target_data: list
+    ) -> None:
+        """Invoke an AES routine directly using its ARM calling convention.
+
+        The RP2350 challenge uses USB stdio rather than the SimpleSerial UART
+        protocol.  Direct invocation keeps the trace focused on ``decrypt`` and
+        avoids requiring a full USB controller and Pico SDK runtime model.
+        """
+
+        convert = (
+            (lambda value: value.encode("utf-8"))
+            if self.input_format == "plaintext"
+            else bytes.fromhex
+        )
+        key = convert(target_data[0])
+        plaintext = convert(target_data[1])
+
+        if len(key) > 128:
+            raise ValueError("The RP2350 decrypt routine accepts at most 128 key bytes")
+        if len(plaintext) > 32:
+            raise ValueError("The RP2350 decrypt routine accepts at most 32 data bytes")
+
+        workspace = self.settings["workspace_address"]
+        key_address = workspace
+        salt_address = workspace + 0x100
+        iv_address = workspace + 0x120
+        data_address = workspace + 0x140
+
+        ql.mem.write(key_address, key.ljust(128, b"\0"))
+        ql.mem.write(salt_address, bytes(32))
+        ql.mem.write(iv_address, bytes(32))
+        ql.mem.write(data_address, plaintext.ljust(32, b"\0"))
+
+        stack_address = self.settings["stack_address"]
+        ql.arch.regs.sp = stack_address
+        ql.mem.write_ptr(stack_address, 1, 4)  # fifth argument: nblk
+        ql.arch.regs.r0 = key_address
+        ql.arch.regs.r1 = salt_address
+        ql.arch.regs.r2 = iv_address
+        ql.arch.regs.r3 = data_address
+
+        entry = sym_parser.get_symbol_by_name(self.settings["enc_cmd"])
+        stop_address = sym_parser.get_symbol_by_name("__flash_binary_end")
+        ql.arch.regs.lr = stop_address | 1
+        ql.arch.regs.pc = entry
+
+        def stop_after_call(qiling: Qiling) -> None:
+            result = bytes(qiling.mem.read(data_address, 16)).hex()
+            self.logger.info("Encryption done!")
+            self.logger.info("Ciphertext: %s", result)
+            qiling.stop()
+
+        ql.hook_address(stop_after_call, stop_address)
 
     def get_algorithm_name(self):
         return "AES"

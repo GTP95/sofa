@@ -35,5 +35,7 @@ class SymParser:
         sym = symtab.get_symbol_by_name(name)
         if sym is None:
             raise ValueError(f"Error, function {name} not found in the .sym file")
-        # Because of Thumb 1 is added to every instruction
-        return sym[0]["st_value"] - 1
+        # Thumb function symbols may use bit 0 as the ISA-state marker, while
+        # local assembly labels are already even.  Clear the marker instead of
+        # subtracting unconditionally, which corrupts even-valued labels.
+        return sym[0]["st_value"] & ~1
