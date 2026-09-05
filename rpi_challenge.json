@@ -1,5 +1,5 @@
 {
-  "platform": "stm32f103",
+  "platform": "rp2350",
   "__platform__comment": "The hardware platform used for this operation (e.g., CW308_STM32F4)",
 
   "target": "AES",
@@ -13,16 +13,22 @@
   "masked": "false",
   "__masked__comment": "Boolean value indicating whether masking is enabled for side-channel resistance (true if masked, false otherwise)",
 
-  "add_cmd": "simpleserial_addcmd",
+  "add_cmd": "",
   "__add_cmd_comment": "Name of the function used to add a command to the SimpleSerial interface (e.g., simpleserial_addcmd), or equivalent. Leave empty if not applicable",
-  "get_cmd": "simpleserial_get",
+  "get_cmd": "",
   "__get_cmd_comment": "Name of the function used to get data from the SimpleSerial interface (e.g., simpleserial_get), or equivalent. Leave empty if not applicable",
-  "key_cmd": "set_key",
+  "key_cmd": "",
   "__key_cmd_comment": "Name of the function used to set the encryption key (e.g., set_key), or equivalent. Leave empty if not applicable",
-  "enc_cmd": "encrypt_plaintext",
+  "enc_cmd": "decrypt",
   "__enc_cmd_comment": "Name of the function used to perform encryption (e.g., encrypt_plaintext), or equivalent. Leave empty if not applicable",
-  "iv_cmd": "set_iv",
+  "iv_cmd": "",
 
-  "memory_mappings": [{"base_address":  1342572544, "size": 1024, "perms":  7, "info": "[RNG]"}],
+  "execution_mode": "direct",
+  "trace_start": "decrypt",
+  "trace_end": "decryption_end",
+  "workspace_address": 537329664,
+  "stack_address": 537391104,
+
+  "memory_mappings": [],
   "__memory_mappings__comment": "Memory regions used by the target. The base address and size must be specified in decimal, as JSON does not support hexadecimal notation. 'perms' is a bitmask specifying the permissions of the region, 7 corresponds to UC_PROT_ALL. 'info' is just a user-defined label to help identify the region, it has no impact on the emulation. All these parameters are directly passed to Qiling, so you can refer to its documentation for more details."
 }

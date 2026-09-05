@@ -58,7 +58,17 @@ class AesSettingsLoader(SettingsLoader):
                 "get_cmd": get_cmd,
                 "key_cmd": key_cmd,
                 "enc_cmd": enc_cmd,
-                "memory_mappings": memory_mappings
+                "iv_cmd": self._settings.get("iv_cmd", ""),
+                "memory_mappings": memory_mappings,
+                "execution_mode": self._settings.get("execution_mode", "uart"),
+                "trace_start": self._settings.get("trace_start", key_cmd),
+                "trace_end": self._settings.get("trace_end", "return_value"),
+                "workspace_address": int(
+                    self._settings.get("workspace_address", 0x20070000)
+                ),
+                "stack_address": int(
+                    self._settings.get("stack_address", 0x2007F000)
+                ),
             }
         except Exception as e:
             self._logger.error(f"An unexpected error occurred while parsing the JSON config file: {e}")
