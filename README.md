@@ -7,12 +7,11 @@ Sofa aims at identifying architectural leakage for ARM software implementations 
 
 This is an improved version of ARCHER's ARM variant (also known as ARMChair), a power simulator for side-channel analysis originally developed at 
 Radboud University, with the aim of developing a tool that is actually usable in the real world. To the best of my knowledge, 
-ARMChair's original developer was Paolo Scattolin. 
+ARMChair's original developer was Paolo Scattolin. When I first got this tool, it was broken: it silently failed during the 
+initial UART communication phase, so the generated traces only covered UART communication and not the encryption. So I set
+to work on it to fix it. It now works properly and has more functionalities than the original. 
 
 ### Warning ⚠️
-While this tool is now in a much better shape than when I first got to work on it, this is still **not working**.
-At least, it isn't failing silently and producing a trace that doesn't capture the encryption phase anymore.
-
 
 We need to use Qiling's latest version for this to work. Unfortunately, at the moment of writing, the current version on 
 PyPI is more than two years old. For this reason, the `requirements.txt` file installs Qiling's dev branch. This can, and 
@@ -29,13 +28,13 @@ space that you ask for, plus a couple of minor checks that are not relevant. The
 was recording the registers any time that some instruction in the code under test would have been in that range. This led 
 to a bunch of odd recordings that should not have been there.
 
-He fixed this by creating his own hook that is currently (4/2/26) being reviewed in the Qiling repo: https://github.com/qilingframework/qiling/pull/1500.
+He fixed this by creating his own hook that is currently (last checked on 5/9/26) being reviewed in the Qiling repo: https://github.com/qilingframework/qiling/pull/1500.
 
 To fix the issue, after installing `qiling`, make sure to run the script `apply_qiling_patch.py` at least once before running Sofa.
 
 - **On Windows**:
    - Run the following command in **Command Prompt** or **PowerShell**:
-     ```bash
+     ```
      python sofa/tools/apply_qiling_patch.py
      ```
 
@@ -44,6 +43,12 @@ To fix the issue, after installing `qiling`, make sure to run the script `apply_
      ```bash
      python3 sofa/tools/apply_qiling_patch.py
      ```
+
+- **On Arch-based Linux distros, and any distro where the previous command fails**:
+    - Run the following command in the terminal:
+      ```bash
+            python sofa/tools/apply_qiling_patch.py
+      ```
 
 This will copy the content of the `qilingpatch` folder into the `qiling/extensions` directory. The location of this directory will depend on where your `qiling` package is installed.
 
