@@ -15,7 +15,9 @@ env/
 .VENV/
 Traces/
 Traces-AES/
+Traces-KECCAK/
 RandomStuff/
+rp2350_hacking_challenge_2/
 
 # Byte-compiled / optimized / DLL files
 *.pyc
