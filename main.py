@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 from argparse import Namespace
+from pathlib import Path
 
 from term_image.image import from_file
 
@@ -75,8 +76,8 @@ if __name__ == "__main__":
     )
 
     session.init_session()
-    session.run_session(target_profile=tp)
+    trace_dir = Path(session.run_session(target_profile=tp))
 
-    #TODO: do not hardcode paths
-    generate_power_traces('Traces-AES', 'Traces-AES/power_traces.npz', args.leakage_model)
-    show_power_traces('Traces-AES/power_traces.npz', args.leakage_model)
+    power_file = trace_dir / 'power_traces.npz'
+    generate_power_traces(trace_dir, power_file, args.leakage_model)
+    show_power_traces(power_file, args.leakage_model)

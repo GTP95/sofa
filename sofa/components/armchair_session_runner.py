@@ -1,6 +1,7 @@
 import csv
 import logging
 import os
+import tempfile
 
 from qiling import Qiling
 from tqdm.contrib.concurrent import process_map
@@ -30,6 +31,7 @@ class ARMChairSessionRunner:
         self.sym_parser = SymParser(elf_path=elf_path)
         self.logger=logging.getLogger(__name__)
         self.json_path=json_path
+        self.output_dir: str | None = None
 
     def process_row(self, row, index) -> None:
         """
@@ -63,12 +65,11 @@ class ARMChairSessionRunner:
 
             self.target_profile.init_uart(ql=ql, input_format=self.input_format)
 
-            output_path = f"{TRACESPATH}-{self.target_profile.get_algorithm_name()}"
-
-            os.makedirs(output_path, 511, True)
+            if self.output_dir is None:
+                raise RuntimeError("Start a session before processing rows")
 
             output_path: str = os.path.join(
-                output_path,
+                self.output_dir,
                 f"traces_{index[0] + 1}.csv",
             )
 
@@ -96,12 +97,19 @@ class ARMChairSessionRunner:
             logger.error(f"\nError processing data {row}: {e}")
             raise
 
-    def run_session(self) -> None:
+    def run_session(self) -> str:
         # check that the data is there
         if self.target_data == None or len(self.target_data) == 0:
             raise ValueError(
                 f"No or empty taget data has been provided, cannot process."
             )
+
+        # Give every session its own directory so postprocessing cannot include
+        # stale traces from an earlier run with different inputs or firmware.
+        output_root = f"{TRACESPATH}-{self.target_profile.get_algorithm_name()}"
+        os.makedirs(output_root, exist_ok=True)
+        self.output_dir = tempfile.mkdtemp(prefix="run-", dir=output_root)
+        self.logger.info("Saving session traces to %s", self.output_dir)
 
         # Notify the user that the session has started
         self.logger.info(f"Session started")
@@ -123,3 +131,4 @@ class ARMChairSessionRunner:
 
         # Notify the user that the session has completed
         self.logger.info("Session completed")
+        return self.output_dir

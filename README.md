@@ -173,6 +173,14 @@ The `Makefile` also provides options for cleaning the build or compiling for spe
 
 #### Step 2: Running the Python Cryptographic Simulation
 
+Each simulation writes its execution traces and `power_traces.npz` to a new
+`Traces-<algorithm>/run-<unique-id>/` directory, whose path is logged at startup.
+Postprocessing uses only that session's traces, so previous runs with different
+input sizes or firmware can remain on disk without affecting the current run.
+The NPZ archive stores power samples in `arr_0` and original sample counts in
+`lengths`. When instruction counts differ, shorter rows have trailing `NaN`
+values; use `arr_0[i, :lengths[i]]` to recover a trace without padding.
+
 Once the project is built, you can run the cryptographic analysis using the Python scripts. Sofa supports both user-provided and auto-generated inputs.
 
 ##### Command-Line Arguments
@@ -264,4 +272,3 @@ python main.py --debug --input user AES --key "..." --plaintext "..." --iv "..."
 ### License
 
 This project is licensed under the MIT License.
-

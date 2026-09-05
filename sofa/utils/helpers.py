@@ -778,7 +778,7 @@ def extract_number(filename):
     ### Returns:
         - `_type_`: _description_
     """
-    match = re.search(r'trace_(\d+)', filename.stem)
+    match = re.search(r'traces?_(\d+)', filename.stem)
     return int(match.group(1)) if match else float('inf')
 
 
@@ -917,8 +917,18 @@ def create_npz_file(name_npy_file, folder, leakage_model, cols=['r0','r1','r2','
 
     trace_list.extend(results)
 
-    vectors_array = np.array(trace_list)
-    np.savez_compressed(name_npy_file, vectors_array)
+    if not trace_list:
+        raise ValueError(f"No execution trace CSV files found in {folder}")
+    lengths = np.array([len(trace) for trace in trace_list], dtype=np.int64)
+    if np.all(lengths == lengths[0]):
+        vectors_array = np.asarray(trace_list)
+    else:
+        # Instruction counts may vary between inputs. Preserve all samples and
+        # mark absent samples explicitly, without truncation or object arrays.
+        vectors_array = np.full((len(trace_list), int(lengths.max())), np.nan)
+        for index, trace in enumerate(trace_list):
+            vectors_array[index, :lengths[index]] = trace
+    np.savez_compressed(name_npy_file, vectors_array, lengths=lengths)
     print("Finished creating the file")
 
 #********************************************************************************************************************

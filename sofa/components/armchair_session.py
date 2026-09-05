@@ -131,7 +131,7 @@ class ARMChairSession:
                 f"Mode {self.mode} has not been implemented yet, use the help function for available user input modes"
             )
 
-    def run_session(self, target_profile: QilingProfile) -> None:
+    def run_session(self, target_profile: QilingProfile) -> str:
         session = ARMChairSessionRunner(
             elf_path=self.elf_path,
             input_format=self.input_format,
@@ -139,4 +139,4 @@ class ARMChairSession:
             target_profile=target_profile,
             json_path=self.args.config
         )
-        session.run_session()
+        return session.run_session()
