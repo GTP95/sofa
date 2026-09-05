@@ -228,8 +228,7 @@ python main.py --input auto --count 10 --leakage_model "HW" AES AES-CW308_STM32F
 ##### Example 4: Running bundled KECCAK implementation with user-provided input
 
 ```bash
-python main.py --input user --key "00112233445566778899aabbccddeeff" --plaintext "00112233445566778899aabbccddeeff" --capacity 1600 KECCAK KECCAK-CW308_STM32F4.elf KECCAK-CW308_STM32F4.json
-```
+python main.py --input user KECCAK --plaintext "00112233445566778899aabbccddeeff00112233445566778899aabbccddeeff00112233445566778899aabbccddeeff00112233445566778899aabbccddeeff" KECCAK-CW308_STM32F4.elf KECCAK-CW308_STM32F4.json```
 
 ##### Example 5: Running a user-provided ELF executable (in this case, "RP2350 Hacking Challenge 2" 's AES implementation)
 Note that this is not included in this repository, you will have to download and build it yourself. The Docker image does this for you.
