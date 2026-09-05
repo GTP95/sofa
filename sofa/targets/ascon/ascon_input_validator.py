@@ -19,9 +19,9 @@ class AsconInputValidator(InputValidator):
         s_use_ad: bool = s_ad_len != 0
 
         key: str = target_data[0]
-        ad: str = target_data[1]
+        plaintext: str = target_data[1]
         nonce: str = target_data[2]
-        plaintext: str = target_data[3]
+        ad: str = target_data[3]
 
         # Validate plaintext length
         pt_len: int = get_hex_str_bytes_nr(string=plaintext)

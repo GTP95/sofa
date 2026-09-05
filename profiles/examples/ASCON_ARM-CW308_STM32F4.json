@@ -1,0 +1,22 @@
+{
+  "platform": "stm32f415",
+  "__platform__comment": "The Qiling MCU platform used for this operation (e.g., stm32f415)",
+  "target": "ASCON_ARM",
+  "__target__comment": "The specific target profile or algorithm being used (e.g., ASCON)",
+  "plaintext_length": "64",
+  "__plaintext_length__comment": "The length of the plaintext input in bytes (e.g., 64 bytes)",
+  "ad_length": "0",
+  "__ad_length__comment": "The length of the associated data input in bytes (e.g., 16 bytes)",
+  "num_shares": "1",
+  "__num_shares__comment": "The number of shares used for masking",
+  "pa_rounds": "12",
+  "__pa_rounds__comment": "The number of PA rounds (full rounds) in the ASCON algorithm",
+  "pb_rounds": "6",
+  "__pb_rounds__comment": "The number of PB rounds (partial rounds) in the ASCON algorithm",
+  "ror_shares": "5",
+  "__ror_shares__comment": "Number of shares rotated in ASCON to mitigate side-channel attacks",
+  "extern_bi": "false",
+  "__extern_bi__comment": "Indicates if external bit interleaving is used",
+  "memory_mappings": [{"base_address": 1342572544, "size": 1024, "perms": 7, "info": "[RNG]"}],
+  "__memory_mappings__comment": "Additional memory regions required by the target during emulation"
+}

@@ -52,6 +52,7 @@ class AsconQilingProfile(QilingProfile):
 
     def __hook_function_add_cmd_reached(self, ql: Qiling) -> None:
         command, data_length = get_command_received(ql=ql)
+        self._uart.register_command(command, data_length)
         if command == "q":
             self.__status[0] = AsconQilingStatus.WAIT_CMD
             ql.log.info("All commands registered correctly!")
