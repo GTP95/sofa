@@ -46,7 +46,7 @@ if __name__ == "__main__":
     elif args.target == "ASCON":
         ig = AsconInputsGenerator()
         iv = AsconInputValidator()
-        sl = AsconSettingsLoader()
+        sl = AsconSettingsLoader(json_path=args.config)
         ip = AsconInputParser()
         tp = AsconQilingProfile()
 

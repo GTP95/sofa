@@ -629,8 +629,7 @@ def initialize_qiling(
         case 'AES':
             config = AesSettingsLoader(json_path).get_target_settings()
         case 'ASCON':
-            logging.getLogger().warning('This part of the codebase needs refactoring and will not work.')
-            config = AsconSettingsLoader().get_target_settings()
+            config = AsconSettingsLoader(json_path).get_target_settings()
         case 'KECCAK':
             config = KeccakHashSettingsLoader(json_path).get_target_settings()
         case _:
@@ -646,6 +645,10 @@ def initialize_qiling(
         case 'stm32f1':
             platform=stm32f1
         case 'stm32f415':
+            platform=stm32f415
+        case 'CW308_STM32F4':
+            # Backwards compatibility for ASCON profiles generated before the
+            # build system started emitting Qiling's platform identifier.
             platform=stm32f415
         case 'rp2350':
             platform = RP2350

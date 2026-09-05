@@ -3,6 +3,7 @@
 #include <Firmware/simpleserial/simpleserial.h>
 #include <stdint.h>
 #include <stdlib.h>
+#include <string.h>
 
 // Default defines, do not change these
 #ifdef PTLEN
