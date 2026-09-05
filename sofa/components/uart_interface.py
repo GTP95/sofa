@@ -8,6 +8,14 @@ import logging
 import time
 
 
+class UartError(RuntimeError):
+    """Raised when UART communication/parsing fails in a way that should stop the emulation."""
+    def __init__(self, message: str, *, raw: bytes = b"", parsed: str | None = None) -> None:
+        super().__init__(message)
+        self.raw = raw
+        self.parsed = parsed
+
+
 class UartHandler:
     """
     Base class for handling UART communication with the Qiling emulated hardware.
@@ -28,35 +36,57 @@ class UartHandler:
         self.logger: logging.Logger = logging.getLogger(__name__)
         self.logger.setLevel(logging.getLogger().level)
         self._rx_buf: bytearray = bytearray()
+        self._command_lengths: dict[str, int] = {}
 
-    def get_response(self, *, timeout_s: float = 1.0, chunk_size: int = 256) -> str:
+    def register_command(self, command: str, data_length: int) -> None:
+        """Remember the payload length advertised by the running firmware."""
+        self._command_lengths[command] = data_length
+
+    def _recv_chunk(self, chunk_size: int) -> bytes:
+        """
+        Receive a chunk from USART1, supporting both recv() and recv(size) APIs.
+        """
+        try:
+            return self.ql.hw.usart1.recv(chunk_size)
+        except TypeError:
+            # Some Qiling USART implementations expose recv() with no args
+            return self.ql.hw.usart1.recv()
+
+    def get_response(self, *, timeout_s: float = 2.5, chunk_size: int = 256) -> str:
         """
         Receives and parses the UART response from the emulated hardware.
 
+        This waits until a full SimpleSerial-like frame is observed (terminator 'z00'),
+        then parses it via parse_usart_res().
+
         Returns:
-            str: The parsed response from the UART, it will always be a hex string
+            str: The parsed response from the UART.
 
         Raises:
             UartError: If there's an error while receiving or parsing the response.
         """
         start = time.monotonic()
         raw_collected = bytearray()
+
         try:
             while (time.monotonic() - start) < timeout_s:
-                # Receive bytes from the USART1 interface (may be partial/empty)
-                chunk: bytes = self.ql.hw.usart1.recv(chunk_size)
+                chunk = self._recv_chunk(chunk_size)
                 if chunk:
                     raw_collected.extend(chunk)
 
-                    # Try parsing whatever we have so far.
-                    # parse_usart_res should be robust to extra bytes / partial frames;
-                    # if it isn't, we still gain visibility via raw logging below.
-                    response: str = parse_usart_res(res_bytes=bytes(raw_collected))
+                    # SimpleSerial framing heuristic: ACK/data frames end with 'z00'
+                    # We look for it in ASCII to decide we likely have a complete frame.
+                    ascii_view = raw_collected.decode("ascii", errors="ignore")
+                    if "z00" not in ascii_view:
+                        continue
+
+                    response = parse_usart_res(res_bytes=raw_collected)
 
                     if response == TargetResponse.ERR.value:
                         self.logger.error(
-                            "UART returned ERR. raw=%s",
+                            "UART parsed as ERR. raw=%s ascii=%r",
                             bytes(raw_collected).hex(),
+                            ascii_view[-200:],
                         )
                         self.ql.stop()
                         raise UartError(
@@ -65,14 +95,11 @@ class UartHandler:
                             parsed=response,
                         )
 
-                    # Heuristic: if parsing yields a non-empty non-ERR string, accept it.
                     if response:
                         return response
 
-                # Avoid a tight busy loop if recv() returns b""
                 time.sleep(0.001)
 
-            # Timed out waiting for a valid response
             self.logger.error(
                 "Timed out waiting for UART response after %.3fs. raw=%s",
                 timeout_s,
@@ -104,22 +131,21 @@ class UartHandler:
 
         Args:
             cmd (bytes): The command to send over UART.
-
-        Raises:
-            Exception: If there is an error while sending the command.
         """
         try:
-            # Log the command being sent, represented as the first byte's ASCII character
-            self.logger.info(msg=f"Sending '{chr(cmd[0])}' command... Full command is: {cmd}")
-            # Send the command over USART1
+            command = chr(cmd[0])
+            expected = self._command_lengths.get(command)
+            if expected is not None:
+                # SimpleSerial v1 sends two ASCII hex characters per byte.
+                payload_length = len(cmd[1:].rstrip(b"\r\n"))
+                if payload_length != expected * 2:
+                    raise UartError(
+                        f"UART command {command!r}: firmware expects {expected} bytes "
+                        f"({expected * 2} hex characters), got {payload_length} hex "
+                        "characters. Match the input/configuration to the firmware "
+                        "build (PTLEN for plaintext)."
+                    )
+            self.logger.info(msg=f"Sending '{chr(cmd[0])}' command... Full command is: {cmd!r}")
             self.ql.hw.usart1.send(cmd)
         except Exception as e:
-            raise Exception(f"Sending '{chr(cmd[0])}' command resulted in: {e}.")
-
-
-class UartError(RuntimeError):
-    """Raised when UART communication/parsing fails in a way that should stop the emulation."""
-    def __init__(self, message: str, *, raw: bytes = b"", parsed: str | None = None) -> None:
-        super().__init__(message)
-        self.raw = raw
-        self.parsed = parsed
+            raise Exception(f"Sending '{chr(cmd[0])}' command resulted in: {e}.") from e

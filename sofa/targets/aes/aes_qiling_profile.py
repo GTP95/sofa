@@ -77,6 +77,7 @@ class AesQilingProfile(QilingProfile):
             ql (Qiling): The Qiling instance that controls the emulation.
         """
         command, data_length = get_command_received(ql=ql)
+        self._uart.register_command(command, data_length)
         if command == "q":
             self.__status[0] = AesQilingStatus.WAIT_CMD
             self.logger.info("All commands registered correctly!")
