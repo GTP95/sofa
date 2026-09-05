@@ -89,8 +89,7 @@ class ARMChairSessionRunner:
                 csv_writer.writerow(headerList)  # Write the headers
                 csv_writer.writerows(traces)  # Write the rows of data
         except UcError as ex:
-            addr, size = ex.args
-            logger.error(f'failed to access address {addr:#010x} ({addr} in decimal). Access size: {size:d}')
+            logger.error("Unicorn emulation failed: %s", ex)
             raise
 
         except Exception as e:

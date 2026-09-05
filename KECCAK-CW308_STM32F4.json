@@ -1,0 +1,14 @@
+{
+  "platform": "stm32f415",
+  "__platform__comment": "The Qiling MCU platform used for this operation (e.g., stm32f415)",
+  "target": "KECCAK",
+  "__target__comment": "The specific target profile or algorithm being used (e.g., KECCAK)",
+  "function": "SHAKE128",
+  "__function__comment": "The specific function of the KECCAK family (e.g., SHAKE128)",
+  "plaintext_length": "64",
+  "__plaintext_length__comment": "The length of the plaintext input in bytes (e.g., 64 bytes)",
+  "digest_length": "64",
+  "__digest_length__comment": "The length of the digest in bytes (e.g., 64 bytes)",
+  "memory_mappings": [{"base_address": 1342572544, "size": 1024, "perms": 7, "info": "[RNG]"}],
+  "__memory_mappings__comment": "Additional memory regions required by the target during emulation"
+}

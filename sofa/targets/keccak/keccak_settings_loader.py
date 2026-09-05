@@ -2,8 +2,8 @@ from sofa.components.settings_loader import SettingsLoader
 
 
 class KeccakHashSettingsLoader(SettingsLoader):
-    def __init__(self, json_path=None) -> None:
-        super().__init__(target="KECCAK", json_path=json_path)
+    def __init__(self, json_path) -> None:
+        super().__init__(json_path)
         self._parse_target_config()
 
     def _parse_target_config(self) -> None:
@@ -17,6 +17,7 @@ class KeccakHashSettingsLoader(SettingsLoader):
                 "target": self._settings["target"],
                 "function": self._settings["function"],
                 "plaintext_length": plaintext_length,
+                "memory_mappings": self._settings.get("memory_mappings", []),
             }
         except Exception as e:
             raise Exception(

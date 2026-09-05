@@ -53,7 +53,7 @@ if __name__ == "__main__":
     elif args.target == "KECCAK":
         ig = KeccakHashInputsGenerator()
         iv = KeccakHashInputValidator()
-        sl = KeccakHashSettingsLoader()
+        sl = KeccakHashSettingsLoader(json_path=args.config)
         ip = KeccakHashInputParser()
         tp = KeccakHashQilingProfile()
 
