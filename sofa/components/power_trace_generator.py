@@ -65,7 +65,7 @@ def show_power_traces(input_file, leakage_model, start=0, end=None, format='npz'
                 xlabel='Time samples', 
                 ylabel='Power consumption',
                 legend_position='right',
-                legend_title='Power consumption under ID model'
+                title='Power consumption under ID model'
             ))
         
         case 'HD':
@@ -93,7 +93,6 @@ def show_power_traces(input_file, leakage_model, start=0, end=None, format='npz'
 
     show(hv.render(plot))
     print("Power traces are displayed inside your browser.")
-
 
 
 
