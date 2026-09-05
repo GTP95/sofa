@@ -31,10 +31,9 @@ class ProgressBar(tqdm):
         """
         logger = logging.getLogger(__name__)
         logger.setLevel(logging.getLogger().level)
-        super().__init__(
-            *args,
-            **kwargs,
-            bar_format=(
+        kwargs.setdefault(
+            "bar_format",
+            (
                 f"Creating traces.."
                 f"{Fore.WHITE}{{l_bar}}{Style.RESET_ALL}"  # Left part of the progress bar (white)
                 f"{Fore.GREEN}{{bar}}{Style.RESET_ALL}"  # The progress bar itself (green)
@@ -42,6 +41,7 @@ class ProgressBar(tqdm):
                 f" {Fore.WHITE}Elapsed: {Fore.WHITE}{{elapsed}}{Style.RESET_ALL}"  # Elapsed time
                 f" {Fore.WHITE}Remaining: {Fore.WHITE}{{remaining}}{Style.RESET_ALL}"  # Remaining time
             ),
-            ncols=100,  # Set the width of the progress bar
-            smoothing=0.5,  # Smoothing factor for progress bar updates
         )
+        kwargs.setdefault("ncols", 100)
+        kwargs.setdefault("smoothing", 0.5)
+        super().__init__(*args, **kwargs)
