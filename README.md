@@ -9,8 +9,8 @@ This is an improved version of ARCHER's ARM variant (also known as ARMChair), a 
 Radboud University, with the aim of developing a tool that is actually usable in the real world. To the best of my knowledge, 
 ARMChair's original developer was Paolo Scattolin. When I first got this tool, it was broken: it silently failed during the 
 initial UART communication phase while still generating traces, therefore the generated traces only covered UART communication and not the encryption. 
-So I set to work on it to fix it. It now works properly and has more functionalities than the original. By using JSON simulation profiles,
-it is now possible to use this simulator with any binary, provided that its architecture is supported by Qiling. 
+So I set to work on it to fix it, and later created this fork after leaving Radboud. It now works properly and has more functionalities than the original. 
+By using JSON simulation profiles, it is now possible to use this simulator with any binary, provided that its architecture is supported by Qiling. 
 
 ### Warning ⚠️
 
@@ -131,11 +131,12 @@ but you can still run simulations with your own binaries.
 
 
 
-4. Install `make` for your platform if it isn't already installed. On Debian-based Linux distributions, you can install it using:
+4. Optional: install `make` for your platform if it isn't already installed. On Debian-based Linux distributions, you can install it using:
 
    ```bash
    sudo apt-get install make
    ```
+    1. Install the [arm-none-eabi](https://developer.arm.com/downloads/-/arm-gnu-toolchain-downloads) toolchain.
 
 #### Docker
 You can build this Docker image with:
