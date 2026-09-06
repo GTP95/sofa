@@ -8,8 +8,8 @@ Sofa aims at identifying architectural leakage for ARM software implementations 
 This is an improved version of ARCHER's ARM variant (also known as ARMChair), a power simulator for side-channel analysis originally developed at 
 Radboud University, with the aim of developing a tool that is actually usable in the real world. To the best of my knowledge, 
 ARMChair's original developer was Paolo Scattolin. When I first got this tool, it was broken: it silently failed during the 
-initial UART communication phase, so the generated traces only covered UART communication and not the encryption. So I set
-to work on it to fix it. It now works properly and has more functionalities than the original. By using JSON simulation profiles,
+initial UART communication phase while still generating traces, therefore the generated traces only covered UART communication and not the encryption. 
+So I set to work on it to fix it. It now works properly and has more functionalities than the original. By using JSON simulation profiles,
 it is now possible to use this simulator with any binary, provided that its architecture is supported by Qiling. 
 
 ### Warning ⚠️
@@ -18,18 +18,25 @@ We need to use Qiling's latest version for this to work. Unfortunately, at the m
 PyPI is more than two years old. For this reason, the `requirements.txt` file installs Qiling's dev branch. This can, and 
 should, be changed once Qiling's PyPI version gets updated.
 
-There is currently a critical bug that prevents the right instructions from being recorded. In particular, we were seeing 
-different branching while comparing traces simulated by Sofa, leading to an incorrect intersection of the intermediates.
+Sofa computes one power sample for each *recorded* instruction, not necessarily for every instruction executed by the
+firmware. Qiling still executes the whole program, including startup and UART handling. Its instruction hook records the
+register state into a CSV trace, then Sofa applies the selected ID, HW, or HD leakage model to each CSV row.
 
-Basically, the `hook_code` function in Qiling wasn't working in the way that Scattolin was expecting. He assumed that he 
-could define a `begin` and `end` using memory addresses and that the hook would be called from when we hit the start until we hit the end. 
+For side-channel analysis, the trace should normally contain the cryptographic operation rather than unrelated startup,
+protocol, and output code. This also avoids extra noise, misalignment between executions, and unnecessarily large traces.
+The capture boundaries must be a temporal execution window: start recording when execution reaches the start marker, keep
+recording every subsequently executed instruction (including calls to helpers at unrelated addresses), and stop when
+execution reaches the end marker.
 
-The way that hook actually works is by checking if the program counter is in between the `begin` and the end of the memory 
-space that you ask for, plus a couple of minor checks that are not relevant. The result is that by defining a range, he 
-was recording the registers any time that some instruction in the code under test would have been in that range. This led 
-to a bunch of odd recordings that should not have been there.
+Qiling's standard `hook_code(begin, end)` has different semantics. It is a static address filter: the callback runs only
+when the current program counter lies numerically between `begin` and `end`. Consequently, it can omit helper routines
+called from the operation when their code lies outside that address range, and it can record code in the range whenever it
+runs, even outside the intended invocation. This mismatch caused incorrect recordings and divergent traces when
+intermediate values were compared.
 
-He fixed this by creating his own hook that is currently (last checked on 5/9/26) being reviewed in the Qiling repo: https://github.com/qilingframework/qiling/pull/1500.
+Sofa therefore uses a small `hook_switch` extension. It switches recording on when the program counter reaches `begin`
+and off when it reaches `end`, so the callback covers the dynamic execution interval rather than an address interval. This
+extension was originally proposed upstream in the Qiling project: https://github.com/qilingframework/qiling/pull/1500.
 
 To fix the issue, after installing `qiling`, make sure to run the script `apply_qiling_patch.py` at least once before running Sofa.
 
