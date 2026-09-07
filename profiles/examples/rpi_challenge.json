@@ -24,10 +24,15 @@
   "iv_cmd": "",
 
   "execution_mode": "direct",
+  "__execution_mode__comment": "How the AES routine is invoked. Use 'direct' to call enc_cmd with ARM register arguments instead of communicating through the UART interface",
   "trace_start": "decrypt",
+  "__trace_start__comment": "Name of the ELF symbol at which trace collection begins (e.g., decrypt). Defaults to enc_cmd when omitted",
   "trace_end": "decryption_end",
+  "__trace_end__comment": "Name of the ELF symbol at which trace collection ends (e.g., decryption_end). Defaults to return_value when omitted",
   "workspace_address": 537329664,
+  "__workspace_address__comment": "Base address, in decimal, of writable emulated memory used for the direct-call key, salt, IV, and data buffers. Defaults to 0x20070000 when omitted",
   "stack_address": 537391104,
+  "__stack_address__comment": "Stack pointer address, in decimal, used for the direct call; the fifth AES argument (nblk) is written here. Defaults to 0x2007F000 when omitted",
 
   "memory_mappings": [],
   "__memory_mappings__comment": "Memory regions used by the target. The base address and size must be specified in decimal, as JSON does not support hexadecimal notation. 'perms' is a bitmask specifying the permissions of the region, 7 corresponds to UC_PROT_ALL. 'info' is just a user-defined label to help identify the region, it has no impact on the emulation. All these parameters are directly passed to Qiling, so you can refer to its documentation for more details."
