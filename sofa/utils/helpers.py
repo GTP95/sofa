@@ -1,3 +1,4 @@
+import json
 import os
 import re
 import shutil
@@ -30,6 +31,98 @@ from sofa.utils.enums import TargetResponse
 
 # region: PARSERS
 
+SUPPORTED_ALGORITHMS = {"AES", "ASCON", "KECCAK"}
+ALGORITHM_OPTIONS = {
+    "AES": frozenset({"iv", "key", "plaintext"}),
+    "ASCON": frozenset({"ad", "key", "nonce", "plaintext"}),
+    "KECCAK": frozenset({"capacity", "plaintext"}),
+}
+OPTION_FLAGS = {
+    "ad": "--ad",
+    "capacity": "--capacity",
+    "iv": "--iv",
+    "key": "--key",
+    "nonce": "--nonce",
+    "plaintext": "--plaintext",
+}
+
+
+def get_profile_algorithm(json_path: str) -> str:
+    """Return the supported algorithm declared by a JSON profile.
+
+    Profile targets may include an implementation suffix, such as
+    ``ASCON_PROTECTED``. The portion before the first underscore identifies the
+    algorithm used to select Sofa's algorithm-specific components.
+
+    Args:
+        json_path: Path to the JSON profile.
+
+    Returns:
+        The algorithm name declared by the profile.
+
+    Raises:
+        ValueError: If the profile cannot be read or does not declare a
+            supported target.
+    """
+    try:
+        with open(json_path, "r", encoding="utf-8") as profile_file:
+            profile = json.load(profile_file)
+    except (OSError, json.JSONDecodeError) as error:
+        raise ValueError(f"Unable to load profile {json_path!r}: {error}") from error
+
+    if not isinstance(profile, dict):
+        raise ValueError(f"Profile {json_path!r} must contain a JSON object")
+
+    target = profile.get("target")
+    if not isinstance(target, str) or not target:
+        raise ValueError(
+            f"Profile {json_path!r} must define a non-empty string 'target'"
+        )
+
+    algorithm = target.split("_", maxsplit=1)[0]
+    if algorithm not in SUPPORTED_ALGORITHMS:
+        supported = ", ".join(sorted(SUPPORTED_ALGORITHMS))
+        raise ValueError(
+            f"Profile target {target!r} is not supported; its base algorithm must "
+            f"be one of: {supported}"
+        )
+
+    return algorithm
+
+
+def validate_algorithm_options(args: Namespace) -> None:
+    """Validate algorithm-specific options against the selected profile.
+
+    Args:
+        args: Parsed arguments containing the profile-selected algorithm and
+            algorithm-specific option values.
+
+    Raises:
+        ValueError: If an option was supplied for a different algorithm.
+    """
+    provided_options = {
+        option
+        for option in OPTION_FLAGS
+        if getattr(args, option, None) is not None
+    }
+    allowed_options = ALGORITHM_OPTIONS[args.algorithm]
+    incompatible_options = sorted(provided_options - allowed_options)
+
+    if not incompatible_options:
+        return
+
+    incompatible_flags = ", ".join(
+        OPTION_FLAGS[option] for option in incompatible_options
+    )
+    allowed_flags = ", ".join(
+        OPTION_FLAGS[option] for option in sorted(allowed_options)
+    )
+    raise ValueError(
+        f"Profile {args.config!r} selects {args.algorithm}, but these options are "
+        f"not valid for {args.algorithm}: {incompatible_flags}. Valid "
+        f"algorithm-specific options are: {allowed_flags}."
+    )
+
 
 def parse_usart_res(res_bytes: bytearray) -> str:
     """
@@ -57,7 +150,7 @@ def parse_usart_res(res_bytes: bytearray) -> str:
 
 def parse_args() -> Namespace:
     """
-    Parses command-line arguments to determine the cryptographic algorithm and input mode.
+    Parse command-line arguments and determine the algorithm from the profile.
 
     Returns:
         Namespace: Parsed arguments as a namespace object.
@@ -100,10 +193,6 @@ def parse_args() -> Namespace:
     parser.add_argument("--leakage_model", type=str, choices=["HD", "HW", "ID"], default="HD", help="Leakage model to use for power trace generation (default: HD).")
 
     parser.add_argument("--no_validation", action="store_true", help="Disable input validation for user-provided inputs.")
-    # Positional argument to select the algorithm (AES, ASCON, KECCAK)
-    subparsers = parser.add_subparsers(
-        dest="target", required=True, help="Choose the cryptographic algorithm."
-    )
 
     parser.add_argument(
         "elf_path",
@@ -114,53 +203,45 @@ def parse_args() -> Namespace:
     parser.add_argument(
         "config",
         type=str,
-        help="Path to the JSON configuration file"
+        help="Path to the JSON profile whose target selects the algorithm.",
     )
 
 
 
-    # AES Subparser
-    aes_parser = subparsers.add_parser("AES", help="AES algorithm options")
-    # ASCON Subparser
-    ascon_parser = subparsers.add_parser("ASCON", help="ASCON algorithm options")
-    # KECCAK Subparser
-    keccak_parser = subparsers.add_parser("KECCAK", help="KECCAK algorithm options")
-
-    # AES Subparser args
-    aes_parser.add_argument("--key", type=str, help="User provided key (hex string).")
-    aes_parser.add_argument(
-        "--plaintext", type=str, help="User provided plaintext (hex string)."
-    )
-    aes_parser.add_argument("--iv", type=str, help="User provided IV (hex string).")
-
-    # ASCON Subparser args
-    ascon_parser.add_argument(
+    parser.add_argument(
         "--key",
         type=str,
-        help="User provided key (hex string). Must be 16 bytes for this implementation",
+        help="User-provided AES or ASCON key.",
     )
-    ascon_parser.add_argument(
-        "--plaintext", type=str, help="User provided plaintext (hex string)."
+    parser.add_argument(
+        "--plaintext", type=str, help="User-provided plaintext."
     )
-    ascon_parser.add_argument(
+    parser.add_argument("--iv", type=str, help="User-provided AES IV.")
+    parser.add_argument(
         "--nonce",
         type=str,
-        help="User provided nonce (hex string). Must be 16 bytes for this implementation",
+        help="User-provided ASCON nonce.",
     )
-    ascon_parser.add_argument(
-        "--ad", type=str, help="User provided associated data (hex string)."
+    parser.add_argument(
+        "--ad", type=str, help="User-provided ASCON associated data."
     )
-
-    # KECCAK Subparser args
-    keccak_parser.add_argument(
-        "--plaintext", type=str, help="User provided plaintext (hex string)."
+    parser.add_argument(
+        "--capacity",
+        type=int,
+        help="KECCAK capacity in bits (default: 1600).",
     )
-
-    keccak_parser.add_argument("--key", type=str, help="User provided key (hex string).")
-    keccak_parser.add_argument("--capacity", type=int, default=1600, help="KECCAK capacity in bits (default: 1600).")
 
     # Parse the arguments
     args = parser.parse_args()
+
+    try:
+        args.algorithm = get_profile_algorithm(args.config)
+        validate_algorithm_options(args)
+    except ValueError as error:
+        parser.error(str(error))
+
+    if args.algorithm == "KECCAK" and args.capacity is None:
+        args.capacity = 1600
 
     # Configure global logging level based on --debug
     log_level = logging.DEBUG if args.debug else logging.INFO
@@ -174,17 +255,17 @@ def parse_args() -> Namespace:
 
     # Conditional requirements for --input
     if args.input == "user":
-        if args.target == "AES" and (not args.key or not args.plaintext):
+        if args.algorithm == "AES" and (not args.key or not args.plaintext):
             parser.error(
                 "--key, and --plaintext are required when --input is 'user' for AES"
             )
-        if args.target == "ASCON" and (
+        if args.algorithm == "ASCON" and (
             not args.key or not args.plaintext or not args.nonce
         ):
             parser.error(
                 "--key, --plaintext, and --nonce are required when --input is 'user' for ASCON"
             )
-        if args.target == "KECCAK" and not args.plaintext:
+        if args.algorithm == "KECCAK" and not args.plaintext:
             parser.error("--plaintext is required when --input is 'user' for KECCAK")
 
     if args.input == "auto":
@@ -198,17 +279,17 @@ def parse_args() -> Namespace:
             )
         if not args.elf_path:
             logger.warning(
-                f"No --elf_path argument provided, in this case the SettingsLoader component needs to be created and used for the {args.target} session"
+                f"No --elf_path argument provided, in this case the SettingsLoader component needs to be created and used for the {args.algorithm} session"
             )
 
     if args.input == "user-raw":
         if not args.elf_path:
             logger.warning(
-                f"No --elf_path argument provided, in this case the SettingsLoader component needs to be created and used for the {args.target} session"
+                f"No --elf_path argument provided, in this case the SettingsLoader component needs to be created and used for the {args.algorithm} session"
             )
 
-    # Process based on the algorithm (determined by the invoked subparser)
-    if args.target == "AES":
+    # Process based on the algorithm declared by the JSON profile.
+    if args.algorithm == "AES":
         if args.input == "user":
             logger.debug("AES with user-provided input:")
             logger.debug(f"Key: {args.key}")
@@ -224,7 +305,7 @@ def parse_args() -> Namespace:
                 f"AES with user provided file. All the inputs in the file will be processed."
             )
 
-    elif args.target == "ASCON":
+    elif args.algorithm == "ASCON":
         if args.input == "user":
             logger.debug("ASCON with user-provided input:")
             logger.debug(f"Key: {args.key}")
@@ -241,7 +322,7 @@ def parse_args() -> Namespace:
                 f"ASCON with user provided file. All the inputs in the file will be processed."
             )
 
-    elif args.target == "KECCAK":
+    elif args.algorithm == "KECCAK":
         if args.input == "user":
             logger.debug("KECCAK with user-provided input:")
             logger.debug(f"Plaintext: {args.plaintext}")

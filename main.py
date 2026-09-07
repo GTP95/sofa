@@ -36,21 +36,21 @@ if __name__ == "__main__":
     ip = None
     tp = None  # this is the only one that needs to be implemented, the rest can be skipped in user-csv or user-raw mode.
 
-    if args.target == "AES":
+    if args.algorithm == "AES":
         ig = AesInputsGenerator()
         iv = AesInputValidator()
         sl = AesSettingsLoader(json_path=args.config)
         ip = AesInputParser()
         tp = AesQilingProfile(json_path=args.config)
 
-    elif args.target == "ASCON":
+    elif args.algorithm == "ASCON":
         ig = AsconInputsGenerator()
         iv = AsconInputValidator()
         sl = AsconSettingsLoader(json_path=args.config)
         ip = AsconInputParser()
         tp = AsconQilingProfile()
 
-    elif args.target == "KECCAK":
+    elif args.algorithm == "KECCAK":
         ig = KeccakHashInputsGenerator()
         iv = KeccakHashInputValidator()
         sl = KeccakHashSettingsLoader(json_path=args.config)
