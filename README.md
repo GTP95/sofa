@@ -289,7 +289,7 @@ python main.py --input user --plaintext "00112233445566778899aabbccddeeff0011223
 ##### Example 5: Running bundled ASCON implementation with user-provided input
 
 ```bash
-python main.py --no_validation --input user --key 000102030405060708090a0b0c0d0e0f --nonce 101112131415161718191a1b1c1d1e1f --plaintext 000102030405060708090a0b0c0d0e0f101112131415161718191a1b1c1d1e1f202122232425262728292a2b2c2d2e2f303132333435363738393a3b3c3d3e3f ASCON_PROTECTED-CW308_STM32F4.elf profiles/examples/ASCON_PROTECTED-CW308_STM32F4.json
+python main.py --input user --key 000102030405060708090a0b0c0d0e0f --nonce 101112131415161718191a1b1c1d1e1f --plaintext 000102030405060708090a0b0c0d0e0f101112131415161718191a1b1c1d1e1f202122232425262728292a2b2c2d2e2f303132333435363738393a3b3c3d3e3f ASCON_PROTECTED-CW308_STM32F4.elf profiles/examples/ASCON_PROTECTED-CW308_STM32F4.json
 ```
 
 ##### Example 6: Running a user-provided ELF executable (in this case, "RP2350 Hacking Challenge 2" 's AES implementation)
