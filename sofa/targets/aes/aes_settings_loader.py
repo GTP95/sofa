@@ -61,7 +61,7 @@ class AesSettingsLoader(SettingsLoader):
                 "iv_cmd": self._settings.get("iv_cmd", ""),
                 "memory_mappings": memory_mappings,
                 "execution_mode": self._settings.get("execution_mode", "uart"),
-                "trace_start": self._settings.get("trace_start", key_cmd),
+                "trace_start": self._settings.get("trace_start", enc_cmd),
                 "trace_end": self._settings.get("trace_end", "return_value"),
                 "workspace_address": int(
                     self._settings.get("workspace_address", 0x20070000)
