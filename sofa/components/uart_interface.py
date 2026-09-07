@@ -145,7 +145,7 @@ class UartHandler:
                         "characters. Match the input/configuration to the firmware "
                         "build (PTLEN for plaintext)."
                     )
-            self.logger.info(msg=f"Sending '{chr(cmd[0])}' command... Full command is: {cmd!r}")
+            self.logger.debug(msg=f"Sending '{chr(cmd[0])}' command... Full command is: {cmd!r}")
             self.ql.hw.usart1.send(cmd)
         except Exception as e:
             raise Exception(f"Sending '{chr(cmd[0])}' command resulted in: {e}.") from e

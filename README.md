@@ -317,7 +317,7 @@ python main.py --no_validation --input user --input_format plaintext AES --key 6
 
 ### Debug Mode
 
-Enable debug mode using the `--debug` flag to get verbose output of all operations, including input parsing, cryptographic operations, and Qiling interactions:
+Enable debug mode using the `--debug` flag to get verbose output of all operations, including input parsing, cryptographic operations, Qiling interactions, AES command registration, and full UART command payloads:
 
 ```bash
 python main.py --debug --input user AES --key "..." --plaintext "..." --iv "..." AES-CW308_STM32F4.elf profiles/examples/AES-CW308_STM32F4.json
