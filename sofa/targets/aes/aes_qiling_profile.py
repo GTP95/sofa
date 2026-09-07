@@ -78,9 +78,9 @@ class AesQilingProfile(QilingProfile):
         self._uart.register_command(command, data_length)
         if command == "q":
             self.__status[0] = AesQilingStatus.WAIT_CMD
-            self.logger.info("All commands registered correctly!")
+            self.logger.debug("All commands registered correctly!")
         else:
-            self.logger.info(f"Command registered successfully ({command}, {data_length})")
+            self.logger.debug(f"Command registered successfully ({command}, {data_length})")
 
     def __hook_function_add_key_reached(self, ql: Qiling) -> None:
         """
