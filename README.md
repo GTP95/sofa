@@ -172,6 +172,11 @@ make TARGET=KECCAK
 For ASCON, you need to choose a target between ASCON_REF, ASCON_ARM, and ASCON_PROTECTED.
 
 The `Makefile` also provides options for cleaning the build or compiling for specific platforms.
+Running `make clean` removes the build artifacts and generated root-level
+profiles for every example bundled under `Targets/` (AES, ASCON, and KECCAK).
+It does not clean the separately supplied Raspberry Pi challenge or remove its
+profile. To clean only one bundled example, pass it explicitly, for example
+`make TARGET=AES clean`.
 
 - **To clean the project:**
 
