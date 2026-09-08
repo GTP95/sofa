@@ -5,7 +5,6 @@ class ARMChairSessionMode(Enum):
     AUTO = "auto"
     USER = "user"
     USER_CSV = "user-csv"
-    USER_RAW = "user-raw"
 
 
 class TargetResponse(Enum):

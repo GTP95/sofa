@@ -17,7 +17,6 @@ class ARMChairSession:
     def __init__(
         self,
         args: Namespace,
-        raw_target_data: list = [],
         input_generator: InputsGenerator = None,
         input_validator: InputValidator = None,
         input_parser: InputParser = None,
@@ -31,7 +30,6 @@ class ARMChairSession:
         self.debug: bool = args.debug
         self.elf_path: str = args.elf_path
         self.target_data: list = []
-        self.raw_target_data: list = raw_target_data
         self.input_generator: InputsGenerator = input_generator
         self.input_parser: InputParser = input_parser
         self.input_validator: InputValidator = input_validator
@@ -118,13 +116,6 @@ class ARMChairSession:
                 next(csv_reader)  # Skip the header row
                 rows = list(csv_reader)  # Read all rows into memory
                 self.target_data.extend(rows)
-
-        elif self.mode == ARMChairSessionMode.USER_RAW:
-            self.logger.warning(
-                f'Beware, {self.mode.value} mode has no validation of any kind, use the debug flag if the run fails and make sure that the inputs that you provided matches what the C code expects and is structured this way ["value1", "value2", etc] where the values match the order that the QilingProfile expects'
-            )
-
-            self.target_data.append(self.raw_target_data)
 
         else:
             raise Exception(
