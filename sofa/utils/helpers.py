@@ -165,9 +165,9 @@ def parse_args() -> Namespace:
 
     parser.add_argument(
         "--input",
-        choices=["user", "user-csv", "auto", "user-raw"],
+        choices=["user", "user-csv", "auto"],
         required=True,
-        help="Choose between command line user-provided, user-provided file, auto-generated input or in code not validated input.",
+        help="Choose between command-line user-provided, user-provided file, or auto-generated input.",
     )
 
     parser.add_argument(
@@ -277,12 +277,6 @@ def parse_args() -> Namespace:
             parser.error(
                 "--path, --path of the .csv file is required when --input is 'user-csv'"
             )
-        if not args.elf_path:
-            logger.warning(
-                f"No --elf_path argument provided, in this case the SettingsLoader component needs to be created and used for the {args.algorithm} session"
-            )
-
-    if args.input == "user-raw":
         if not args.elf_path:
             logger.warning(
                 f"No --elf_path argument provided, in this case the SettingsLoader component needs to be created and used for the {args.algorithm} session"

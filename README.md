@@ -1,5 +1,5 @@
-
-## Sofa: a Power Simulator for SCA analysis of ARM binaries
+# Sofa
+## A Power Simulator for SCA analysis of ARM binaries
 
 ![Sofa](art/CPU.webp)
 
@@ -92,10 +92,9 @@ power simulation on their own.
 
 - Python 3.10 or higher (for compatibility with some of the libraries used). **Tested on Python 3.12**.  
     **At the time of writing, dependency installation fails on Python 3.13**, but it could be due to outdated wheels that may be updated in the future.
-- The `make` build system (required for compiling the firmware).
 - Qiling for ARM emulation.
 - Required Python packages (installable via `requirements.txt`).
-- Optional: [arm-none-eabi](https://developer.arm.com/downloads/-/arm-gnu-toolchain-downloads) toolchain for building the default targets. Without this, you will not be able to run the examples,
+- Optional: the `make` build system and the [arm-none-eabi](https://developer.arm.com/downloads/-/arm-gnu-toolchain-downloads) toolchain for building the default targets. Without this, you will not be able to run the examples,
 but you can still run simulations with your own binaries.
 
 ### Installation
@@ -192,9 +191,9 @@ profile. To clean only one bundled example, pass it explicitly, for example
 
 #### Step 2: Writing or Selecting a Profile
 
-Sofa needs a JSON profile in addition to the ELF file. The profile describes how the firmware was built and emulated; it does not contain the key, plaintext, nonce, or other per-run input. Pass its path as the final command-line argument in Step 3.
+Sofa needs a JSON profile in addition to the ELF file. The profile describes some firmware's aspects and how it should be emulated; it does not contain the key, plaintext, nonce, or other per-run input. Pass its path as the final command-line argument in Step 3.
 
-Stable profiles for the bundled targets are available in [`profiles/examples/`](profiles/examples/):
+Example profiles for the bundled targets are available in [`profiles/examples/`](profiles/examples/):
 
 - `AES-CW308_STM32F4.json`
 - `KECCAK-CW308_STM32F4.json`
@@ -216,20 +215,23 @@ Every profile contains these common fields:
 
 Algorithm-specific fields describe details such as the AES key size and firmware symbols, the KECCAK function, or the ASCON associated-data length and build parameters. The `__..._comment` properties are documentation only and are ignored by Sofa.
 
-For ASCON and KECCAK, `make` also writes a profile for the selected build to the repository root. Build options are reflected in that generated file; for example:
+For the bundled examples, `make` also writes a profile for the selected build to the repository root. Build options are reflected in that generated file; for example:
 
 ```bash
+make TARGET=AES PTLEN=32 MODE=CBC KEYSIZE=256 MASKED=1
 make TARGET=ASCON_REF PTLEN=64 AD_LEN=0
 make TARGET=KECCAK PTLEN=64 FUNC=SHAKE128 OPLEN=64
 ```
 
-These root-level profiles are temporary and ignored by Git. A subsequent build can overwrite them, and `make clean` removes them. AES and externally supplied firmware such as the RP2350 challenge do not generate complete profiles automatically, so start from the corresponding example when customization is needed.
+These root-level profiles are temporary and ignored by Git. A subsequent build can overwrite them, and `make clean` removes them. Externally supplied firmware such as the RP2350 challenge does not generate a profile automatically, so start from the corresponding example when customization is needed.
 
 Whichever profile you use, its input lengths, platform, memory mappings, command symbols, and execution mode must agree with the ELF. A mismatch will usually cause input validation, symbol lookup, UART, or unmapped-memory errors.
 
+**Practical tip:** the most tedious part of writing a profile is likely figuring out the correct memory mappings, as it usually requires to find and go through some platform-specific documentation. However, an AI agent can do this for you. The only thing you have to double check is that the start and and symbols for the instruction recording are correct, i.e. check that it selected the portion of the execution you're actually interested in. A mistake in any other profile's setting will just result in an error during the simulation rather than a wrong result, so there's no risk.
+
 #### Step 3: Running the Python Cryptographic Simulation
 
-Once the firmware and matching profile are ready, run the cryptographic analysis using `main.py`. Sofa supports both user-provided and auto-generated inputs.
+Once the firmware and matching profile are ready, run the cryptographic analysis invoking `main.py`. Sofa supports both user-provided and auto-generated inputs.
 The cryptographic algorithm is selected from the profile's `target` field; it is
 not specified separately on the command line. Targets with an implementation
 suffix, such as `ASCON_PROTECTED`, select the corresponding base algorithm.
@@ -250,7 +252,7 @@ values; use `arr_0[i, :lengths[i]]` to recover a trace without padding.
 | Argument          | Description                                                                                                                            |
 |-------------------|----------------------------------------------------------------------------------------------------------------------------------------|
 | `--debug`         | Enable debug mode for verbose output.                                                                                                  |
-| `--input`         | Choose between `user`, `user-csv`, `user-raw`, or `auto` input mode.                                                                   |
+| `--input`         | Choose between `user`, `user-csv`, or `auto` input mode.                                                                               |
 | `--no_validation` | Disable input validation for user-provided inputs.                                                                                     |
 | `--count`         | Number of auto-generated inputs (required for `auto` mode).                                                                            |
 | `--path`          | Path to the input .csv file (required for user-csv mode).                                                                              |
@@ -302,20 +304,6 @@ Note that this is not included in this repository, you will have to download and
 ```bash
 python main.py --no_validation --input user --input_format plaintext --key 66b3ca75e02ad9c8abb06c0b2d297fb660ed5c58c9029ec883f9dbcd2a16195d5e75fadfd32acb297ca03930f1ff08c6714d3f79eb3a26cdc9ef28f553983141 --plaintext "00112233445566778899aabbccddeeff" rp2350_hacking_challenge_2/build/rp2350_hacking_challenge_2.elf profiles/examples/rpi_challenge.json
 ```
-
-### How It Works
-
-1. **Makefile-based Firmware Compilation**: 
-   The project starts with a `make` build that compiles the cryptographic firmware, producing ELF binaries based on the selected cryptographic algorithm and platform. For supported targets, the build also generates a matching runtime profile.
-
-2. **Session Setup**:
-   After the build process, the Python scripts handle the session setup. It parses the command-line arguments and ensures that inputs (either user-provided or auto-generated) are ready for use in cryptographic analysis.
-
-3. **Qiling Integration**: 
-   The Qiling framework emulates the target ARM platform and executes the compiled firmware, allowing detailed tracing of cryptographic operations, including input/output and disassembly of ARM instructions.
-
-4. **Cryptographic Analysis**: 
-   Sofa generates traces of the encryption process, useful for debugging or cryptographic analysis, including side-channel resistance.
 
 ### Supported Cryptographic Algorithms
 

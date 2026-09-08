@@ -34,7 +34,7 @@ if __name__ == "__main__":
     iv = None
     sl = None
     ip = None
-    tp = None  # this is the only one that needs to be implemented, the rest can be skipped in user-csv or user-raw mode.
+    tp = None
 
     if args.algorithm == "AES":
         ig = AesInputsGenerator()
@@ -65,10 +65,6 @@ if __name__ == "__main__":
 
     session = ARMChairSession(
         args=args,
-        raw_target_data=[
-            "9db09adc6ec1d3b367e5ddf6d2cadfd1",
-            "afc17270ea15da418e588ef63c0d98e2",
-        ],  # usable in user-raw mode if we want some quick custom data to pass, this is just an example [key, plaintext].
         input_generator=ig,
         input_validator=iv,
         input_parser=ip,
