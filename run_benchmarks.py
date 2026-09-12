@@ -1,14 +1,18 @@
 import subprocess
 import psutil
 import time
+import sys
+from shlex import quote
 from threading import Thread
 
 # Define commands for each target
 commands = [
-    "python Armchair.py --input auto --count 100 AES",
-    "python Armchair.py --input auto --count 100 ASCON",
-    "python Armchair.py --input auto --count 100 KECCAK",
+    f"{quote(sys.executable)} main.py --input auto --count 100 AES-CW308_STM32F4.elf profiles/examples/AES-CW308_STM32F4.json",
+    f"{quote(sys.executable)} main.py --input auto --count 100 ASCON_REF-CW308_STM32F4.elf profiles/examples/ASCON_REF-CW308_STM32F4.json",
+    f"{quote(sys.executable)} main.py --input auto --count 100 KECCAK-CW308_STM32F4.elf profiles/examples/KECCAK-CW308_STM32F4.json",
 ]
+
+build_targets = ["AES", "ASCON_REF", "KECCAK"]
 
 
 # Function to monitor resources across all processes
@@ -88,6 +92,22 @@ def execute_with_retries(cmd, max_retries=5):
         "peak_ram": None,
         "error": stderr.strip() if stderr else "Unknown error.",
     }
+
+
+# Build each firmware before benchmarking. Compilation is intentionally outside
+# the measured command so that the results contain only simulation resources.
+for target in build_targets:
+    print(f"Building firmware for {target}...", flush=True)
+    build_process = subprocess.run(
+        ["make", f"TARGET={target}"],
+        capture_output=True,
+        text=True,
+    )
+    if build_process.returncode != 0:
+        build_output = (build_process.stdout + build_process.stderr).strip()
+        raise SystemExit(
+            f"Failed to build firmware for {target}.\n{build_output}"
+        )
 
 
 # Run each command and monitor performance

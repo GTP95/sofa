@@ -287,6 +287,15 @@ python main.py --input auto --count 10 AES-CW308_STM32F4.elf profiles/examples/A
 python main.py --input auto --count 10 --leakage_model "HW" AES-CW308_STM32F4.elf profiles/examples/AES-CW308_STM32F4.json
 ```
 
+##### Benchmarking the bundled implementations
+
+Run `python run_benchmarks.py` to build the AES, ASCON_REF, and KECCAK firmware
+and then measure 100 auto-generated inputs for each. Compilation is not part of
+the reported benchmark timings. This requires `make` and the `arm-none-eabi`
+toolchain; if a build fails, the script reports its output and stops before any
+benchmark runs. Each benchmark invokes `main.py` with the target's matching ELF
+file and example profile.
+
 ##### Example 4: Running bundled KECCAK implementation with user-provided input
 
 ```bash
