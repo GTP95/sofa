@@ -172,7 +172,7 @@ def parse_args() -> Namespace:
     parser.add_argument(
         "--input",
         choices=["user", "user-csv", "auto"],
-        required=True,
+        default=None,
         help="Choose between command-line user-provided, user-provided file, or auto-generated input.",
     )
 
@@ -180,6 +180,22 @@ def parse_args() -> Namespace:
         "--count",
         type=int,
         help="Number of auto-generated inputs (required for auto mode).",
+    )
+    parser.add_argument(
+        "--tvla",
+        action="store_true",
+        help="Run first-order fixed-versus-random TVLA (implies --input auto).",
+    )
+    parser.add_argument(
+        "--tvla_variable",
+        choices=["plaintext", "key", "iv", "nonce", "ad"],
+        default="plaintext",
+        help="Input varied in TVLA's random group (default: plaintext).",
+    )
+    parser.add_argument(
+        "--tvla_seed",
+        type=int,
+        help="Seed for reproducible TVLA input generation.",
     )
 
     parser.add_argument(
@@ -250,11 +266,39 @@ def parse_args() -> Namespace:
     # Parse the arguments
     args = parser.parse_args()
 
+    if args.tvla:
+        if args.input in {"user", "user-csv"}:
+            parser.error("--tvla cannot be combined with --input user or user-csv")
+        args.input = "auto"
+        if args.input_format != "hex":
+            parser.error("--tvla requires --input_format hex")
+        if args.count is None or args.count < 4 or args.count % 2:
+            parser.error("--tvla requires an even --count of at least 4")
+    elif args.input is None:
+        parser.error("--input is required unless --tvla is enabled")
+
     try:
         args.algorithm = get_profile_algorithm(args.config)
         validate_algorithm_options(args)
     except ValueError as error:
         parser.error(str(error))
+
+    if args.tvla:
+        from sofa.components.tvla import tvla_field_lengths
+
+        loader_type = {
+            "AES": AesSettingsLoader,
+            "ASCON": AsconSettingsLoader,
+            "KECCAK": KeccakHashSettingsLoader,
+        }[args.algorithm]
+        active_fields = tvla_field_lengths(
+            args.algorithm, loader_type(args.config).get_target_settings()
+        )
+        if args.tvla_variable not in active_fields:
+            parser.error(
+                f"--tvla_variable {args.tvla_variable!r} is not active for "
+                f"{args.algorithm}; choose one of: {', '.join(active_fields)}"
+            )
 
     if args.algorithm == "KECCAK" and args.capacity is None:
         args.capacity = 1600
@@ -975,7 +1019,7 @@ def create_trace_file(folder, name_output_file, leakage_model, numberTraces=100,
     print("Creating simulation traces model....", leakage_model)
     trace_list = []
     count = 0
-    files = sorted(Path(folder).glob('*.csv'), key=extract_number)
+    files = sorted(Path(folder).glob('traces_*.csv'), key=extract_number)
     for file in tqdm(files):
         if count >= numberTraces:
             break
@@ -1155,7 +1199,7 @@ def create_npz_file(
     create_npz_file("output.npz", "data_folder", "ID", ["col1", "col2"], num_cores=4) # Use 4 cores
     """
     print("Creating simulation traces model....", leakage_model)
-    files = sorted(Path(folder).glob('*.csv'), key=extract_number)
+    files = sorted(Path(folder).glob('traces_*.csv'), key=extract_number)
     if not files:
         raise ValueError(f"No execution trace CSV files found in {folder}")
 
@@ -1220,6 +1264,14 @@ def create_npz_file(
             for key in ("read_masks", "write_masks", "window_ids", "pcs"):
                 arrays[key][index, :length] = result[key]
 
+        manifest = Path(folder) / "tvla_inputs.csv"
+        extra_values = {}
+        if manifest.exists():
+            from sofa.components.tvla import load_tvla_group_labels
+
+            extra_values["group_labels"] = load_tvla_group_labels(
+                manifest, [file.name for file in files]
+            )
         np.savez_compressed(
             name_npy_file,
             arrays["arr_0"],
@@ -1244,6 +1296,7 @@ def create_npz_file(
                 dtype="U32",
             ),
             capstone_version=np.asarray(distribution_version("capstone"), dtype="U16"),
+            **extra_values,
         )
         for array in arrays.values():
             array.flush()
@@ -1336,7 +1389,7 @@ def create_trace_file_dest(folder, name_output_file, leakage_model, list_dest_re
     print("Creating simulation traces model....", leakage_model)
     trace_list = []
     count = 0
-    files = sorted(Path(folder).glob('*.csv'), key=extract_number)
+    files = sorted(Path(folder).glob('traces_*.csv'), key=extract_number)
     for file in tqdm(files):
         if count >= numberTraces:
             break
@@ -1414,7 +1467,7 @@ def create_npy_file(
     """
     print("Creating simulation traces model....", leakage_model)
     trace_list: list[np.ndarray] = []
-    files = sorted(Path(folder).glob("*.csv"), key=extract_number)
+    files = sorted(Path(folder).glob("traces_*.csv"), key=extract_number)
     for count, file in enumerate(files):
         print("Trace ", count)
         result = process_csv_file(file, cols, leakage_model, register_model)

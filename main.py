@@ -6,6 +6,7 @@ from term_image.image import from_file
 
 from sofa.components.armchair_session import ARMChairSession
 from sofa.components.power_trace_generator import generate_power_traces, show_power_traces
+from sofa.components.tvla import analyze_tvla_archive, show_tvla_results
 from sofa.targets.aes.aes_input_generator import AesInputsGenerator
 from sofa.targets.aes.aes_input_parser import AesInputParser
 from sofa.targets.aes.aes_input_validator import AesInputValidator
@@ -81,4 +82,14 @@ if __name__ == "__main__":
         args.leakage_model,
         register_model=args.register_model,
     )
-    show_power_traces(power_file, args.leakage_model, register_model=args.register_model)
+    if args.tvla:
+        results_file = analyze_tvla_archive(
+            power_file,
+            tested_variable=args.tvla_variable,
+            effective_seed=args.tvla_seed,
+        )
+        show_tvla_results(results_file)
+    else:
+        show_power_traces(
+            power_file, args.leakage_model, register_model=args.register_model
+        )

@@ -12,6 +12,8 @@ from argparse import Namespace
 import csv
 import logging
 
+from sofa.components.tvla import generate_tvla_inputs, write_tvla_manifest
+
 
 class ARMChairSession:
     def __init__(
@@ -38,6 +40,8 @@ class ARMChairSession:
         self.logger=logging.getLogger(__name__)
         # Set logger level after instantiation to follow global configuration
         self.logger.setLevel(logging.getLogger().level)
+        self.tvla_manifest: list[dict[str, str]] = []
+        self.tvla_seed: int | None = None
 
     def init_session(self) -> None:
         # Initialize (or not) the classes
@@ -77,6 +81,22 @@ class ARMChairSession:
 
             # Retrieve target settings from the settings loader
             target_settings: dict = sl.get_target_settings()
+
+            if getattr(self.args, "tvla", False):
+                self.target_data, self.tvla_manifest, self.tvla_seed = generate_tvla_inputs(
+                    algorithm=self.args.algorithm,
+                    target_settings=target_settings,
+                    count=self.args.count,
+                    variable=self.args.tvla_variable,
+                    seed=self.args.tvla_seed,
+                    overrides={
+                        name: getattr(self.args, name, None)
+                        for name in ("key", "plaintext", "iv", "nonce", "ad")
+                    },
+                )
+                self.args.tvla_seed = self.tvla_seed
+                self.logger.info("TVLA effective seed: %s", self.tvla_seed)
+                return
 
             # Create the input filename based on the target and platform
             input_path: str = f"{sl.get_target()}-{sl.get_plat()}-Inputs.csv"
@@ -124,6 +144,7 @@ class ARMChairSession:
             )
 
     def run_session(self, target_profile: QilingProfile) -> str:
+        """Run all initialized inputs and return the new run directory."""
         session = ARMChairSessionRunner(
             elf_path=self.elf_path,
             input_format=self.input_format,
@@ -132,4 +153,9 @@ class ARMChairSession:
             json_path=self.args.config,
             register_model=self.register_model,
         )
-        return session.run_session()
+        output_dir = session.run_session()
+        if self.tvla_manifest:
+            write_tvla_manifest(
+                f"{output_dir}/tvla_inputs.csv", self.tvla_manifest
+            )
+        return output_dir

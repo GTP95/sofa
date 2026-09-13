@@ -80,6 +80,7 @@ Sofa begins by building the project using `make` before executing Python scripts
 - **Integration with Qiling** for ARM-based platform simulation.
 - **Compilation of firmware using multiple Makefiles** to support diverse platforms and algorithms.
 - **Customizable input validation and padding for cryptographic algorithms.**
+- **First-order fixed-versus-random TVLA** with reproducible, balanced input generation and point-wise Welch scores.
 
 #### Clarification on leakage models
 
@@ -260,8 +261,9 @@ an error that lists both the incompatible and valid options.
 
 Each simulation writes its execution traces and `power_traces.npz` to a new
 `Traces-<algorithm>/run-<unique-id>/` directory, whose path is logged at startup.
-Postprocessing uses only that session's traces, so previous runs with different
-input sizes or firmware can remain on disk without affecting the current run.
+Postprocessing uses only `traces_*.csv` from that session, so manifests and
+previous runs with different input sizes or firmware can remain on disk without
+affecting the current run.
 The NPZ archive stores power samples in `arr_0` and original sample counts in
 `lengths`. When instruction counts differ, shorter rows have trailing `NaN`
 values; use `arr_0[i, :lengths[i]]` to recover a trace without padding. It also
@@ -274,6 +276,9 @@ stores `read_components` and `write_components` with shape
 diagnostics increase output size substantially; temporary disk-backed arrays
 keep their construction from multiplying peak RAM use. The optional NPY output
 contains only combined, equal-length power traces.
+
+In TVLA runs, `power_traces.npz` additionally contains a fixed-width Unicode
+`group_labels` array (`fixed` or `random`) aligned with `trace_filenames`.
 
 The richer accessed-register CSV schema contains pre/post register values and
 read/write masks. Historical CSV files can still be postprocessed with
@@ -298,6 +303,9 @@ they do not contain each instruction's post-state or decoded access sets.
 | `--nonce`         | The 16-byte ASCON public nonce.                                                                                                        |
 | `--ad`            | Optional ASCON associated data when the firmware was built with a nonzero `AD_LEN`.                                                    |
 | `--capacity`      | Capacity for `KECCAK` sponge function.                                                                                                 |
+| `--tvla`          | Run first-order fixed-versus-random TVLA; implies `--input auto` and requires an even `--count` of at least 4.                         |
+| `--tvla_variable` | Input varied in the random group. Defaults to `plaintext`; availability depends on the selected profile.                              |
+| `--tvla_seed`     | Optional nonnegative 64-bit seed. If omitted, Sofa generates and records an effective seed.                                              |
 | `elf_path`        | Path to the .elf file (this is a mandatory positional argument).                                                                       |
 | `config`          | Path to the JSON profile whose `target` field selects the algorithm (this is a mandatory positional argument).                         |
 
@@ -329,6 +337,66 @@ the reported benchmark timings. This requires `make` and the `arm-none-eabi`
 toolchain; if a build fails, the script reports its output and stops before any
 benchmark runs. Each benchmark invokes `main.py` with the target's matching ELF
 file and example profile.
+
+##### First-order TVLA
+
+Use `--tvla` with an even trace count of at least four. `--input` may be omitted
+because TVLA implies `--input auto`; explicitly selecting `user` or `user-csv`
+is rejected. TVLA-generated values always use hexadecimal input format.
+
+```bash
+python main.py --tvla --count 100 --tvla_seed 1234 AES-CW308_STM32F4.elf profiles/examples/AES-CW308_STM32F4.json
+```
+
+The default is conventional non-specific fixed-versus-random plaintext TVLA.
+Sofa generates one baseline vector, repeats its plaintext in the fixed group,
+varies only plaintext in the random group, and keeps the key, IV, nonce, and
+associated data fixed as applicable. Fixed and random rows alternate. Existing
+`--key`, `--plaintext`, `--iv`, `--nonce`, and `--ad` values override their
+corresponding generated baseline fields, so a run can combine a known baseline
+with seeded generation for unspecified fields.
+
+`--tvla_variable` can instead select the only input varied in random rows:
+
+- AES supports `plaintext`, `key`, and `iv` when the profile enables an IV.
+- ASCON supports `plaintext`, `key`, `nonce`, and `ad` when `ad_length` is nonzero.
+- KECCAK supports only `plaintext`.
+
+Inactive variables, such as `iv` for AES-ECB or `ad` for an ASCON profile with
+`ad_length: 0`, are rejected. A generated random value that happens to equal
+the baseline is regenerated.
+
+Every TVLA run writes these additional files in its run directory:
+
+- `tvla_inputs.csv` records each trace filename, its group, tested variable,
+  effective seed, and all active algorithm inputs. This is the reproduction
+  manifest.
+- `tvla_results.npz` contains `t_scores`, the strict `exceeds_threshold` mask,
+  scalar `threshold`, `fixed_count`, and `random_count`, reference `pcs` and
+  `window_ids`, leakage/register metadata, tested variable, effective seed,
+  and the source power-archive name.
+- `tvla_plot.html` is a standalone plot of Welch score versus sample index,
+  with lines at +4.5 and -4.5 and highlighted crossings. Infinite scores are
+  clipped only in the plot and marked separately; the NPZ retains infinity.
+
+Sofa calculates the first-order point-wise Welch two-sample statistic from the
+combined power samples, using sample variances (`ddof=1`) and online Welford
+accumulation. A sample exceeds the conventional threshold only when
+`abs(t) > 4.5`; equality does not count. If both groups have zero variance at a
+sample, equal means produce zero and different means produce signed infinity,
+which represents perfect separation in deterministic simulated traces.
+
+TVLA analysis is deliberately strict: it requires at least two balanced traces
+per group, equal sample counts, identical PC and window-ID sequences, identical
+read/write-mask sequences for the `accessed` register model, and no invalid
+samples inside declared trace lengths. Sofa reports the first divergent sample
+and trace pair rather than truncating or realigning traces.
+
+This mode is a qualitative leakage indicator, not proof that leakage is
+exploitable or that an implementation is secure. It currently analyzes only
+first-order combined power. It does not provide higher-order preprocessing,
+per-register tests, fixed-vs-fixed classification, independent confirmation
+runs, or automatic attribution to instructions, source lines, or registers.
 
 ##### Example 4: Running bundled KECCAK implementation with user-provided input
 
