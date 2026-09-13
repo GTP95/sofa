@@ -58,3 +58,5 @@ main.html
 /ASCON_REF-CW308_STM32F4.json
 /KECCAK-CW308_STM32F4.json
 /rpi_challenge.json
+
+*.pdf
