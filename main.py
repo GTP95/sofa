@@ -75,5 +75,10 @@ if __name__ == "__main__":
     trace_dir = Path(session.run_session(target_profile=tp))
 
     power_file = trace_dir / 'power_traces.npz'
-    generate_power_traces(trace_dir, power_file, args.leakage_model)
-    show_power_traces(power_file, args.leakage_model)
+    generate_power_traces(
+        trace_dir,
+        power_file,
+        args.leakage_model,
+        register_model=args.register_model,
+    )
+    show_power_traces(power_file, args.leakage_model, register_model=args.register_model)

@@ -1,4 +1,6 @@
-#This files contains some code adapted from one of ARCHER's infamous Jupyter notebooks
+# This file contains some code adapted from one of ARCHER's Jupyter notebooks.
+
+from pathlib import Path
 
 import holoviews as hv
 import numpy as np
@@ -6,9 +8,17 @@ from bokeh.plotting import show
 from holoviews import opts
 
 from sofa.utils.helpers import create_npz_file, create_npy_file
+from sofa.utils.register_access import REGISTER_NAMES
 
 
-def generate_power_traces(input_dir, output_file, leakage_model: str, selected_registers=['r0','r1','r2','r3','r4','r5','r6','r7','r8','r9','r10','r11','r12','sp','lr','pc'], format='npz'):
+def generate_power_traces(
+    input_dir: str | Path,
+    output_file: str | Path,
+    leakage_model: str,
+    selected_registers: list[str] | tuple[str, ...] = REGISTER_NAMES,
+    format: str = "npz",
+    register_model: str = "accessed",
+) -> None:
     """
     Generate power traces from the CSV execution traces in the given input directory and save them to the specified output file.
     Args:
@@ -17,18 +27,38 @@ def generate_power_traces(input_dir, output_file, leakage_model: str, selected_r
         leakage_model: one of the supported leakage models. Currently, can be 'HD', 'HW', or 'ID'.
         selected_registers: the registers to consider when simulating the power consumption. Default is the following ARM registers: r0,r1,r2,r3,r4,r5,r6,r7,r8,r9,r10,r11,r12,sp,lr,pc.
         format: the format in which to save the power traces. Can be 'npz' (default) or 'npy'.
+        register_model: use only instruction-accessed registers (default), or all selected registers.
 
     Returns:
         None. The function saves the generated power traces to the specified output file in NPZ format.
     """
 
     if format == 'npz':
-        create_npz_file(output_file, input_dir, leakage_model, selected_registers)
+        create_npz_file(
+            output_file,
+            input_dir,
+            leakage_model,
+            selected_registers,
+            register_model=register_model,
+        )
     else:
-        create_npy_file(output_file, input_dir, leakage_model, selected_registers)
+        create_npy_file(
+            output_file,
+            input_dir,
+            leakage_model,
+            selected_registers,
+            register_model=register_model,
+        )
 
 
-def show_power_traces(input_file, leakage_model, start=0, end=None, format='npz'): #TODO: add --nobrowser option to render them in the terminal instead. Useful when running inside a container.
+def show_power_traces(
+    input_file: str | Path,
+    leakage_model: str,
+    start: int = 0,
+    end: int | None = None,
+    format: str = "npz",
+    register_model: str = "accessed",
+) -> None:
     """
     Display power traces from the specified input file using Holoviews.
 
@@ -38,6 +68,7 @@ def show_power_traces(input_file, leakage_model, start=0, end=None, format='npz'
         start: the starting index of the traces to display (default is 0).
         end: the ending index of the traces to display (default is None, which means all traces).
         format: the format of the input file, either 'npz' or 'npy'.
+        register_model: register selection model used to generate the trace.
 
     Returns:
         None
@@ -45,7 +76,11 @@ def show_power_traces(input_file, leakage_model, start=0, end=None, format='npz'
 
     # Load traces
 
-    traces = np.load(input_file)['arr_0']
+    if format == "npz":
+        with np.load(input_file) as archive:
+            traces = archive["arr_0"]
+    else:
+        traces = np.load(input_file)
 
 
 
@@ -65,7 +100,7 @@ def show_power_traces(input_file, leakage_model, start=0, end=None, format='npz'
                 xlabel='Time samples', 
                 ylabel='Power consumption',
                 legend_position='right',
-                title='Power consumption under ID model'
+                title=f'Power consumption under ID/{register_model} model'
             ))
         
         case 'HD':
@@ -74,7 +109,7 @@ def show_power_traces(input_file, leakage_model, start=0, end=None, format='npz'
                                                 xlabel='Instruction',
                                                 ylabel='Power consumption',
                                                 legend_position='right',
-                                                title='Power consumption under HD model'
+                                                title=f'Power consumption under HD/{register_model} model'
                                             ))
 
         case 'HW':
@@ -83,7 +118,7 @@ def show_power_traces(input_file, leakage_model, start=0, end=None, format='npz'
                                                 xlabel='Instruction',
                                                 ylabel='Power consumption',
                                                 legend_position='right',
-                                                title='Power consumption under HW model'
+                                                title=f'Power consumption under HW/{register_model} model'
                                             )
             )
 
@@ -93,8 +128,4 @@ def show_power_traces(input_file, leakage_model, start=0, end=None, format='npz'
 
     show(hv.render(plot))
     print("Power traces are displayed inside your browser.")
-
-
-
-
 

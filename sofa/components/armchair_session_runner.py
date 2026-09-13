@@ -10,6 +10,7 @@ from unicorn import UcError
 from sofa.components.sym_parser import SymParser
 from sofa.components.qiling_profile import QilingProfile
 from sofa.utils.arm_helpers import headerList
+from sofa.utils.register_access import ACCESSED_TRACE_HEADER
 from sofa.utils.constants import TRACESPATH
 from sofa.utils.helpers import initialize_qiling
 from sofa.utils.progress_bar import ProgressBar
@@ -22,7 +23,8 @@ class ARMChairSessionRunner:
         input_format,
         target_profile: QilingProfile,
         target_data: list,
-        json_path: str
+        json_path: str,
+        register_model: str = "accessed",
     ) -> None:
         self.elf_path: str = elf_path
         self.input_format: str = input_format
@@ -31,6 +33,7 @@ class ARMChairSessionRunner:
         self.sym_parser = SymParser(elf_path=elf_path)
         self.logger=logging.getLogger(__name__)
         self.json_path=json_path
+        self.register_model = register_model
         self.output_dir: str | None = None
 
     def process_row(self, row, index) -> None:
@@ -60,7 +63,8 @@ class ARMChairSessionRunner:
                 profile=self.target_profile,
                 traces=traces,
                 cache=cache,
-                json_path=self.json_path
+                json_path=self.json_path,
+                register_model=self.register_model,
             )
 
             self.target_profile.init_uart(ql=ql, input_format=self.input_format)
@@ -79,6 +83,8 @@ class ARMChairSessionRunner:
 
             ql.log.info("Starting Qiling..")
             ql.run()
+            if self.register_model == "accessed":
+                ql.sofa_access_recorder.validate_complete()
 
             if logging.getLogger().isEnabledFor(logging.DEBUG):
                 logger.debug("Writing traces to CSV...")
@@ -86,7 +92,11 @@ class ARMChairSessionRunner:
             # Write traces using csv module
             with open(output_path, mode="w", newline="") as file:
                 csv_writer = csv.writer(file)
-                csv_writer.writerow(headerList)  # Write the headers
+                csv_writer.writerow(
+                    ACCESSED_TRACE_HEADER
+                    if self.register_model == "accessed"
+                    else headerList
+                )
                 csv_writer.writerows(traces)  # Write the rows of data
         except UcError as ex:
             logger.error("Unicorn emulation failed: %s", ex)

@@ -3,9 +3,10 @@ import os
 import re
 import shutil
 from argparse import Namespace, ArgumentParser
-from multiprocessing import Pool, cpu_count
 from pathlib import Path
 import logging
+from importlib.metadata import version as distribution_version
+import tempfile
 
 import numpy as np
 import pandas as pd
@@ -27,6 +28,11 @@ from sofa.targets.ascon.ascon_settings_loader import AsconSettingsLoader
 from sofa.targets.keccak.keccak_settings_loader import KeccakHashSettingsLoader
 from sofa.utils.arm_helpers import arm_registers, return_instruction_type_arm
 from sofa.utils.enums import TargetResponse
+from sofa.utils.register_access import (
+    AccessedRegisterRecorder,
+    REGISTER_INDEX,
+    REGISTER_NAMES,
+)
 
 
 # region: PARSERS
@@ -191,6 +197,16 @@ def parse_args() -> Namespace:
     )
 
     parser.add_argument("--leakage_model", type=str, choices=["HD", "HW", "ID"], default="HD", help="Leakage model to use for power trace generation (default: HD).")
+    parser.add_argument(
+        "--register_model",
+        choices=["accessed", "all"],
+        default="accessed",
+        help=(
+            "Registers included in power simulation: only registers read or "
+            "written by each instruction (accessed, default), or every selected "
+            "register (all)."
+        ),
+    )
 
     parser.add_argument("--no_validation", action="store_true", help="Disable input validation for user-provided inputs.")
 
@@ -686,7 +702,8 @@ def initialize_qiling(
     elf: str,
     traces: list,
     cache: dict,
-        json_path: str
+        json_path: str,
+        register_model: str = "accessed",
 ) -> Qiling:
     """
     Initializes Qiling with the given profile, ELF file, and disassembler hooks.
@@ -764,15 +781,29 @@ def initialize_qiling(
     # this essentialy cuts the traces number in half.
     begin, end = profile.get_profile_range(sym_parser=sym_parser)
 
-    disassembler_data: tuple[Cs, list] = (disassembler, traces, cache)
-
-    hook_switch(
-        ql=ql,
-        callback=arm_disassembler_cached,
-        user_data=disassembler_data,
-        begin=begin,
-        end=end,
-    )
+    if register_model == "accessed":
+        recorder = AccessedRegisterRecorder(
+            disassembler=disassembler,
+            trace_data=traces,
+            cache=cache,
+            begin=begin,
+            end=end,
+        )
+        ql.hook_code(recorder.on_instruction)
+        ql.sofa_access_recorder = recorder
+    elif register_model == "all":
+        disassembler_data: tuple[Cs, list, dict] = (disassembler, traces, cache)
+        hook_switch(
+            ql=ql,
+            callback=arm_disassembler_cached,
+            user_data=disassembler_data,
+            begin=begin,
+            end=end,
+        )
+    else:
+        raise ValueError(
+            f"Unsupported register model {register_model!r}; use 'accessed' or 'all'"
+        )
 
     return ql
 
@@ -964,22 +995,152 @@ def create_trace_file(folder, name_output_file, leakage_model, numberTraces=100,
     print("Finished creating the file")
 
 
-def process_csv_file(file, cols, leakage_model):
-    """
-    Process a single CSV file based on the specified leakage model and columns.
-    """
-    #     print('Processing file:', file)
-    if leakage_model == 'ID':
-        trace = create_ID_trace(file, cols)
-    elif leakage_model == 'HW':
-        trace = create_opt_HW_trace(file, cols)
-    elif leakage_model == 'HD':
-        trace = create_opt_HD_trace(file, cols)
-    return trace
+def _hex_frame_to_uint64(frame: pd.DataFrame) -> np.ndarray:
+    """Convert a data frame of hexadecimal strings to an unsigned array."""
+    return frame.map(lambda value: int(value, 16)).to_numpy(dtype=np.uint64)
+
+
+def _selected_register_mask(cols: list[str] | tuple[str, ...]) -> np.ndarray:
+    """Return a Boolean vector identifying selected registers."""
+    unknown = sorted(set(cols) - set(REGISTER_NAMES))
+    if unknown:
+        raise ValueError(f"Unsupported ARM registers: {', '.join(unknown)}")
+    return np.asarray([register in cols for register in REGISTER_NAMES], dtype=bool)
+
+
+def process_csv_file(
+    file: str | Path,
+    cols: list[str] | tuple[str, ...],
+    leakage_model: str,
+    register_model: str = "accessed",
+) -> dict[str, np.ndarray]:
+    """Compute combined and per-register leakage for one execution CSV."""
+    frame = pd.read_csv(file)
+    selected = _selected_register_mask(cols)
+
+    if register_model == "accessed":
+        required = {
+            "trace_schema",
+            "read_mask",
+            "write_mask",
+            *(f"post_{register}" for register in REGISTER_NAMES),
+        }
+        missing = sorted(required - set(frame.columns))
+        if missing:
+            raise ValueError(
+                f"{file} is not an accessed-register trace; missing columns: "
+                f"{', '.join(missing)}. Re-run the simulation with "
+                "--register_model accessed."
+            )
+        if not frame["trace_schema"].eq(AccessedRegisterRecorder.TRACE_SCHEMA).all():
+            raise ValueError(f"{file} has an unsupported accessed trace schema")
+
+        pre = _hex_frame_to_uint64(frame[list(REGISTER_NAMES)])
+        post = _hex_frame_to_uint64(
+            frame[[f"post_{register}" for register in REGISTER_NAMES]]
+        )
+        raw_read_masks = (
+            frame["read_mask"]
+            .map(lambda value: int(value, 16))
+            .to_numpy(dtype=np.uint64)
+        )
+        raw_write_masks = (
+            frame["write_mask"]
+            .map(lambda value: int(value, 16))
+            .to_numpy(dtype=np.uint64)
+        )
+        bits = np.arange(len(REGISTER_NAMES), dtype=np.uint64)
+        read_active = ((raw_read_masks[:, None] >> bits) & 1).astype(bool)
+        write_active = ((raw_write_masks[:, None] >> bits) & 1).astype(bool)
+        read_active &= selected
+        write_active &= selected
+
+        if leakage_model == "HW":
+            read_components = np.bitwise_count(pre).astype(np.float64) * read_active
+            write_components = np.bitwise_count(post).astype(np.float64) * write_active
+        elif leakage_model == "ID":
+            read_components = pre.astype(np.float64) * read_active
+            write_components = post.astype(np.float64) * write_active
+        elif leakage_model == "HD":
+            read_components = np.zeros(pre.shape, dtype=np.float64)
+            write_components = (
+                np.bitwise_count(np.bitwise_xor(pre, post)).astype(np.float64)
+                * write_active
+            )
+        else:
+            raise ValueError(f"Unsupported leakage model {leakage_model!r}")
+        read_masks = np.sum(
+            read_active.astype(np.uint64) << bits, axis=1, dtype=np.uint64
+        )
+        write_masks = np.sum(
+            write_active.astype(np.uint64) << bits, axis=1, dtype=np.uint64
+        )
+        window_ids = frame["window_id"].to_numpy(dtype=np.int64)
+    elif register_model == "all":
+        pre = _hex_frame_to_uint64(frame[list(REGISTER_NAMES)])
+        if leakage_model == "HW":
+            components = np.bitwise_count(pre).astype(np.float64) * selected
+        elif leakage_model == "ID":
+            components = pre.astype(np.float64) * selected
+        elif leakage_model == "HD":
+            components = (
+                np.bitwise_count(np.bitwise_xor(pre[:-1], pre[1:])).astype(np.float64)
+                * selected
+            )
+        else:
+            raise ValueError(f"Unsupported leakage model {leakage_model!r}")
+        if leakage_model == "HD":
+            read_components = np.zeros(components.shape, dtype=np.float64)
+            write_components = components
+        else:
+            read_components = components
+            write_components = np.zeros(components.shape, dtype=np.float64)
+        selected_mask = sum(1 << REGISTER_INDEX[name] for name in cols)
+        sample_count = len(components)
+        read_masks = np.full(
+            sample_count,
+            selected_mask if leakage_model != "HD" else 0,
+            dtype=np.uint64,
+        )
+        write_masks = np.full(
+            sample_count,
+            selected_mask if leakage_model == "HD" else 0,
+            dtype=np.uint64,
+        )
+        window_ids = np.zeros(sample_count, dtype=np.int64)
+    else:
+        raise ValueError(
+            f"Unsupported register model {register_model!r}; use 'accessed' or 'all'"
+        )
+
+    sample_count = len(read_components)
+    pcs = (
+        frame["PC"]
+        .iloc[:sample_count]
+        .map(lambda value: int(value, 16))
+        .to_numpy(dtype=np.uint64)
+    )
+    combined = np.sum(read_components + write_components, axis=1)
+    return {
+        "combined": combined,
+        "read_components": read_components,
+        "write_components": write_components,
+        "read_masks": read_masks,
+        "write_masks": write_masks,
+        "window_ids": window_ids,
+        "pcs": pcs,
+    }
 
 
 ### code that uses multiprocessing package
-def create_npz_file(name_npy_file, folder, leakage_model, cols=['r0','r1','r2','r3','r4','r5','r6','r7','r8','r9','r10','r11','r12','sp','lr','pc'], num_cores=None):
+def create_npz_file(
+    name_npy_file: str | Path,
+    folder: str | Path,
+    leakage_model: str,
+    cols: list[str] | tuple[str, ...] = REGISTER_NAMES,
+    num_cores: int | None = None,
+    register_model: str = "accessed",
+) -> None:
     """
     Creates a numpy file from a folder containing csv files.
 
@@ -987,40 +1148,107 @@ def create_npz_file(name_npy_file, folder, leakage_model, cols=['r0','r1','r2','
     folder: folder containing the csv files
     leakage_model: the leakage model to be used to create the traces (ID, HW, HD)
     cols: list of the columns/registers from the dataset to be used to create the traces
-    num_cores: number of CPU cores to use in multiprocessing (default is None, which uses all available cores)
+    num_cores: retained for API compatibility. Disk-backed processing is
+        intentionally sequential to keep peak memory bounded.
 
     Example usage:
     create_npz_file("output.npz", "data_folder", "ID", ["col1", "col2"], num_cores=4) # Use 4 cores
     """
     print("Creating simulation traces model....", leakage_model)
-    trace_list = []
-    count = 0
-    # files = list(Path(folder).glob('*.csv'))
     files = sorted(Path(folder).glob('*.csv'), key=extract_number)
-
-    # Determine number of cores to use
-    if num_cores is None:
-        num_cores = cpu_count()
-
-    # Define a multiprocessing pool with specified number of cores
-    with Pool(processes=num_cores) as pool:
-        # Process each CSV file in parallel
-        results = pool.starmap(process_csv_file, [(file, cols, leakage_model) for file in files])
-
-    trace_list.extend(results)
-
-    if not trace_list:
+    if not files:
         raise ValueError(f"No execution trace CSV files found in {folder}")
-    lengths = np.array([len(trace) for trace in trace_list], dtype=np.int64)
-    if np.all(lengths == lengths[0]):
-        vectors_array = np.asarray(trace_list)
-    else:
-        # Instruction counts may vary between inputs. Preserve all samples and
-        # mark absent samples explicitly, without truncation or object arrays.
-        vectors_array = np.full((len(trace_list), int(lengths.max())), np.nan)
-        for index, trace in enumerate(trace_list):
-            vectors_array[index, :lengths[index]] = trace
-    np.savez_compressed(name_npy_file, vectors_array, lengths=lengths)
+
+    # Determine lengths without retaining parsed traces. The archive arrays are
+    # disk-backed below, keeping peak RAM bounded for long Keccak executions.
+    lengths = []
+    for file in files:
+        with file.open("rb") as trace_file:
+            row_count = sum(1 for _line in trace_file) - 1
+        lengths.append(
+            row_count - 1
+            if register_model == "all" and leakage_model == "HD"
+            else row_count
+        )
+    lengths_array = np.asarray(lengths, dtype=np.int64)
+    max_length = int(lengths_array.max())
+    if max_length <= 0:
+        raise ValueError("Execution traces contain no power samples")
+    shape = (len(files), max_length)
+    component_shape = (*shape, len(REGISTER_NAMES))
+
+    with tempfile.TemporaryDirectory(prefix="sofa-power-") as temporary_dir:
+        arrays = {
+            "arr_0": np.memmap(
+                Path(temporary_dir) / "power.dat",
+                mode="w+", dtype=np.float64, shape=shape,
+            ),
+            "read_components": np.memmap(
+                Path(temporary_dir) / "reads.dat",
+                mode="w+", dtype=np.float64, shape=component_shape,
+            ),
+            "write_components": np.memmap(
+                Path(temporary_dir) / "writes.dat",
+                mode="w+", dtype=np.float64, shape=component_shape,
+            ),
+            "read_masks": np.memmap(
+                Path(temporary_dir) / "read_masks.dat",
+                mode="w+", dtype=np.float64, shape=shape,
+            ),
+            "write_masks": np.memmap(
+                Path(temporary_dir) / "write_masks.dat",
+                mode="w+", dtype=np.float64, shape=shape,
+            ),
+            "window_ids": np.memmap(
+                Path(temporary_dir) / "windows.dat",
+                mode="w+", dtype=np.float64, shape=shape,
+            ),
+            "pcs": np.memmap(
+                Path(temporary_dir) / "pcs.dat",
+                mode="w+", dtype=np.float64, shape=shape,
+            ),
+        }
+        for array in arrays.values():
+            array[:] = np.nan
+
+        for index, file in enumerate(tqdm(files)):
+            result = process_csv_file(file, cols, leakage_model, register_model)
+            length = len(result["combined"])
+            arrays["arr_0"][index, :length] = result["combined"]
+            for key in ("read_components", "write_components"):
+                arrays[key][index, :length, :] = result[key]
+            for key in ("read_masks", "write_masks", "window_ids", "pcs"):
+                arrays[key][index, :length] = result[key]
+
+        np.savez_compressed(
+            name_npy_file,
+            arrays["arr_0"],
+            lengths=lengths_array,
+            read_components=arrays["read_components"],
+            write_components=arrays["write_components"],
+            read_masks=arrays["read_masks"],
+            write_masks=arrays["write_masks"],
+            window_ids=arrays["window_ids"],
+            pcs=arrays["pcs"],
+            register_names=np.asarray(REGISTER_NAMES, dtype="U3"),
+            selected_registers=np.asarray(cols, dtype="U3"),
+            trace_filenames=np.asarray(
+                [file.name for file in files], dtype="U256"
+            ),
+            leakage_model=np.asarray(leakage_model, dtype="U2"),
+            register_model=np.asarray(register_model, dtype="U8"),
+            trace_schema=np.asarray(
+                AccessedRegisterRecorder.TRACE_SCHEMA
+                if register_model == "accessed"
+                else "sofa-all-v1",
+                dtype="U32",
+            ),
+            capstone_version=np.asarray(distribution_version("capstone"), dtype="U16"),
+        )
+        for array in arrays.values():
+            array.flush()
+        del array
+        arrays.clear()
     print("Finished creating the file")
 
 #********************************************************************************************************************
@@ -1169,7 +1397,13 @@ def create_HD_trace(filename, cols):
     return np.sum(hd_ref, axis=1)
 
 
-def create_npy_file(name_npy_file, folder, leakage_model, cols):
+def create_npy_file(
+    name_npy_file: str | Path,
+    folder: str | Path,
+    leakage_model: str,
+    cols: list[str] | tuple[str, ...] = REGISTER_NAMES,
+    register_model: str = "accessed",
+) -> None:
     """
      creates a numpy file from a folder containing csv files
 
@@ -1179,18 +1413,19 @@ def create_npy_file(name_npy_file, folder, leakage_model, cols):
      cols: list of the columns/registers from the dataset to be used to create the traces
     """
     print("Creating simulation traces model....", leakage_model)
-    trace_list = []
-    count = 0
-    for file in Path(folder).glob('*.csv'):
-        print('Trace ', count)
-        if leakage_model == 'ID':
-            trace = create_ID_trace(file, cols)
-        elif leakage_model == 'HW':
-            trace = create_HW_trace(file, cols)
-        elif leakage_model == 'HD':
-            trace = create_HD_trace(file, cols)
-        trace_list.append(trace)
-        count += 1
-    vectors_array = np.array(trace_list)
+    trace_list: list[np.ndarray] = []
+    files = sorted(Path(folder).glob("*.csv"), key=extract_number)
+    for count, file in enumerate(files):
+        print("Trace ", count)
+        result = process_csv_file(file, cols, leakage_model, register_model)
+        trace_list.append(result["combined"])
+    if not trace_list:
+        raise ValueError(f"No execution trace CSV files found in {folder}")
+    lengths = {len(trace) for trace in trace_list}
+    if len(lengths) != 1:
+        raise ValueError(
+            "NPY cannot represent variable-length traces; use the default NPZ format"
+        )
+    vectors_array = np.asarray(trace_list)
     np.save(name_npy_file, vectors_array)
     print("Finished creating the file")

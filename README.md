@@ -34,9 +34,11 @@ called from the operation when their code lies outside that address range, and i
 runs, even outside the intended invocation. This mismatch caused incorrect recordings and divergent traces when
 intermediate values were compared.
 
-Sofa therefore uses a small `hook_switch` extension. It switches recording on when the program counter reaches `begin`
-and off when it reaches `end`, so the callback covers the dynamic execution interval rather than an address interval. This
-extension was originally proposed upstream in the Qiling project: https://github.com/qilingframework/qiling/pull/1500.
+For the historical `all` register model, Sofa therefore uses a small `hook_switch` extension. It switches recording on
+when the program counter reaches `begin` and off when it reaches `end`, so the callback covers the dynamic execution
+interval rather than an address interval. The default `accessed` recorder implements the same temporal gating directly,
+because it must observe both the pre- and post-execution state of each instruction. This extension was originally proposed
+upstream in the Qiling project: https://github.com/qilingframework/qiling/pull/1500.
 
 To fix the issue, after installing `qiling`, make sure to run the script `apply_qiling_patch.py` at least once before running Sofa.
 
@@ -80,13 +82,30 @@ Sofa begins by building the project using `make` before executing Python scripts
 - **Customizable input validation and padding for cryptographic algorithms.**
 
 #### Clarification on leakage models
-Under the identity (ID) model, the power consumption of each instruction is computed as the sum of the values of *all* the registers.  
-Under the Hamming weight (HW) model, the power consumption of each instruction is computed as the sum of the Hamming weights of *all* registers' values.  
-Under the Hamming distance (HD) model, the power consumption of each instruction is computed as the sum of the Hamming distances of *all* the registers between their value in the current state and their value in the next state.  
 
-This implementation *does not* differentiate between registers that are accessed by the current instruction and those that aren't. 
-Therefore, the generated power traces are usable for statistical testing to find data-dependent leakage, but aren't an accurate 
-power simulation on their own.
+By default, `--register_model accessed` uses Capstone 5.0.9 to determine the architectural registers read and written by
+each executed ARM/Thumb instruction. For instruction *i*, let `R_i` and `W_i` be those sets, and let `v_i^-` and `v_i^+`
+be a register's 32-bit value immediately before and after execution. Sofa computes:
+
+- `ID(i) = sum(v_i^-[r] for r in R_i) + sum(v_i^+[r] for r in W_i)`
+- `HW(i) = sum(HW(v_i^-[r]) for r in R_i) + sum(HW(v_i^+[r]) for r in W_i)`
+- `HD(i) = sum(HW(v_i^-[r] XOR v_i^+[r]) for r in W_i)`
+
+A register that is both read and written contributes on both sides of ID and HW. HD models architectural register-bank
+transitions and therefore considers writes only; an unchanged write is still an access but contributes zero HD. Explicit
+and implicit general-purpose accesses such as stack-pointer writeback, link-register updates, and PC-relative operands are
+included. Normal sequential PC advancement is excluded. The selected-register API remains a filter over the supported
+`r0`-`r12`, `sp`, `lr`, and `pc` set.
+
+`--register_model all` retains Sofa's previous behavior for comparison and reproducibility: ID and HW use the pre-state of
+every selected register, while HD compares every selected register in consecutive pre-instruction states and consequently
+has one fewer sample. `accessed` produces one sample per completed instruction for all three leakage models.
+
+This is an architectural approximation, not a calibrated physical CPU model. It does not model flags as power-bearing
+state, memory/data buses, pipeline state, glitches, or register-specific read/write weights. Flags are still used by the
+emulator to decide which instructions execute. Capstone's known missing PC metadata for branches, table branches, and ADR
+is corrected by Sofa. Accessed capture rejects interrupt/exception-handler execution and incomplete capture windows rather
+than silently attributing their state changes to an instruction.
 
 ### Requirements (can be ignored if using the Docker image)
 
@@ -245,7 +264,21 @@ Postprocessing uses only that session's traces, so previous runs with different
 input sizes or firmware can remain on disk without affecting the current run.
 The NPZ archive stores power samples in `arr_0` and original sample counts in
 `lengths`. When instruction counts differ, shorter rows have trailing `NaN`
-values; use `arr_0[i, :lengths[i]]` to recover a trace without padding.
+values; use `arr_0[i, :lengths[i]]` to recover a trace without padding. It also
+stores `read_components` and `write_components` with shape
+`(traces, samples, 16)`, plus `read_masks`, `write_masks`, `window_ids`, and
+`pcs`. Numeric diagnostic arrays use the same `NaN` padding. `register_names`,
+`selected_registers`, `leakage_model`, `register_model`, `trace_schema`, and
+`capstone_version` describe the archive without requiring pickle, while
+`trace_filenames` maps each archive row back to its execution CSV. Per-register
+diagnostics increase output size substantially; temporary disk-backed arrays
+keep their construction from multiplying peak RAM use. The optional NPY output
+contains only combined, equal-length power traces.
+
+The richer accessed-register CSV schema contains pre/post register values and
+read/write masks. Historical CSV files can still be postprocessed with
+`register_model="all"`; they cannot be converted to `accessed` traces because
+they do not contain each instruction's post-state or decoded access sets.
 
 ##### Command-Line Arguments
 
@@ -260,6 +293,7 @@ values; use `arr_0[i, :lengths[i]]` to recover a trace without padding.
 | `--key`           | The cryptographic key for `AES` or `ASCON`.                                                                                            |
 | `--plaintext`     | The plaintext (hex string) to encrypt.                                                                                                 |
 | `--leakage_model` | Leakage model to use for the analysis. Either `ID`, `HW`, or `HD`.<br/>Defaults to `HD`.                                               |
+| `--register_model` | Register selection model: `accessed` (the default) uses only instruction operands/results; `all` retains the historical all-selected-register behavior. |
 | `--iv`            | Initialization vector for AES modes that require one.                                                                                  |
 | `--nonce`         | The 16-byte ASCON public nonce.                                                                                                        |
 | `--ad`            | Optional ASCON associated data when the firmware was built with a nonzero `AD_LEN`.                                                    |

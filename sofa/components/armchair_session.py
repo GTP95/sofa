@@ -29,6 +29,7 @@ class ARMChairSession:
         # Use global logging configuration; avoid storing a debug boolean
         self.debug: bool = args.debug
         self.elf_path: str = args.elf_path
+        self.register_model: str = getattr(args, "register_model", "accessed")
         self.target_data: list = []
         self.input_generator: InputsGenerator = input_generator
         self.input_parser: InputParser = input_parser
@@ -128,6 +129,7 @@ class ARMChairSession:
             input_format=self.input_format,
             target_data=self.target_data,
             target_profile=target_profile,
-            json_path=self.args.config
+            json_path=self.args.config,
+            register_model=self.register_model,
         )
         return session.run_session()
