@@ -1059,7 +1059,10 @@ def process_csv_file(
     register_model: str = "accessed",
 ) -> dict[str, np.ndarray]:
     """Compute combined and per-register leakage for one execution CSV."""
-    frame = pd.read_csv(file)
+    frame = pd.read_csv(
+        file, dtype={"Machine": str, "Ins": str, "Operands": str},
+        keep_default_na=False,
+    )
     selected = _selected_register_mask(cols)
 
     if register_model == "accessed":
@@ -1173,6 +1176,9 @@ def process_csv_file(
         "write_masks": write_masks,
         "window_ids": window_ids,
         "pcs": pcs,
+        "instruction_machines": frame["Machine"].iloc[:sample_count].to_numpy(dtype=str),
+        "instruction_mnemonics": frame["Ins"].iloc[:sample_count].to_numpy(dtype=str),
+        "instruction_operands": frame["Operands"].iloc[:sample_count].to_numpy(dtype=str),
     }
 
 
@@ -1251,10 +1257,15 @@ def create_npz_file(
                 Path(temporary_dir) / "pcs.dat",
                 mode="w+", dtype=np.float64, shape=shape,
             ),
+            "instruction_ids": np.memmap(
+                Path(temporary_dir) / "instructions.dat",
+                mode="w+", dtype=np.float64, shape=shape,
+            ),
         }
         for array in arrays.values():
             array[:] = np.nan
 
+        instruction_table: dict[tuple[str, str, str], int] = {}
         for index, file in enumerate(tqdm(files)):
             result = process_csv_file(file, cols, leakage_model, register_model)
             length = len(result["combined"])
@@ -1263,6 +1274,12 @@ def create_npz_file(
                 arrays[key][index, :length, :] = result[key]
             for key in ("read_masks", "write_masks", "window_ids", "pcs"):
                 arrays[key][index, :length] = result[key]
+            for sample, description in enumerate(zip(
+                result["instruction_machines"], result["instruction_mnemonics"],
+                result["instruction_operands"], strict=True,
+            )):
+                instruction_id = instruction_table.setdefault(description, len(instruction_table))
+                arrays["instruction_ids"][index, sample] = instruction_id
 
         manifest = Path(folder) / "tvla_inputs.csv"
         extra_values = {}
@@ -1282,6 +1299,10 @@ def create_npz_file(
             write_masks=arrays["write_masks"],
             window_ids=arrays["window_ids"],
             pcs=arrays["pcs"],
+            instruction_ids=arrays["instruction_ids"],
+            instruction_machines=np.asarray([item[0] for item in instruction_table], dtype=str),
+            instruction_mnemonics=np.asarray([item[1] for item in instruction_table], dtype=str),
+            instruction_operands=np.asarray([item[2] for item in instruction_table], dtype=str),
             register_names=np.asarray(REGISTER_NAMES, dtype="U3"),
             selected_registers=np.asarray(cols, dtype="U3"),
             trace_filenames=np.asarray(

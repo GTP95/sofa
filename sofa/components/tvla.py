@@ -4,13 +4,16 @@ from __future__ import annotations
 
 import csv
 import secrets
+from html import escape
 from pathlib import Path
 from random import Random
-from typing import Mapping, Sequence
+from typing import Iterable, Mapping, Sequence
 
 import numpy as np
-from bokeh.models import ColumnDataSource
+from bokeh.layouts import column
+from bokeh.models import ColumnDataSource, DataTable, Div, HoverTool, TableColumn
 from bokeh.plotting import figure, output_file, save, show
+from bokeh.resources import INLINE
 
 from sofa.utils.constants import AES_BLOCK_SIZE, ASCON_KEY_SIZE, ASCON_NONCE_SIZE
 
@@ -19,6 +22,20 @@ TVLA_THRESHOLD = 4.5
 TVLA_MANIFEST = "tvla_inputs.csv"
 TVLA_RESULTS = "tvla_results.npz"
 TVLA_PLOT = "tvla_plot.html"
+TVLA_OCCURRENCES = "tvla_instruction_occurrences.csv"
+TVLA_SUMMARY = "tvla_instruction_summary.csv"
+INSTRUCTION_FIELDS = (
+    "instruction_machines", "instruction_mnemonics", "instruction_operands",
+)
+OCCURRENCE_FIELDS = (
+    "sample_index", "window_id", "pc", "machine", "mnemonic", "operands",
+    "t_score", "abs_t_score", "read_registers", "write_registers",
+    "leakage_model", "register_model", "tested_variable", "threshold",
+)
+SUMMARY_FIELDS = (
+    "pc", "machine", "mnemonic", "operands", "total_occurrences",
+    "flagged_occurrences", "max_abs_t_score", "t_score_at_max", "sample_index_at_max",
+)
 
 
 def tvla_field_lengths(
@@ -219,6 +236,51 @@ def _first_divergence(
             )
 
 
+def _reference_instruction_metadata(
+    archive: Mapping[str, np.ndarray],
+    expected_shape: tuple[int, int],
+    filenames: np.ndarray,
+) -> dict[str, np.ndarray]:
+    """Validate instruction tables and return aligned reference descriptions."""
+    keys = {"instruction_ids", *INSTRUCTION_FIELDS}
+    present = keys.intersection(archive)
+    if not present:
+        return {key: np.full(expected_shape[1], "", dtype="U1") for key in INSTRUCTION_FIELDS}
+    if present != keys:
+        raise ValueError(
+            f"Power archive has incomplete instruction metadata: {', '.join(sorted(keys - present))}"
+        )
+    tables = {key: np.asarray(archive[key]) for key in INSTRUCTION_FIELDS}
+    if any(value.ndim != 1 or value.dtype.kind != "U" for value in tables.values()):
+        raise ValueError("TVLA instruction descriptions must be one-dimensional Unicode arrays")
+    table_lengths = {len(value) for value in tables.values()}
+    if len(table_lengths) != 1:
+        raise ValueError("TVLA instruction-description table lengths differ")
+    raw_ids = np.asarray(archive["instruction_ids"])
+    if raw_ids.ndim != 2 or raw_ids.dtype.kind not in "iuf":
+        raise ValueError("TVLA instruction-ID array is not aligned with power samples")
+    ids = raw_ids[:, :expected_shape[1]]
+    if ids.shape != expected_shape:
+        raise ValueError("TVLA instruction-ID array is not aligned with power samples")
+    table_length = len(tables[INSTRUCTION_FIELDS[0]])
+    if (not np.isfinite(ids).all() or np.any(ids < 0)
+            or np.any(ids >= table_length) or np.any(ids != np.floor(ids))):
+        raise ValueError("TVLA instruction IDs must be finite integers indexing the description table")
+    ids = ids.astype(np.int64)
+    reference = {key: values[ids[0]] for key, values in tables.items()}
+    for trace_index in range(1, len(ids)):
+        differs = np.zeros(expected_shape[1], dtype=bool)
+        for key, values in tables.items():
+            differs |= values[ids[trace_index]] != reference[key]
+        positions = np.flatnonzero(differs)
+        if positions.size:
+            raise ValueError(
+                f"TVLA instruction-identity alignment diverges at sample {int(positions[0])} "
+                f"between {filenames[0]} and {filenames[trace_index]}"
+            )
+    return reference
+
+
 def analyze_tvla_archive(
     power_file: str | Path,
     output_path: str | Path | None = None,
@@ -305,7 +367,8 @@ def analyze_tvla_archive(
         register_model = (
             str(archive["register_model"]) if "register_model" in archive else ""
         )
-        if register_model == "accessed":
+        reference_metadata = _reference_instruction_metadata(archive, expected_shape, filenames)
+        if register_model == "accessed" or {"read_masks", "write_masks"}.intersection(archive):
             mask_arrays = (
                 ("read_masks", "read-mask"),
                 ("write_masks", "write-mask"),
@@ -323,11 +386,16 @@ def analyze_tvla_archive(
                     raise ValueError(
                         f"TVLA {description} array is not aligned with power samples"
                     )
+                if (mask_values.dtype.kind not in "iuf" or not np.isfinite(mask_values).all()
+                        or np.any(mask_values < 0) or np.any(mask_values > 0xFFFF)
+                        or np.any(mask_values != np.floor(mask_values))):
+                    raise ValueError(f"TVLA {description} values must be 16-bit register masks")
                 _first_divergence(
                     mask_values,
                     filenames,
                     description,
                 )
+                reference_metadata[key] = mask_values[0].astype(np.uint64)
         scores = compute_welch_t_scores(traces[:, :sample_count], labels)
         metadata = {
             key: np.asarray(archive[key])
@@ -355,27 +423,163 @@ def analyze_tvla_archive(
             0 if effective_seed is None else effective_seed, dtype=np.uint64
         ),
         source_archive=np.asarray(power_path.name, dtype="U256"),
+        **reference_metadata,
         **metadata,
     )
     return destination
 
 
+def _instruction_report_data(
+    results_file: str | Path,
+) -> tuple[dict[str, np.ndarray], list[dict[str, object]]]:
+    """Load occurrence columns and summarize existing tests by instruction."""
+    with np.load(results_file, allow_pickle=False) as archive:
+        scores = np.asarray(archive["t_scores"], dtype=np.float64)
+        if scores.ndim != 1 or not scores.size or np.isnan(scores).any():
+            raise ValueError("TVLA result scores must be a nonempty one-dimensional array without NaN")
+        count = len(scores)
+        threshold = float(archive["threshold"])
+        leakage_model = str(archive["leakage_model"]) if "leakage_model" in archive else ""
+        register_model = str(archive["register_model"]) if "register_model" in archive else ""
+        variable = str(archive["tested_variable"]) if "tested_variable" in archive else ""
+        names = (
+            archive["register_names"].tolist() if "register_names" in archive
+            else [f"r{index}" for index in range(13)] + ["sp", "lr", "pc"]
+        )
+        selected = archive["selected_registers"].tolist() if "selected_registers" in archive else []
+        descriptions_present = set(INSTRUCTION_FIELDS).intersection(archive)
+        if descriptions_present and descriptions_present != set(INSTRUCTION_FIELDS):
+            raise ValueError("TVLA results have incomplete instruction metadata")
+        for key in descriptions_present:
+            values = np.asarray(archive[key])
+            if values.shape != (count,) or values.dtype.kind != "U":
+                raise ValueError(f"TVLA result {key} must be a Unicode array aligned with scores")
+        for key in ("pcs", "window_ids", "read_masks", "write_masks"):
+            if key in archive and np.asarray(archive[key]).shape != (count,):
+                raise ValueError(f"TVLA result {key} is not aligned with scores")
+        data = {
+            "sample_index": np.arange(count),
+            "window_id": np.asarray(archive["window_ids"], dtype=np.int64),
+            "pc": np.asarray([hex(int(pc)) for pc in archive["pcs"]]),
+            "t_score": scores,
+            "abs_t_score": np.abs(scores),
+            "threshold": np.full(count, threshold),
+            "leakage_model": np.full(count, leakage_model),
+            "register_model": np.full(count, register_model),
+            "tested_variable": np.full(count, variable),
+        }
+        for field, key in zip(("machine", "mnemonic", "operands"), INSTRUCTION_FIELDS, strict=True):
+            data[field] = np.asarray(archive[key]) if key in archive else np.full(count, "")
+        for side in ("read", "write"):
+            active_side = side == "write" if leakage_model == "HD" else True
+            if register_model == "all" and leakage_model != "HD":
+                active_side = side == "read"
+            key = f"{side}_masks"
+            if not active_side:
+                registers = [""] * count
+            elif key in archive:
+                registers = [
+                    " ".join(name for bit, name in enumerate(names) if int(mask) & (1 << bit))
+                    for mask in archive[key]
+                ]
+            elif register_model == "all":
+                registers = [" ".join(name for name in names if name in selected)] * count
+            else:
+                registers = [""] * count
+            data[f"{side}_registers"] = np.asarray(registers)
+
+    groups: dict[tuple[str, str, str, str], dict[str, object]] = {}
+    for sample in range(count):
+        identity = tuple(str(data[field][sample]) for field in ("pc", "machine", "mnemonic", "operands"))
+        score = float(scores[sample])
+        magnitude = abs(score)
+        row = groups.get(identity)
+        if row is None:
+            row = dict(zip(("pc", "machine", "mnemonic", "operands"), identity, strict=True))
+            row.update(
+                total_occurrences=0, flagged_occurrences=0,
+                max_abs_t_score=magnitude, t_score_at_max=score, sample_index_at_max=sample,
+            )
+            groups[identity] = row
+        row["total_occurrences"] += 1
+        row["flagged_occurrences"] += int(magnitude > threshold)
+        if magnitude > row["max_abs_t_score"]:
+            row.update(max_abs_t_score=magnitude, t_score_at_max=score, sample_index_at_max=sample)
+    summary = [row for row in groups.values() if row["flagged_occurrences"]]
+    summary.sort(key=lambda row: (
+        -row["max_abs_t_score"], int(row["pc"], 16), row["machine"], row["mnemonic"], row["operands"],
+    ))
+    return data, summary
+
+
+def _write_instruction_csv(
+    path: Path, fields: Sequence[str], rows: Iterable[Mapping[str, object]],
+) -> None:
+    """Write an instruction report, retaining headers when no samples cross."""
+    with path.open("w", encoding="utf-8", newline="") as output:
+        writer = csv.DictWriter(output, fieldnames=fields)
+        writer.writeheader()
+        writer.writerows(rows)
+
+
+def write_tvla_instruction_reports(results_file: str | Path) -> tuple[Path, Path]:
+    """Export flagged occurrences and summaries without performing new tests."""
+    results_path = Path(results_file)
+    data, summary = _instruction_report_data(results_path)
+    flagged = np.flatnonzero(data["abs_t_score"] > data["threshold"])
+    occurrences_path = results_path.with_name(TVLA_OCCURRENCES)
+    summary_path = results_path.with_name(TVLA_SUMMARY)
+    _write_instruction_csv(
+        occurrences_path, OCCURRENCE_FIELDS,
+        ({field: data[field][sample] for field in OCCURRENCE_FIELDS} for sample in flagged),
+    )
+    _write_instruction_csv(summary_path, SUMMARY_FIELDS, summary)
+    distinct_pcs = len({row["pc"] for row in summary})
+    print(
+        f"TVLA: {len(flagged)} flagged samples at {distinct_pcs} distinct instruction addresses "
+        f"({len(summary)} instruction descriptions)."
+    )
+    print(f"Instruction occurrences: {occurrences_path}")
+    print(f"Instruction summary: {summary_path}")
+    return occurrences_path, summary_path
+
+
+def _attribution_description(leakage_model: str, register_model: str) -> str:
+    """Describe the execution event represented by the selected power model."""
+    if register_model == "accessed":
+        if leakage_model == "HD":
+            return "HD observes pre/post transitions in registers written by this instruction. Read registers do not contribute."
+        return "HW/ID observes this instruction's operand reads and result writes."
+    if register_model == "all":
+        if leakage_model == "HD":
+            return (
+                "HD observes consecutive recorded pre-state transitions associated with the earlier row; "
+                "these can span capture boundaries. Register sets are model-selected registers, not decoded accesses."
+            )
+        return (
+            "HW/ID observes pre-instruction register state. "
+            "Register sets are model-selected registers, not decoded accesses."
+        )
+    return "Attribution metadata is unavailable in this older archive."
+
+
 def show_tvla_results(
     results_file: str | Path, plot_path: str | Path | None = None, display: bool = True
 ) -> Path:
-    """Save a standalone interactive TVLA plot and optionally open it."""
+    """Save a standalone TVLA plot with instruction details and summary table."""
     results_path = Path(results_file)
     destination = Path(plot_path) if plot_path else results_path.with_name(TVLA_PLOT)
-    with np.load(results_path) as archive:
-        scores = np.asarray(archive["t_scores"], dtype=np.float64)
-        threshold = float(archive["threshold"])
+    data, summary = _instruction_report_data(results_path)
+    scores = data["t_score"]
+    threshold = float(data["threshold"][0])
     finite = scores[np.isfinite(scores)]
     display_limit = max(
         threshold * 1.25,
         float(np.max(np.abs(finite))) if finite.size else threshold * 1.25,
     )
-    plotted = np.clip(scores, -display_limit, display_limit)
-    indices = np.arange(len(scores))
+    data["x"] = data["sample_index"]
+    data["y"] = np.clip(scores, -display_limit, display_limit)
+    data["score_text"] = np.asarray([str(float(score)) for score in scores])
     crossing = np.abs(scores) > threshold
     infinite = np.isinf(scores)
     plot = figure(
@@ -385,37 +589,51 @@ def show_tvla_results(
         width=1000,
         height=500,
     )
-    plot.line(indices, plotted, line_width=1.5, legend_label="t-score")
+    line = plot.line("x", "y", source=ColumnDataSource(data), line_width=1.5, legend_label="t-score")
+    plot.add_tools(HoverTool(renderers=[line], tooltips=[
+        ("Sample", "@sample_index"), ("Window", "@window_id"), ("PC", "@pc"),
+        ("Machine", "@machine"), ("Instruction", "@mnemonic @operands"),
+        ("t-score", "@score_text"), ("Tested variable", "@tested_variable"),
+        ("Leakage model", "@leakage_model"), ("Register model", "@register_model"),
+        ("Contributing reads", "@read_registers"), ("Contributing writes", "@write_registers"),
+    ]))
     endpoints = [0, max(len(scores) - 1, 0)]
-    plot.line(
-        endpoints, [threshold, threshold], line_dash="dashed", color="firebrick"
-    )
-    plot.line(
-        endpoints, [-threshold, -threshold], line_dash="dashed", color="firebrick"
+    plot.line(endpoints, [threshold, threshold], line_dash="dashed", color="firebrick")
+    plot.line(endpoints, [-threshold, -threshold], line_dash="dashed", color="firebrick")
+    plot.scatter(
+        "x", "y", source=ColumnDataSource({key: values[crossing] for key, values in data.items()}),
+        color="orange", size=5, legend_label=f"|t| > {threshold:g}",
     )
     plot.scatter(
-        "x",
-        "y",
-        source=ColumnDataSource(
-            {"x": indices[crossing], "y": plotted[crossing]}
-        ),
-        color="orange",
-        size=5,
-        legend_label=f"|t| > {threshold:g}",
+        "x", "y", source=ColumnDataSource({key: values[infinite] for key, values in data.items()}),
+        marker="x", color="black", size=10, legend_label="infinite (clipped)",
     )
-    plot.scatter(
-        "x",
-        "y",
-        source=ColumnDataSource(
-            {"x": indices[infinite], "y": plotted[infinite]}
-        ),
-        marker="x",
-        color="black",
-        size=10,
-        legend_label="infinite (clipped)",
+    summary_data = {field: [row[field] for row in summary] for field in SUMMARY_FIELDS}
+    table = DataTable(
+        source=ColumnDataSource(summary_data), width=1000, height=300,
+        sortable=True, index_position=None,
+        columns=[
+            TableColumn(field="pc", title="PC"), TableColumn(field="machine", title="Machine"),
+            TableColumn(field="mnemonic", title="Instruction"), TableColumn(field="operands", title="Operands"),
+            TableColumn(field="total_occurrences", title="Total occurrences"),
+            TableColumn(field="flagged_occurrences", title="Flagged occurrences"),
+            TableColumn(field="max_abs_t_score", title="Max |t|"),
+            TableColumn(field="t_score_at_max", title="t at max"),
+            TableColumn(field="sample_index_at_max", title="Sample at max"),
+        ],
     )
-    output_file(destination, title="Sofa TVLA results")
-    save(plot)
+    attribution = _attribution_description(str(data["leakage_model"][0]), str(data["register_model"][0]))
+    description = Div(text=(
+        "<p>Potentially leaking instructions under the selected simulated model. "
+        "Public-input variation can cause crossings; a crossing does not establish exploitability, "
+        "and first-order non-detection does not establish security.</p>"
+        f"<p>{escape(attribution)}</p>"
+        "<p>The table summarizes existing sample tests across capture windows. "
+        "It does not pool occurrences or add statistical confirmation. Infinite scores are clipped only in the plot.</p>"
+    ), width=1000)
+    layout = column(description, plot, Div(text="<h3>Flagged instruction summary</h3>"), table)
+    output_file(destination, title="Sofa TVLA results", mode="inline")
+    save(layout, resources=INLINE)
     if display:
-        show(plot)
+        show(layout)
     return destination

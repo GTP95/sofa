@@ -398,16 +398,22 @@ a point, equal means produce zero and different means produce signed infinity,
 representing perfect separation in deterministic simulated traces.
 
 TVLA analysis requires at least two balanced traces per group, equal sample
-counts, identical PC and window-ID sequences, identical read/write-mask
+counts, identical PC, instruction-description, and window-ID sequences, identical read/write-mask
 sequences for the `accessed` register model, and no invalid samples within
 declared trace lengths. Sofa reports the first divergent sample and trace pair
 instead of truncating or realigning traces.
 
+Each TVLA run automatically localizes threshold crossings to the recorded
+instructions and exports occurrence and instruction-summary reports. No
+additional CLI flag, profile configuration, or cryptographic intermediate-value
+definitions are needed.
+
 This is a qualitative leakage indicator, not proof that leakage is exploitable
-or that an implementation is secure. It currently analyzes only first-order
-combined power. It does not provide higher-order preprocessing, per-register
-tests, fixed-vs-fixed classification, independent confirmation runs, or
-automatic attribution to instructions, source lines, or registers.
+or that an implementation is secure. Public-input variation can cause crossings,
+and first-order non-detection does not establish security. Sofa analyzes only
+first-order combined power. It does not provide higher-order preprocessing,
+per-register tests, fixed-vs-fixed classification, independent confirmation
+runs, source-line attribution, provenance tracking, or symbolic analysis.
 
 ### TVLA output
 
@@ -418,11 +424,61 @@ Every TVLA run adds these files to its run directory:
   manifest.
 - `tvla_results.npz` contains `t_scores`, the strict `exceeds_threshold` mask,
   scalar `threshold`, `fixed_count`, `random_count`, reference `pcs` and
-  `window_ids`, leakage and register metadata, the tested variable, effective
-  seed, and source power-archive name.
+  `window_ids`, aligned one-dimensional `instruction_machines`,
+  `instruction_mnemonics`, and `instruction_operands`, reference `read_masks`
+  and `write_masks` when available, leakage and register metadata, the tested
+  variable, effective seed, and source power-archive name.
 - `tvla_plot.html` is a standalone Welch-score plot with lines at +4.5 and
-  -4.5 and highlighted crossings. Infinite scores are clipped only in the
-  plot and marked separately; the NPZ retains infinity.
+  -4.5 and highlighted crossings. Hover shows sample index, capture window,
+  hexadecimal PC, machine bytes, mnemonic, operands, original score, tested
+  variable, models, and contributing register sets. A sortable table shows
+  the instruction summary. Browser resources are embedded for offline use.
+  Infinite scores are clipped only in the plot and marked separately;
+  hover, the table, CSV reports, and the NPZ retain infinity.
+- `tvla_instruction_occurrences.csv` contains one row per threshold-crossing
+  sample in execution order. Columns are `sample_index` (zero-based),
+  `window_id`, hexadecimal `pc`, `machine`, `mnemonic`, `operands`, `t_score`,
+  `abs_t_score`, `read_registers`, `write_registers`, `leakage_model`,
+  `register_model`, `tested_variable`, and `threshold`. Register sets are
+  space-separated in canonical register order. Repeated executions of the
+  same instruction remain separate rows.
+- `tvla_instruction_summary.csv` groups occurrences by PC and instruction
+  description across capture windows. It includes `pc`, `machine`,
+  `mnemonic`, `operands`, `total_occurrences` (including unflagged samples),
+  `flagged_occurrences`, `max_abs_t_score`, `t_score_at_max`, and
+  `sample_index_at_max`. Only groups with crossings are included, ordered
+  by descending maximum absolute score, then numeric PC and description.
+  Equal maxima use the earliest sample. This summarizes existing sample
+  tests; it does not pool observations or add statistical confirmation.
+
+Runs without crossings produce header-only CSV reports and an empty summary
+table. Sofa prints the flagged-sample count, distinct instruction-address
+count, and report paths.
+
+Instruction attribution depends on the selected model:
+
+- `accessed/HD` describes the pre/post transitions in registers written by
+  the instruction at that sample. Read registers do not contribute.
+- `accessed/HW` and `accessed/ID` describe operand reads and result writes
+  for that instruction. Register sets identify modeled contributions, not
+  individually significant registers.
+- `all/HW` and `all/ID` describe pre-instruction register-state observations.
+- `all/HD` describes consecutive recorded pre-state transitions associated
+  with the earlier CSV row. These transitions can span capture boundaries.
+  In `all` mode, reported sets are model-selected registers, not decoded
+  instruction accesses.
+
+Older power archives without instruction descriptions still support TVLA
+and PC-only reports with empty description fields. Instruction identity cannot
+be checked for those archives. Partially present or malformed instruction
+metadata is rejected. Existing TVLA result archives can also be reported:
+
+```python
+from sofa.components.tvla import show_tvla_results, write_tvla_instruction_reports
+
+write_tvla_instruction_reports("Traces-AES/run-example/tvla_results.npz")
+show_tvla_results("Traces-AES/run-example/tvla_results.npz", display=False)
+```
 
 In addition, `power_traces.npz` contains a fixed-width Unicode `group_labels`
 array (`fixed` or `random`) aligned with `trace_filenames`.
@@ -444,6 +500,8 @@ The main `power_traces.npz` archive contains:
 | `read_components`, `write_components` | Per-register diagnostic arrays with shape `(traces, samples, 16)`. |
 | `read_masks`, `write_masks` | Register-access masks for each sample. |
 | `window_ids`, `pcs` | Capture-window and program-counter diagnostics. |
+| `instruction_ids` | Instruction-description table indices with shape `(traces, samples)`. |
+| `instruction_machines`, `instruction_mnemonics`, `instruction_operands` | Deduplicated one-dimensional Unicode description tables indexed by `instruction_ids`. |
 | `trace_filenames` | Mapping from each archive row to its execution CSV. |
 | `register_names`, `selected_registers` | Register metadata. |
 | `leakage_model`, `register_model`, `trace_schema`, `capstone_version` | Reproducibility metadata. |
@@ -454,6 +512,13 @@ diagnostic arrays use the same padding. Metadata does not require pickle.
 Per-register diagnostics substantially increase output size; Sofa uses
 temporary disk-backed arrays to avoid multiplying peak memory use while
 constructing them.
+
+Instruction identities preserve the CSV `Machine`, `Ins`, and `Operands`
+fields, including leading zeroes in machine bytes and empty operands.
+Description tables require no pickle. `instruction_ids` uses the same trailing
+`NaN` padding as the numeric diagnostics; only indices within declared trace
+lengths are valid. In `tvla_results.npz`, description arrays are expanded to
+the aligned reference sample sequence instead of retaining the table indices.
 
 The optional NPY output contains only combined power traces of equal length.
 

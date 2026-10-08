@@ -88,6 +88,10 @@ class LeakageModelTests(unittest.TestCase):
                 self.assertEqual(archive["read_components"].shape, (2, 2, 16))
                 np.testing.assert_array_equal(archive["lengths"], [1, 2])
                 self.assertTrue(np.isnan(archive["arr_0"][0, 1]))
+                self.assertEqual(archive["instruction_ids"].shape, (2, 2))
+                self.assertTrue(np.isnan(archive["instruction_ids"][0, 1]))
+                self.assertEqual(archive["instruction_machines"].tolist(), ["00bf"])
+                self.assertEqual(archive["instruction_operands"].tolist(), [""])
                 self.assertEqual(archive["register_model"].item(), "accessed")
                 self.assertEqual(archive["capstone_version"].item(), "5.0.9")
 
