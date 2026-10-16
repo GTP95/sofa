@@ -15,9 +15,11 @@ from qiling import Qiling
 from qiling.arch.models import ARM_CPU_MODEL
 from qiling.const import QL_ARCH, QL_OS, QL_VERBOSE
 from qiling.extensions.hookswitch.hook_switch import hook_switch
-from qiling.extensions.mcu import stm32f1
 from qiling.extensions.mcu.stm32f1 import stm32f103
-from qiling.extensions.mcu.stm32f4 import stm32f415
+from qiling.extensions.mcu.atmel import sam3x8e
+from qiling.extensions.mcu.bes import bes2300
+from qiling.extensions.mcu.nxp import mk64f12
+from qiling.extensions.mcu import stm32f4
 from tqdm import tqdm
 
 from sofa.components.qiling_profile import QilingProfile
@@ -772,26 +774,65 @@ def initialize_qiling(
             raise ValueError(f"Algorithm {profile.get_algorithm_name()} not supported.")
 
 
-    #convert platform string into platform constant. The string comes from the JSON config file, the constant is Qiling's internal representation of that
+    # Resolve JSON platform identifiers to Qiling MCU environment dictionaries.
     is_rp2350 = False
     cputype = None
     match config['platform']:
-        case 'stm32f103':
-            platform=stm32f103
-        case 'stm32f1':
-            platform=stm32f1
+        case 'stm32f103' | 'stm32f1':
+            platform = stm32f103
+        case 'stm32f401':
+            platform = stm32f4.stm32f401
+        case 'stm32f405':
+            platform = stm32f4.stm32f405
+        case 'stm32f407':
+            platform = stm32f4.stm32f407
+        case 'stm32f410':
+            platform = stm32f4.stm32f410
+        case 'stm32f411':
+            platform = stm32f4.stm32f411
+        case 'stm32f412':
+            platform = stm32f4.stm32f412
+        case 'stm32f413':
+            platform = stm32f4.stm32f413
         case 'stm32f415':
-            platform=stm32f415
+            platform = stm32f4.stm32f415
+        case 'stm32f417':
+            platform = stm32f4.stm32f417
+        case 'stm32f423':
+            platform = stm32f4.stm32f423
+        case 'stm32f427':
+            platform = stm32f4.stm32f427
+        case 'stm32f429':
+            platform = stm32f4.stm32f429
+        case 'stm32f437':
+            platform = stm32f4.stm32f437
+        case 'stm32f439':
+            platform = stm32f4.stm32f439
+        case 'stm32f446':
+            platform = stm32f4.stm32f446
+        case 'stm32f469':
+            platform = stm32f4.stm32f469
+        case 'stm32f479':
+            platform = stm32f4.stm32f479
+        case 'sam3x8e':
+            platform = sam3x8e
+        case 'mk64f12':
+            platform = mk64f12
+        case 'bes2300':
+            platform = bes2300
         case 'CW308_STM32F4':
             # Backwards compatibility for ASCON profiles generated before the
             # build system started emitting Qiling's platform identifier.
-            platform=stm32f415
+            platform = stm32f4.stm32f415
         case 'rp2350':
             platform = RP2350
             cputype = ARM_CPU_MODEL.ARM_CORTEX_M33
             is_rp2350 = True
         case _:
-            raise ValueError(f"Platform {config['platform']} needs to be added inside 'helpers.py' in the 'initialize_qiling' function.")
+            raise ValueError(
+                f"Unsupported ARM MCU platform: {config['platform']!r}. "
+                "Use a Qiling ARM MCU identifier or 'rp2350'."
+            )
 
     ql = Qiling(
         argv=[elf],
@@ -809,8 +850,20 @@ def initialize_qiling(
         # avoids Qiling's costly one-instruction-at-a-time MCU scheduler.
         ql.os.fast_mode = True
     else:
-        ql.hw.create("usart1")
-        ql.hw.create("rcc")
+        # Keep Sofa's USART1 interface while using each board's native UART.
+        uart_label, clock_label = {
+            "sam3x8e": ("uart", "pmc"),
+            "mk64f12": ("uart0", "sim"),
+            "bes2300": ("uart0", "cmu"),
+        }.get(config["platform"], ("usart1", "rcc"))
+        uart_config = platform[uart_label.upper()]
+        ql.hw.create(
+            "usart1",
+            struct=uart_config["struct"],
+            base=uart_config["base"],
+            kwargs=uart_config.get("kwargs", {}),
+        )
+        ql.hw.create(clock_label)
 
     # Load memory mappings from config and apply them
     for memap_obj in config['memory_mappings']:

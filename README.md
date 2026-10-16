@@ -232,6 +232,25 @@ Use these files directly with the default builds. For a custom binary, copy
 the closest example and edit the copy so the known-good example remains
 unchanged.
 
+### MCU platform identifiers
+
+The profile's `platform` accepts every ARM MCU definition in the pinned Qiling
+version: `stm32f103`, `stm32f401`, `stm32f405`, `stm32f407`, `stm32f410`,
+`stm32f411`, `stm32f412`, `stm32f413`, `stm32f415`, `stm32f417`, `stm32f423`,
+`stm32f427`, `stm32f429`, `stm32f437`, `stm32f439`, `stm32f446`, `stm32f469`,
+`stm32f479`, `sam3x8e`, `mk64f12`, and `bes2300`. Sofa also provides its custom
+`rp2350` platform. The legacy identifiers `stm32f1` and `CW308_STM32F4` select
+`stm32f103` and `stm32f415`, respectively.
+
+Sofa exposes SAM3X8E's UART and MK64F12/BES2300's UART0 through its usual
+`usart1` interface and selects each board's clock peripheral. Firmware must
+use that UART for Sofa's serial protocol. Platform selection does not supply
+missing upstream hardware models: the pinned Qiling version includes a
+BES2300 environment definition but lacks its UART and clock implementations.
+The bundled firmware and example profiles remain the tested configurations.
+Qiling's RISC-V `gd32vf103` MCU and non-MCU operating-system platforms require
+architecture-specific tracing and are not supported by Sofa's ARM recorder.
+
 ### Common profile fields
 
 | Field | Meaning |
