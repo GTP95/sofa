@@ -21,7 +21,7 @@ class SymParser:
             __elf_data: bytes = f.read()
         self.__elf = ELFFile(stream=BytesIO(initial_bytes=__elf_data))
 
-    def get_symbol_by_name(self, name) -> int:
+    def get_symbol_by_name(self, name: str) -> int:
         """
         Retrieves the details of a specific symbol by its name.
 
@@ -32,10 +32,13 @@ class SymParser:
             int: The address of the symbol.
         """
         symtab = self.__elf.get_section_by_name(".symtab")
+        if symtab is None:
+            raise ValueError("ELF has no .symtab; provide numeric addresses or an unstripped ELF")
         sym = symtab.get_symbol_by_name(name)
         if sym is None:
             raise ValueError(f"Error, function {name} not found in the .sym file")
         # Thumb function symbols may use bit 0 as the ISA-state marker, while
         # local assembly labels are already even.  Clear the marker instead of
         # subtracting unconditionally, which corrupts even-valued labels.
-        return sym[0]["st_value"] & ~1
+        address = sym[0]["st_value"]
+        return address & ~1 if self.__elf.header["e_machine"] == "EM_ARM" else address

@@ -1,10 +1,10 @@
 # Sofa
 
-*A power simulator for side-channel analysis of ARM binaries*
+*A power simulator for side-channel analysis of ARM and RISC-V binaries*
 
 ![Sofa](art/CPU.webp)
 
-Sofa identifies architectural leakage in ARM software implementations of
+Sofa identifies architectural leakage in ARM and RISC-V software implementations of
 cryptographic algorithms. It uses [Qiling](https://qiling.io/) to emulate a
 firmware binary, records register state during the operation of interest, and
 applies an Identity (ID), Hamming Weight (HW), or Hamming Distance (HD) leakage
@@ -43,7 +43,7 @@ Qiling.
 - JSON profiles for configuring binaries, platforms, and capture windows.
 - First-order fixed-versus-random TVLA with reproducible, balanced input
   generation and point-wise Welch scores.
-- Qiling-based emulation of ARM platforms.
+- Qiling-based emulation of ARM MCU firmware and bare-metal ARM64/RV32/RV64 ELF routines, including ARM64 FP/NEON and RISC-V F/D registers.
 - Makefile-based firmware builds for multiple targets and platforms.
 
 ### Supported algorithms
@@ -61,7 +61,7 @@ These host requirements can be ignored when using the Docker image:
 - Python 3.10 or later. Sofa is tested on Python 3.12. At the time of writing,
   dependency installation fails on Python 3.13, possibly because some wheels
   have not yet been updated.
-- Qiling for ARM emulation. It is installed by `requirements.txt`.
+- Qiling for emulation. It is installed by `requirements.txt`.
 - The remaining Python packages listed in `requirements.txt`.
 - Optional: `make` and the
   [Arm GNU toolchain](https://developer.arm.com/downloads/-/arm-gnu-toolchain-downloads)
@@ -248,8 +248,97 @@ use that UART for Sofa's serial protocol. Platform selection does not supply
 missing upstream hardware models: the pinned Qiling version includes a
 BES2300 environment definition but lacks its UART and clock implementations.
 The bundled firmware and example profiles remain the tested configurations.
-Qiling's RISC-V `gd32vf103` MCU and non-MCU operating-system platforms require
-architecture-specific tracing and are not supported by Sofa's ARM recorder.
+The board runner remains specific to ARM MCUs. RISC-V and ARM64 routines use
+the generic bare-metal runner below; it does not model GD32VF103 peripherals
+or operating-system services.
+
+### Bare-metal ARM64 and RISC-V
+
+Sofa accepts user-supplied, statically linked, little-endian `ET_EXEC` ELF
+binaries for ARM64, RV32, and RV64. No root filesystem, UART, or board model is
+required. Loadable segments use their ELF virtual addresses; BSS starts at
+zero. The routine must work without firmware startup, dynamic linking,
+relocation processing, interrupts, syscalls, or peripheral initialization.
+Existing Cortex-M and RP2350 profiles keep their behavior.
+
+Start with `profiles/examples/AES-arm64-baremetal.json`,
+`AES-riscv32-baremetal.json`, or `AES-riscv64-baremetal.json`. These are
+**illustrative templates**, not bundled firmware examples. They assume a
+user-supplied function with the integer/pointer ABI:
+
+```c
+void aes_ecb_encrypt(const uint8_t *key, uint8_t *data, size_t length);
+```
+
+Adapt the entry symbol, capture markers, addresses, memory mappings, and
+algorithm settings to your ELF. The workspace and return page in the templates
+must not overlap its loadable segments. Run with the usual input options:
+
+```bash
+python main.py --input auto --count 10 my-arm64.elf profiles/examples/AES-arm64-baremetal.json
+python main.py --tvla --count 100 --tvla_seed 1234 my-rv64.elf profiles/examples/AES-riscv64-baremetal.json
+```
+
+Use `platform: "baremetal"` and `execution_mode: "baremetal-direct"` together.
+The optional `architecture` is `arm64`, `riscv32`, or `riscv64`; when omitted,
+Sofa detects it from the ELF, and when present it must match. This execution
+mode also works with the existing ASCON and KECCAK input/TVLA workflows when
+the profile supplies their algorithm settings.
+
+| Field | Bare-metal meaning |
+|-------|--------------------|
+| `memory_mappings` | Additional 4096-byte-aligned regions, with sizes in multiples of 4096 and Unicorn permissions. Regions must not overlap ELF pages or each other. |
+| `trace_start`, `trace_end` | Exact ELF symbols or numeric addresses. Capture begins inclusively and ends exclusively; repeated visits to the start create distinct windows. The end may equal the return sentinel. |
+| `direct_call.entry` | Exact ELF function symbol or numeric address. Numeric addresses also work with stripped binaries. |
+| `direct_call.stack_address` | Initial SP, aligned to 16 bytes, with writable mapped space below it for the routine and above it for any stack arguments. |
+| `direct_call.return_address` | Aligned, executable, reserved four-byte sentinel. Sofa writes a NOP here and stops before executing it; do not point this at live code or data. |
+| `direct_call.buffers` | Named objects with numeric `address`, positive `size`, and optional `input`. Each range must be readable/writable. Input bytes are copied and zero-padded; oversized inputs fail. Buffers without an input are zeroed. |
+| `direct_call.arguments` | Ordered unsigned pointer-width integers, `{"buffer": "name"}` pointers, or `{"length": "input"}` byte lengths. |
+| `instruction_limit` | Positive instruction count for the complete call; defaults to 1,000,000. Failure to return or complete the capture window raises an error. |
+
+Input sources are `key`, `plaintext`, and optional `iv` for AES; `key`,
+`plaintext`, `nonce`, and optional `ad` for ASCON; and `plaintext` for KECCAK.
+Lengths refer to decoded input bytes, including UTF-8 encoding when plaintext
+input format is selected. Arguments follow AAPCS64 or the RISC-V integer
+calling convention: the first eight use registers, and remaining arguments use
+pointer-sized stack slots. FP/vector arguments and aggregate arguments are not
+supported; FP/SIMD instructions within the routine are supported. Provide any
+required buffers and lengths explicitly; the runner does not infer an
+algorithm's C function signature or validate its output ciphertext.
+
+The physical register banks are:
+
+| Architecture | Recorded registers |
+|--------------|--------------------|
+| ARM64 | `x0`–`x30`, `sp`, `pc` (64 bits), then `v0`–`v31` (128 bits). |
+| RV32 | `x0`–`x31`, `pc` (32 bits), then `f0`–`f31` (64 bits). |
+| RV64 | `x0`–`x31`, `pc`, then `f0`–`f31` (64 bits). |
+
+Aliases such as ARM64 `w0`/`d0`/`q0` and RISC-V ABI names share their physical
+register slot. Every access models the **full physical register**, including
+scalar and vector-lane accesses; unrelated upper bits can therefore contribute
+to HW/ID. RISC-V `x0` is recorded but contributes no leakage. FP values use
+raw register bit patterns, including NaN boxing, rather than numerical floating
+point values. Status registers are diagnostic only. ID power samples use
+float64 and can round large integer values above 2^53; HW and HD count bits
+using exact integers, including all 128 ARM64 SIMD bits.
+
+ARM64 FP/NEON, RISC-V integer/M/A/F/D operations, and compressed instructions
+are supported subject to the pinned emulator's instruction support. The RISC-V
+access decoder explicitly handles instruction effects because Capstone 5 lacks
+RISC-V register-access metadata; unhandled instructions fail instead of
+silently omitting accesses. ARM SVE/SME and RISC-V V are unsupported.
+
+New traces use `sofa-accessed-v2` or `sofa-all-v2`, with an `architecture`
+column and hexadecimal register values. NPZ metadata adds `architecture` and
+`register_widths`; component arrays have 65 register slots. Access masks have
+shape `(traces, samples, 2)` with little-endian `uint64` words: bit `i` of
+word `j` selects register `64*j+i`. PCs use exact `uint64` values. Trace
+`lengths` identify valid samples; mask/PC padding is zero and window/instruction
+ID padding is -1. Power/component padding remains NaN. TVLA results retain
+packed masks with shape `(samples, 2)` and reports display canonical names.
+Historical ARM CSV/NPZ formats remain readable and ARM output keeps its
+existing format. Archives cannot mix architectures or schema versions.
 
 ### Common profile fields
 
@@ -516,7 +605,7 @@ The main `power_traces.npz` archive contains:
 |-------|----------|
 | `arr_0` | Combined power samples. |
 | `lengths` | Original sample count for each trace. |
-| `read_components`, `write_components` | Per-register diagnostic arrays with shape `(traces, samples, 16)`. |
+| `read_components`, `write_components` | Per-register diagnostic arrays with shape `(traces, samples, registers)` (16 for Cortex-M, 65 for the new architectures). |
 | `read_masks`, `write_masks` | Register-access masks for each sample. |
 | `window_ids`, `pcs` | Capture-window and program-counter diagnostics. |
 | `instruction_ids` | Instruction-description table indices with shape `(traces, samples)`. |
@@ -549,10 +638,10 @@ access sets.
 
 ## Leakage and register models
 
-The default `--register_model accessed` mode uses Capstone 5.0.9 to determine
-which architectural registers each executed ARM or Thumb instruction reads
+The default `--register_model accessed` mode uses Capstone 5.0.9 with
+architecture-specific access rules to determine which registers each instruction reads
 and writes. For instruction *i*, let `R_i` and `W_i` be those sets, and let
-`v_i^-` and `v_i^+` be a register's 32-bit value immediately before and after
+`v_i^-` and `v_i^+` be a register's raw bit pattern immediately before and after
 execution. Sofa computes:
 
 - `ID(i) = sum(v_i^-[r] for r in R_i) + sum(v_i^+[r] for r in W_i)`
@@ -566,7 +655,7 @@ Explicit and implicit general-purpose accesses, including stack-pointer
 writeback, link-register updates, and PC-relative operands, are included.
 Normal sequential PC advancement is excluded.
 
-The selected-register API filters the supported `r0`-`r12`, `sp`, `lr`, and
+For Cortex-M, the selected-register API filters the supported `r0`-`r12`, `sp`, `lr`, and
 `pc` set.
 
 `--register_model all` retains Sofa's earlier behavior for comparison and
@@ -587,8 +676,9 @@ to an instruction.
 ## How instruction capture works
 
 Sofa computes one power sample per *recorded* instruction, which is not
-necessarily every instruction the firmware executes. Qiling executes the
-entire program, including startup and UART handling. Sofa records register
+necessarily every instruction the firmware executes. For MCU profiles, Qiling
+executes the entire program, including startup and UART handling. Bare-metal
+direct profiles begin at the configured routine entry. Sofa records register
 state into a CSV trace during the selected interval and then applies the
 chosen leakage model to every CSV row.
 
@@ -607,7 +697,7 @@ code inside the range when it executes outside the intended invocation. This
 semantic mismatch caused incorrect recordings and divergent traces when
 intermediate values were compared.
 
-For the historical `all` register model, Sofa's `hook_switch` extension turns
+For the Cortex-M `all` register model, Sofa's `hook_switch` extension turns
 recording on at `begin` and off at `end`, covering the dynamic execution
 interval. The default `accessed` recorder implements the same temporal gating
 directly because it must observe both pre- and post-execution instruction

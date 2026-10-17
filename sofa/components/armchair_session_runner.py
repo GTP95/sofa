@@ -1,4 +1,5 @@
 import csv
+import json
 import logging
 import os
 import tempfile
@@ -33,6 +34,11 @@ class ARMChairSessionRunner:
         self.sym_parser = SymParser(elf_path=elf_path)
         self.logger=logging.getLogger(__name__)
         self.json_path=json_path
+        with open(json_path, encoding="utf-8") as config_file:
+            config = json.load(config_file)
+        if config.get("execution_mode") == "baremetal-direct":
+            from sofa.components.baremetal import BaremetalProfile
+            self.target_profile = BaremetalProfile(config)
         self.register_model = register_model
         self.output_dir: str | None = None
 
@@ -82,9 +88,19 @@ class ARMChairSessionRunner:
             )
 
             ql.log.info("Starting Qiling..")
-            ql.run()
-            if self.register_model == "accessed":
+            if hasattr(ql, "sofa_architecture"):
+                limit = self.target_profile.config.get("instruction_limit", 1_000_000)
+                if not isinstance(limit, int) or isinstance(limit, bool) or limit <= 0:
+                    raise ValueError("instruction_limit must be a positive integer")
+                stop = self.target_profile.config["direct_call"]["return_address"]
+                ql.run(begin=ql.sofa_entry, end=stop + 4, count=limit)
+                if not ql.sofa_returned:
+                    raise RuntimeError("Bare-metal routine did not return within instruction_limit")
                 ql.sofa_access_recorder.validate_complete()
+            else:
+                ql.run()
+                if self.register_model == "accessed":
+                    ql.sofa_access_recorder.validate_complete()
 
             if logging.getLogger().isEnabledFor(logging.DEBUG):
                 logger.debug("Writing traces to CSV...")
@@ -93,9 +109,9 @@ class ARMChairSessionRunner:
             with open(output_path, mode="w", newline="") as file:
                 csv_writer = csv.writer(file)
                 csv_writer.writerow(
-                    ACCESSED_TRACE_HEADER
-                    if self.register_model == "accessed"
-                    else headerList
+                    ql.sofa_trace_header if hasattr(ql, "sofa_trace_header") else (
+                        ACCESSED_TRACE_HEADER if self.register_model == "accessed" else headerList
+                    )
                 )
                 csv_writer.writerows(traces)  # Write the rows of data
         except UcError as ex:

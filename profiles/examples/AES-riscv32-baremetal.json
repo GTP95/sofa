@@ -1,0 +1,56 @@
+{
+  "__example_comment": "Illustrative profile for a user-supplied static ELF; adjust symbols, mappings, sizes and addresses to match your binary.",
+  "platform": "baremetal",
+  "execution_mode": "baremetal-direct",
+  "architecture": "riscv32",
+  "target": "AES",
+  "key_length": "128",
+  "plaintext_length": "16",
+  "use_iv": "false",
+  "masked": "false",
+  "trace_start": "aes_ecb_encrypt",
+  "trace_end": 4194304,
+  "memory_mappings": [
+    {
+      "base_address": 3145728,
+      "size": 65536,
+      "perms": 3,
+      "info": "workspace and stack"
+    },
+    {
+      "base_address": 4194304,
+      "size": 4096,
+      "perms": 5,
+      "info": "reserved return sentinel"
+    }
+  ],
+  "direct_call": {
+    "entry": "aes_ecb_encrypt",
+    "stack_address": 3211008,
+    "return_address": 4194304,
+    "buffers": {
+      "key": {
+        "address": 3145728,
+        "size": 16,
+        "input": "key"
+      },
+      "data": {
+        "address": 3145984,
+        "size": 16,
+        "input": "plaintext"
+      }
+    },
+    "arguments": [
+      {
+        "buffer": "key"
+      },
+      {
+        "buffer": "data"
+      },
+      {
+        "length": "plaintext"
+      }
+    ]
+  },
+  "instruction_limit": 1000000
+}

@@ -8,14 +8,13 @@ from bokeh.plotting import show
 from holoviews import opts
 
 from sofa.utils.helpers import create_npz_file, create_npy_file
-from sofa.utils.register_access import REGISTER_NAMES
 
 
 def generate_power_traces(
     input_dir: str | Path,
     output_file: str | Path,
     leakage_model: str,
-    selected_registers: list[str] | tuple[str, ...] = REGISTER_NAMES,
+    selected_registers: list[str] | tuple[str, ...] | None = None,
     format: str = "npz",
     register_model: str = "accessed",
 ) -> None:
@@ -25,7 +24,7 @@ def generate_power_traces(
         input_dir: the directory containing the execution traces in CSV format.
         output_file: name (and optionally path) of the NPZ file that will be created to store the power traces.
         leakage_model: one of the supported leakage models. Currently, can be 'HD', 'HW', or 'ID'.
-        selected_registers: the registers to consider when simulating the power consumption. Default is the following ARM registers: r0,r1,r2,r3,r4,r5,r6,r7,r8,r9,r10,r11,r12,sp,lr,pc.
+        selected_registers: the registers to consider when simulating the power consumption. Default is the physical register bank recorded for the trace architecture.
         format: the format in which to save the power traces. Can be 'npz' (default) or 'npy'.
         register_model: use only instruction-accessed registers (default), or all selected registers.
 

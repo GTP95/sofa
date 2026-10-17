@@ -763,6 +763,12 @@ def initialize_qiling(
         Qiling: The initialized Qiling instance.
     """
 
+    with open(json_path, encoding="utf-8") as config_file:
+        raw_config = json.load(config_file)
+    if raw_config.get("platform") == "baremetal" or raw_config.get("execution_mode") == "baremetal-direct":
+        from sofa.components.baremetal import initialize_baremetal
+        return initialize_baremetal(elf, raw_config, profile, sym_parser, traces, register_model)
+
     match profile.get_algorithm_name():
         case 'AES':
             config = AesSettingsLoader(json_path).get_target_settings()
@@ -1107,15 +1113,19 @@ def _selected_register_mask(cols: list[str] | tuple[str, ...]) -> np.ndarray:
 
 def process_csv_file(
     file: str | Path,
-    cols: list[str] | tuple[str, ...],
+    cols: list[str] | tuple[str, ...] | None,
     leakage_model: str,
     register_model: str = "accessed",
 ) -> dict[str, np.ndarray]:
     """Compute combined and per-register leakage for one execution CSV."""
+    from sofa.utils.wide_traces import trace_architecture, process_v2
+    if trace_architecture(file) is not None:
+        return process_v2(file, cols, leakage_model, register_model)
     frame = pd.read_csv(
         file, dtype={"Machine": str, "Ins": str, "Operands": str},
         keep_default_na=False,
     )
+    cols = REGISTER_NAMES if cols is None else cols
     selected = _selected_register_mask(cols)
 
     if register_model == "accessed":
@@ -1240,7 +1250,7 @@ def create_npz_file(
     name_npy_file: str | Path,
     folder: str | Path,
     leakage_model: str,
-    cols: list[str] | tuple[str, ...] = REGISTER_NAMES,
+    cols: list[str] | tuple[str, ...] | None = None,
     num_cores: int | None = None,
     register_model: str = "accessed",
 ) -> None:
@@ -1261,6 +1271,14 @@ def create_npz_file(
     files = sorted(Path(folder).glob('traces_*.csv'), key=extract_number)
     if not files:
         raise ValueError(f"No execution trace CSV files found in {folder}")
+
+    from sofa.utils.wide_traces import trace_architecture, create_v2_archive
+    if trace_architecture(files[0]) is not None:
+        create_v2_archive(name_npy_file, files, leakage_model, cols, register_model)
+        return
+    if any(trace_architecture(file) is not None for file in files[1:]):
+        raise ValueError("Cannot mix historical ARM and architecture-aware traces")
+    cols = REGISTER_NAMES if cols is None else cols
 
     # Determine lengths without retaining parsed traces. The archive arrays are
     # disk-backed below, keeping peak RAM bounded for long Keccak executions.
@@ -1528,7 +1546,7 @@ def create_npy_file(
     name_npy_file: str | Path,
     folder: str | Path,
     leakage_model: str,
-    cols: list[str] | tuple[str, ...] = REGISTER_NAMES,
+    cols: list[str] | tuple[str, ...] | None = None,
     register_model: str = "accessed",
 ) -> None:
     """

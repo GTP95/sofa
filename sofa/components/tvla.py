@@ -16,6 +16,7 @@ from bokeh.plotting import figure, output_file, save, show
 from bokeh.resources import INLINE
 
 from sofa.utils.constants import AES_BLOCK_SIZE, ASCON_KEY_SIZE, ASCON_NONCE_SIZE
+from sofa.utils.wide_traces import unpack_mask
 
 
 TVLA_THRESHOLD = 4.5
@@ -227,7 +228,10 @@ def _first_divergence(
     """Raise an informative error for the first row differing from reference."""
     reference = values[0]
     for trace_index in range(1, len(values)):
-        differences = np.flatnonzero(values[trace_index] != reference)
+        different = values[trace_index] != reference
+        if different.ndim > 1:
+            different = np.any(different, axis=tuple(range(1, different.ndim)))
+        differences = np.flatnonzero(different)
         if differences.size:
             sample = int(differences[0])
             raise ValueError(
@@ -377,16 +381,35 @@ def analyze_tvla_archive(
                 if key not in archive:
                     raise ValueError(f"Power archive is missing TVLA data: {key}")
                 raw_masks = np.asarray(archive[key])
-                if raw_masks.ndim != 2:
+                packed = raw_masks.ndim == 3
+                if "trace_schema" in archive and str(archive["trace_schema"]).endswith("-v2") and not packed:
+                    raise ValueError("Version-two register masks must use packed uint64 words")
+                if packed:
+                    from sofa.utils.architectures import ARCHITECTURES
+                    architecture = str(archive["architecture"]) if "architecture" in archive else ""
+                    if architecture not in ARCHITECTURES:
+                        raise ValueError("Packed register masks require architecture metadata")
+                    descriptor = ARCHITECTURES[architecture]
+                    names = archive["register_names"].tolist() if "register_names" in archive else []
+                    widths = archive["register_widths"].tolist() if "register_widths" in archive else []
+                    if names != list(descriptor.names) or widths != list(descriptor.widths):
+                        raise ValueError("Packed register mask metadata does not match architecture")
+                    words = (len(names) + 63) // 64
+                    if raw_masks.shape[2] != words or raw_masks.dtype != np.dtype("uint64"):
+                        raise ValueError("Invalid packed register mask layout")
+                    remaining = len(names) % 64
+                    if remaining and np.any(raw_masks[:, :sample_count, -1] >> np.uint64(remaining)):
+                        raise ValueError("Packed register mask exceeds register bank")
+                elif raw_masks.ndim != 2:
                     raise ValueError(
                         f"TVLA {description} array is not aligned with power samples"
                     )
                 mask_values = raw_masks[:, :sample_count]
-                if mask_values.shape != expected_shape:
+                if mask_values.shape[:2] != expected_shape:
                     raise ValueError(
                         f"TVLA {description} array is not aligned with power samples"
                     )
-                if (mask_values.dtype.kind not in "iuf" or not np.isfinite(mask_values).all()
+                if not packed and (mask_values.dtype.kind not in "iuf" or not np.isfinite(mask_values).all()
                         or np.any(mask_values < 0) or np.any(mask_values > 0xFFFF)
                         or np.any(mask_values != np.floor(mask_values))):
                     raise ValueError(f"TVLA {description} values must be 16-bit register masks")
@@ -406,6 +429,8 @@ def analyze_tvla_archive(
                 "selected_registers",
                 "register_names",
                 "capstone_version",
+                "architecture",
+                "register_widths",
             )
             if key in archive
         }
@@ -455,7 +480,10 @@ def _instruction_report_data(
             if values.shape != (count,) or values.dtype.kind != "U":
                 raise ValueError(f"TVLA result {key} must be a Unicode array aligned with scores")
         for key in ("pcs", "window_ids", "read_masks", "write_masks"):
-            if key in archive and np.asarray(archive[key]).shape != (count,):
+            expected = (count,)
+            if key in {"read_masks", "write_masks"} and key in archive and archive[key].ndim == 2:
+                expected = (count, (len(names) + 63) // 64)
+            if key in archive and np.asarray(archive[key]).shape != expected:
                 raise ValueError(f"TVLA result {key} is not aligned with scores")
         data = {
             "sample_index": np.arange(count),
@@ -479,7 +507,7 @@ def _instruction_report_data(
                 registers = [""] * count
             elif key in archive:
                 registers = [
-                    " ".join(name for bit, name in enumerate(names) if int(mask) & (1 << bit))
+                    " ".join(name for bit, name in enumerate(names) if unpack_mask(mask) & (1 << bit))
                     for mask in archive[key]
                 ]
             elif register_model == "all":

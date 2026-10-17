@@ -1,4 +1,6 @@
 #!/usr/bin/env python3
+import json
+
 from argparse import Namespace
 from pathlib import Path
 
@@ -65,6 +67,12 @@ if __name__ == "__main__":
         raise Exception(
             f"This target has not been implemented yet, use the help function for available targets"
         )
+
+    with open(args.config, encoding="utf-8") as config_file:
+        raw_config = json.load(config_file)
+    if raw_config.get("execution_mode") == "baremetal-direct":
+        from sofa.components.baremetal import BaremetalProfile
+        tp = BaremetalProfile(raw_config)
 
     session = ARMChairSession(
         args=args,

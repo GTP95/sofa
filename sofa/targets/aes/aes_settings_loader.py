@@ -40,11 +40,16 @@ class AesSettingsLoader(SettingsLoader):
             plaintext_length: int = int(self._settings["plaintext_length"])
             use_iv: bool = self._settings["use_iv"].lower() == "true"
             masked: bool = self._settings["masked"].lower() == "true"
-            add_cmd: str = self._settings["add_cmd"]
-            get_cmd: str = self._settings["get_cmd"]
-            key_cmd: str = self._settings["key_cmd"]
-            enc_cmd: str = self._settings["enc_cmd"]
-            memory_mappings = self._settings["memory_mappings"]
+            baremetal = self._settings.get("execution_mode") == "baremetal-direct"
+            commands = {
+                name: self._settings.get(name, "") if baremetal else self._settings[name]
+                for name in ("add_cmd", "get_cmd", "key_cmd", "enc_cmd")
+            }
+            add_cmd: str = commands["add_cmd"]
+            get_cmd: str = commands["get_cmd"]
+            key_cmd: str = commands["key_cmd"]
+            enc_cmd: str = commands["enc_cmd"]
+            memory_mappings = self._settings.get("memory_mappings", []) if baremetal else self._settings["memory_mappings"]
 
             # Store the parsed settings in the _parsed_settings dictionary
             self._parsed_settings = {
