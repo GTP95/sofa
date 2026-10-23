@@ -43,6 +43,11 @@ def tvla_field_lengths(
     algorithm: str, settings: Mapping[str, object]
 ) -> dict[str, int]:
     """Return active TVLA input fields and their lengths in bytes."""
+    from sofa.components.pqc import FAMILIES, PQCSpec
+    if algorithm in FAMILIES:
+        spec = PQCSpec.from_settings(settings)
+        field = spec.tvla_variable
+        return {field: spec.message_length if field == 'message' else spec.sizes[field]}
     if algorithm == "AES":
         fields = {
             "key": int(settings["key_length"]),
@@ -83,7 +88,7 @@ def generate_tvla_inputs(
     algorithm: str,
     target_settings: Mapping[str, object],
     count: int,
-    variable: str = "plaintext",
+    variable: str | None = None,
     seed: int | None = None,
     overrides: Mapping[str, str | None] | None = None,
 ) -> tuple[list[list[str]], list[dict[str, str]], int]:
@@ -91,6 +96,15 @@ def generate_tvla_inputs(
 
     Returns target rows, manifest rows, and the effective random seed.
     """
+    from sofa.components.pqc import FAMILIES, PQCSpec, generate_pqc_inputs
+    if algorithm in FAMILIES:
+        spec = PQCSpec.from_settings(target_settings)
+        if variable is not None and variable != spec.tvla_variable:
+            raise ValueError(f'PQC TVLA requires variable {spec.tvla_variable!r}')
+        if overrides and any(value is not None for value in overrides.values()):
+            raise ValueError('PQC TVLA does not accept baseline overrides in this version')
+        return generate_pqc_inputs(spec, count, seed, tvla=True)
+    variable = variable or 'plaintext'
     if count < 4 or count % 2:
         raise ValueError("TVLA --count must be an even integer of at least 4")
     fields = tvla_field_lengths(algorithm, target_settings)
@@ -236,7 +250,8 @@ def _first_divergence(
             sample = int(differences[0])
             raise ValueError(
                 f"TVLA {label} alignment diverges at sample {sample} between "
-                f"{filenames[0]} and {filenames[trace_index]}"
+                f"{filenames[0]} and {filenames[trace_index]}. Data-dependent PQC execution may "
+                "diverge; choose an aligned capture window. Sofa does not truncate or align traces."
             )
 
 
@@ -338,7 +353,8 @@ def analyze_tvla_archive(
             raise ValueError(
                 "TVLA sample counts differ between "
                 f"{filenames[0]} ({first}) and {filenames[divergent]} "
-                f"({lengths[divergent]})"
+                f"({lengths[divergent]}). Data-dependent PQC execution may produce unequal traces; "
+                "select a consistently aligned capture window. Sofa does not truncate or align traces."
             )
         sample_count = int(lengths[0])
         if sample_count > traces.shape[1]:
@@ -431,6 +447,7 @@ def analyze_tvla_archive(
                 "capstone_version",
                 "architecture",
                 "register_widths",
+                "pqc_inputs",
             )
             if key in archive
         }

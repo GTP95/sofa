@@ -27,6 +27,8 @@ from sofa.targets.keccak.keccak_input_parser import KeccakHashInputParser
 from sofa.targets.keccak.keccak_input_validator import KeccakHashInputValidator
 from sofa.targets.keccak.keccak_settings_loader import KeccakHashSettingsLoader
 from sofa.utils.helpers import parse_args
+from sofa.components.pqc import (FAMILIES, PQCInputsGenerator, PQCInputValidator,
+                                  PQCSettingsLoader, PQCInputParser)
 
 if __name__ == "__main__":
     image=from_file('art/CPU.webp')
@@ -61,6 +63,12 @@ if __name__ == "__main__":
         sl = KeccakHashSettingsLoader(json_path=args.config)
         ip = KeccakHashInputParser()
         tp = KeccakHashQilingProfile()
+
+    elif args.algorithm in FAMILIES:
+        ig = PQCInputsGenerator()
+        iv = PQCInputValidator()
+        sl = PQCSettingsLoader(args.config)
+        ip = PQCInputParser()
 
     else:
         # If the target is not implemented, raise an error

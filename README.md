@@ -32,10 +32,12 @@ Qiling.
 - [Benchmarking](#benchmarking)
 - [Project background](#project-background)
 - [License](#license)
+- [NIST PQC with external binaries](#nist-pqc-with-external-bare-metal-binaries)
 
 ## Features
 
 - AES, ASCON, and KECCAK example targets.
+- ML-KEM, ML-DSA and SLH-DSA named inputs, valid generation and TVLA for external bare-metal binaries.
 - Identity, Hamming Weight, and Hamming Distance leakage models.
 - Instruction-aware register selection and a historical all-register mode.
 - User-provided, CSV, and automatically generated inputs.
@@ -53,6 +55,7 @@ Qiling.
 | AES | Key, IV, and plaintext in user-provided and auto-generated modes. |
 | ASCON | Key, nonce, plaintext, and optional associated data. |
 | KECCAK | Key, plaintext, and sponge capacity. |
+| ML-KEM, ML-DSA, SLH-DSA | Operation-specific named inputs for external ARM64/RV32/RV64 ELFs; see [PQC support](#nist-pqc-with-external-bare-metal-binaries). |
 
 ## Requirements
 
@@ -63,6 +66,7 @@ These host requirements can be ignored when using the Docker image:
   have not yet been updated.
 - Qiling for emulation. It is installed by `requirements.txt`.
 - The remaining Python packages listed in `requirements.txt`.
+- Optional: OpenSSL 3.5+ libcrypto for PQC automatic generation and TVLA; supplied PQC vectors do not require it.
 - Optional: `make` and the
   [Arm GNU toolchain](https://developer.arm.com/downloads/-/arm-gnu-toolchain-downloads)
   (`arm-none-eabi`) for building the bundled examples. They are not required
@@ -379,7 +383,8 @@ validation, symbol lookup, UART, or unmapped-memory error.
 Run `main.py` with an input mode, the ELF path, and the matching profile. The
 algorithm comes from the profile's `target` field; it is not a separate
 command-line argument. Targets with an implementation suffix, such as
-`ASCON_PROTECTED`, select the corresponding base algorithm.
+`ASCON_PROTECTED`, select the corresponding base algorithm. PQC profiles use an
+exact family target and a separate `parameter_set` field.
 
 Algorithm-specific options are checked against the selected target. For
 example, using `--nonce` with an AES profile or `--iv` with an ASCON profile
@@ -479,15 +484,16 @@ TVLA implies `--input auto`, so `--input` may be omitted. Explicitly selecting
 `user` or `user-csv` is rejected, and TVLA-generated values always use
 hexadecimal input format.
 
-By default, Sofa performs conventional non-specific fixed-versus-random
-plaintext TVLA. It creates one baseline vector, repeats its plaintext in the
+For AES, ASCON and KECCAK, Sofa defaults to conventional non-specific
+fixed-versus-random plaintext TVLA. It creates one baseline vector, repeats its plaintext in the
 fixed group, varies only plaintext in the random group, and keeps the key, IV,
 nonce, and associated data fixed where applicable. Fixed and random rows
 alternate. Existing `--key`, `--plaintext`, `--iv`, `--nonce`, and `--ad`
 values override the corresponding generated baseline fields, allowing a known
 baseline to be combined with seeded generation for unspecified fields.
 
-Use `--tvla_variable` to choose the only value that varies in random rows:
+Use `--tvla_variable` to choose the varied field for these algorithms
+(PQC has [operation-specific variables and dependent changes](#optional-host-backend-reproducibility-and-tvla)):
 
 - AES supports `plaintext`, `key`, and `iv` when the profile enables an IV.
 - ASCON supports `plaintext`, `key`, `nonce`, and `ad` when `ad_length` is
@@ -722,7 +728,8 @@ state.
 | `--ad` | ASCON associated data when the firmware uses a nonzero `AD_LEN`. |
 | `--capacity` | Capacity for the KECCAK sponge function. |
 | `--tvla` | Run first-order fixed-versus-random TVLA; implies `--input auto` and requires an even `--count` of at least four. |
-| `--tvla_variable` | Input varied in the random TVLA group; defaults to `plaintext`, with availability determined by the profile. |
+| `--tvla_variable` | Input varied in the random TVLA group; defaults to `plaintext` for AES/ASCON/KECCAK and the operation-specific field for PQC. |
+| `--pqc_inputs` | JSON object of named hexadecimal inputs for PQC user mode. |
 | `--tvla_seed` | Optional nonnegative 64-bit seed. If omitted, Sofa generates and records an effective seed. |
 | `elf_path` | Required path to the ELF file. |
 | `config` | Required path to the JSON profile whose `target` selects the algorithm. |
@@ -764,3 +771,155 @@ features.
 ## License
 
 Sofa is licensed under the MIT License.
+
+## NIST PQC with external bare-metal binaries
+
+Sofa supports all finalized FIPS 203 ML-KEM parameter sets (512, 768, 1024),
+FIPS 204 ML-DSA sets (44, 65, 87), and all twelve FIPS 205 SLH-DSA sets
+(`SHA2-128s` through `SHAKE-256f`). These use the existing ARM64, RV32 and RV64
+static ELF runner. Supply your own binary: there is no bundled PQC firmware,
+MCU/UART integration, implicit RNG, Falcon, HQC or stateful signature support.
+
+Profiles use the exact family as `target`: `ML-KEM`, `ML-DSA` or `SLH-DSA`.
+Set `platform: "baremetal"`, `execution_mode: "baremetal-direct"`, an explicit
+`parameter_set` (string or integer for ML-KEM/ML-DSA), and `operation`:
+
+| Family | Operations | Parameter sets |
+| --- | --- | --- |
+| ML-KEM | `keygen`, `encapsulate`, `decapsulate` | `512`, `768`, `1024` |
+| ML-DSA | `keygen`, `sign`, `verify` | `44`, `65`, `87` |
+| SLH-DSA | `keygen`, `sign`, `verify` | `SHA2`/`SHAKE` × `128`/`192`/`256` × `s`/`f`, e.g. `SHAKE-192s` |
+
+Signature profiles accept `signature_mode: "pure"` (default) or `"prehash"`,
+`prehash_algorithm`, and `randomized: true` (default; use a JSON boolean).
+Prehash supports SHA-224/256/384/512, SHA-512/224, SHA-512/256,
+SHA3-224/256/384/512, SHAKE128 (32 output bytes) and SHAKE256 (64 output bytes).
+The selected hash must preserve the parameter set's collision strength:
+128 bits for ML-DSA-44 and SLH-DSA-128, 192 for ML-DSA-65 and SLH-DSA-192,
+256 for ML-DSA-87 and SLH-DSA-256. Thus SHA-224 and SHA3-224 are rejected,
+and SHA-256/SHAKE128 are limited to the 128-bit sets. Hash names are exact.
+These rules follow [FIPS 204](https://doi.org/10.6028/NIST.FIPS.204) and
+[FIPS 205](https://doi.org/10.6028/NIST.FIPS.205).
+
+### Supplied inputs and wrapper ABI
+
+User mode takes `--pqc_inputs PATH`, a JSON object whose values are hexadecimal
+strings with no prefixes or whitespace. CSV mode uses the same **named columns**;
+column order does not matter. Context defaults to empty and is limited to 255 bytes.
+An empty message is valid. Required inputs are:
+
+| Operation | Fields |
+| --- | --- |
+| Key generation | `seed` |
+| ML-KEM encapsulation | `public_key`, `randomness` |
+| ML-KEM decapsulation | `secret_key`, `ciphertext` |
+| Signing | `secret_key`, `message`, `randomness` (when randomized) |
+| Verification | `public_key`, `message`, `signature` |
+
+`context` is optional for signatures. Additional named fields can accompany the
+required fields. All keys use raw FIPS encodings, including **expanded** secret
+keys, not DER, PEM or seed-only secret-key encodings. ML-KEM seeds concatenate
+32-byte `d` and `z`; ML-DSA seeds are 32 bytes; SLH-DSA seeds concatenate
+`SK.seed || SK.prf || PK.seed` (3n bytes). Encapsulation randomness is the 32-byte
+FIPS `m`; signing randomness is 32 bytes for ML-DSA or n bytes for SLH-DSA
+(n = 16/24/32). With `randomized: false`, Sofa supplies 32 zero bytes for ML-DSA
+or `PK.seed` from the secret key for SLH-DSA; conflicting randomness is rejected.
+
+| Parameter | Public key | Expanded secret key | Ciphertext/signature |
+| --- | ---: | ---: | ---: |
+| ML-KEM-512 / 768 / 1024 | 800 / 1184 / 1568 | 1632 / 2400 / 3168 | 768 / 1088 / 1568 |
+| ML-DSA-44 / 65 / 87 | 1312 / 1952 / 2592 | 2560 / 4032 / 4896 | 2420 / 3309 / 4627 |
+| SLH-DSA-128s / 128f | 32 | 64 | 7856 / 17088 |
+| SLH-DSA-192s / 192f | 48 | 96 | 16224 / 35664 |
+| SLH-DSA-256s / 256f | 64 | 128 | 29792 / 49856 |
+
+Sizes are bytes; SLH-DSA sizes apply to both SHA2 and SHAKE. Required fields,
+hex encodings and exact sizes are checked before emulation in every PQC mode,
+including CSV and `--no_validation`. Sofa preserves same-size malformed
+cryptographic inputs for rejection testing, without repairing keys, ciphertexts
+or signatures. It does not perform general cryptographic validation of outputs.
+
+`direct_call.buffers.*.input` can select any supplied named field or the derived
+`encoded_message`. For signatures this is `00 || len(context) || context || message`
+in pure mode, or `01 || len(context) || context || DER(hash OID) || hash(message)`
+in prehash mode. `{"length": "encoded_message"}` passes its actual byte count.
+Public API wrappers can select raw `message` and `context`; internal wrappers can
+select `encoded_message`. Avoid encoding an already encoded message a second time.
+Each wrapper must accept explicit seeds/randomness via configured pointer/integer
+arguments. Sofa does not infer a library's C signature or emulate its RNG.
+
+Nine [external-binary templates](profiles/examples) named
+`ML-KEM-*-arm64-baremetal.json`, `ML-DSA-*-arm64-baremetal.json` and
+`SLH-DSA-*-arm64-baremetal.json` cover each operation. Their wrapper contracts are:
+
+- Keygen: `(seed, public_key_out, secret_key_out)`.
+- Encapsulation: `(public_key, randomness, ciphertext_out, shared_secret_out)`.
+- Decapsulation: `(secret_key, ciphertext, shared_secret_out)`.
+- Sign: `(secret_key, encoded_message, message_length, randomness, signature_out)`.
+- Verify: `(public_key, encoded_message, message_length, signature)`, returning an integer.
+
+All arguments are pointers except `message_length`. Output buffers use the existing
+direct-call workspace mechanism. Adapt symbols, sizes, memory mappings, stack and
+instruction limit to your binary. Signature templates have room for a 64-byte
+pure message with empty context; increase their encoded-message buffer for longer
+messages, context, or prehash encoding. For RV32/RV64, change `architecture` to
+`riscv32`/`riscv64` and adapt addresses and ELF; the runner uses a0–a7 and the
+architecture's pointer width (ARM64 uses x0–x7).
+
+```bash
+# Supplied JSON (e.g. keygen.json contains {"seed": "...64 bytes of hex..."})
+.venv/bin/python main.py wrapper.elf profiles/examples/ML-KEM-keygen-arm64-baremetal.json \
+  --input user --pqc_inputs keygen.json
+# Named CSV inputs, including a complete pqc_inputs.csv manifest from a prior run
+.venv/bin/python main.py wrapper.elf profile.json --input user-csv --path vectors.csv
+# Valid generated operations; messages default to 64 bytes, set message_length in the profile
+.venv/bin/python main.py wrapper.elf profile.json --input auto --count 10
+.venv/bin/python main.py wrapper.elf profile.json --tvla --count 100 --tvla_seed 42
+```
+
+### Optional host backend, reproducibility and TVLA
+
+Automatic generation and PQC TVLA require OpenSSL **3.5+ libcrypto**, with the
+requested algorithms available in its provider. Set `SOFA_LIBCRYPTO` to an explicit
+shared-library path if necessary. Python's `ssl` version and the `openssl` command
+can differ from the library loaded by ctypes. Supplied JSON/CSV vectors and
+existing algorithms do not require the host backend. The backend uses typed EVP
+bindings, explicit seeds, the [ML-KEM `ikme` testing parameter](https://docs.openssl.org/3.5/man7/EVP_KEM-ML-KEM/)
+and signature `test-entropy`/`message-encoding` parameters documented for
+[ML-DSA](https://docs.openssl.org/3.5/man7/EVP_SIGNATURE-ML-DSA/) and
+[SLH-DSA](https://docs.openssl.org/3.5/man7/EVP_SIGNATURE-SLH-DSA/).
+These produce experiment vectors, with no additional OpenSSL message encoding.
+
+PQC TVLA allows one variable per operation, selected by default:
+
+| Operation | Variable | Held fixed / dependent changes |
+| --- | --- | --- |
+| Keygen | `seed` | Key pair changes with seed |
+| Encapsulation | `randomness` | Fixed public key; ciphertext changes |
+| Decapsulation | `ciphertext` | Fixed key pair; fresh randomness produces valid ciphertexts |
+| Sign | `message` | Fixed secret key and signing randomness; signature changes |
+| Verify | `message` | Fixed public key; valid signature regenerated for each message |
+
+Other PQC `--tvla_variable` values and baseline overrides are rejected. Existing
+algorithms retain their plaintext default. Fixed/random rows are balanced and
+interleaved. Message TVLA requires a nonempty configured message length.
+`--tvla_seed` controls generation (also accepted with PQC auto mode); omitted seeds
+are generated and recorded. Each run writes `pqc_inputs.csv` with all actual bytes,
+operation, parameter set, signature/prehash/randomness settings, generation seed
+when generated, and changed fields. TVLA also writes `tvla_inputs.csv` with group
+labels. PQC input metadata is retained as JSON text in the `pqc_inputs` field of
+power and TVLA result archives. Replay a manifest using its matching profile and
+`--input user-csv`; this does not require OpenSSL.
+
+PQC operations can be very long and produce large register CSVs and power archives.
+Allocate enough workspace and stack, set a suitable instruction limit, and choose
+a focused capture window where useful. Strict TVLA alignment checks still require
+equal lengths, PCs, instruction identities and access masks. Data-dependent loops
+(including ML-DSA rejection sampling) may fail those checks. Sofa does not truncate
+or automatically align traces; choose a consistently aligned capture window.
+
+PQC verification uses pinned NIST ACVP key-generation vectors for all 18 parameter
+sets, KEM vectors, and external pure/prehash signature vectors. Fixture JSON files
+under `tests/vectors/pqc_*.json` record their upstream commit, group and test IDs.
+Run `.venv/bin/python -m unittest discover -s tests`; backend tests skip when
+OpenSSL 3.5+ cannot be loaded, while input and ELF integration tests still run.

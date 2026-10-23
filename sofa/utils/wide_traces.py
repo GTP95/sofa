@@ -172,6 +172,11 @@ def create_v2_archive(destination: str | Path, files: list[Path], leakage_model:
         if manifest.exists():
             from sofa.components.tvla import load_tvla_group_labels
             metadata["group_labels"] = load_tvla_group_labels(manifest, [f.name for f in files])
+        pqc_manifest = files[0].parent / "pqc_inputs.csv"
+        if pqc_manifest.exists():
+            import json
+            with pqc_manifest.open(encoding="utf-8", newline="") as source:
+                metadata["pqc_inputs"] = np.asarray(json.dumps(list(csv.DictReader(source))))
         np.savez_compressed(destination, **arrays, **metadata)
         for array in arrays.values():
             array.flush()

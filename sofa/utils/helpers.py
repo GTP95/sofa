@@ -39,13 +39,17 @@ from sofa.utils.register_access import (
 
 # region: PARSERS
 
-SUPPORTED_ALGORITHMS = {"AES", "ASCON", "KECCAK"}
+from sofa.components.pqc import FAMILIES, PQCSpec, PQCSettingsLoader
+
+SUPPORTED_ALGORITHMS = {"AES", "ASCON", "KECCAK"} | FAMILIES
 ALGORITHM_OPTIONS = {
     "AES": frozenset({"iv", "key", "plaintext"}),
     "ASCON": frozenset({"ad", "key", "nonce", "plaintext"}),
     "KECCAK": frozenset({"capacity", "plaintext"}),
 }
+ALGORITHM_OPTIONS.update({name: frozenset({"pqc_inputs"}) for name in FAMILIES})
 OPTION_FLAGS = {
+    "pqc_inputs": "--pqc_inputs",
     "ad": "--ad",
     "capacity": "--capacity",
     "iv": "--iv",
@@ -87,7 +91,7 @@ def get_profile_algorithm(json_path: str) -> str:
             f"Profile {json_path!r} must define a non-empty string 'target'"
         )
 
-    algorithm = target.split("_", maxsplit=1)[0]
+    algorithm = target if target in FAMILIES else target.split("_", maxsplit=1)[0]
     if algorithm not in SUPPORTED_ALGORITHMS:
         supported = ", ".join(sorted(SUPPORTED_ALGORITHMS))
         raise ValueError(
@@ -190,15 +194,17 @@ def parse_args() -> Namespace:
     )
     parser.add_argument(
         "--tvla_variable",
-        choices=["plaintext", "key", "iv", "nonce", "ad"],
-        default="plaintext",
-        help="Input varied in TVLA's random group (default: plaintext).",
+        choices=["plaintext", "key", "iv", "nonce", "ad", "seed", "randomness", "ciphertext", "message"],
+        default=None,
+        help="Input varied in TVLA's random group (PQC: operation-specific; otherwise plaintext).",
     )
     parser.add_argument(
         "--tvla_seed",
         type=int,
         help="Seed for reproducible TVLA input generation.",
     )
+
+    parser.add_argument("--pqc_inputs", type=str, help="Named hexadecimal PQC inputs in a JSON object.")
 
     parser.add_argument(
         "--path",
@@ -285,6 +291,20 @@ def parse_args() -> Namespace:
     except ValueError as error:
         parser.error(str(error))
 
+    if args.algorithm in FAMILIES:
+        try:
+            spec = PQCSpec.from_settings(PQCSettingsLoader(args.config).get_target_settings())
+        except ValueError as error:
+            parser.error(str(error))
+        if args.input_format != "hex":
+            parser.error("PQC inputs require --input_format hex")
+        if args.input == "user" and not args.pqc_inputs:
+            parser.error("PQC user mode requires --pqc_inputs PATH")
+        if args.pqc_inputs and args.input != "user":
+            parser.error("--pqc_inputs requires --input user; use --path for CSV replay")
+    if args.tvla_variable is None:
+        args.tvla_variable = spec.tvla_variable if args.algorithm in FAMILIES else "plaintext"
+
     if args.tvla:
         from sofa.components.tvla import tvla_field_lengths
 
@@ -292,6 +312,7 @@ def parse_args() -> Namespace:
             "AES": AesSettingsLoader,
             "ASCON": AsconSettingsLoader,
             "KECCAK": KeccakHashSettingsLoader,
+            **{name: PQCSettingsLoader for name in FAMILIES},
         }[args.algorithm]
         active_fields = tvla_field_lengths(
             args.algorithm, loader_type(args.config).get_target_settings()

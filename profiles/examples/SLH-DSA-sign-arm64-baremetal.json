@@ -1,0 +1,72 @@
+{
+  "__example_comment": "External-binary template. Supply a static ELF and adapt entry, capture symbols, memory, stack and instruction limit. Signature wrappers take already encoded FIPS messages and explicit randomness.",
+  "platform": "baremetal",
+  "execution_mode": "baremetal-direct",
+  "architecture": "arm64",
+  "target": "SLH-DSA",
+  "parameter_set": "SHA2-128f",
+  "operation": "sign",
+  "trace_start": "sofa_pqc_wrapper",
+  "trace_end": 4194304,
+  "memory_mappings": [
+    {
+      "base_address": 3145728,
+      "size": 1048576,
+      "perms": 3,
+      "info": "PQC buffers and stack"
+    },
+    {
+      "base_address": 4194304,
+      "size": 4096,
+      "perms": 5,
+      "info": "return sentinel"
+    }
+  ],
+  "instruction_limit": 100000000,
+  "signature_mode": "pure",
+  "randomized": true,
+  "message_length": 64,
+  "direct_call": {
+    "entry": "sofa_pqc_wrapper",
+    "stack_address": 4190208,
+    "return_address": 4194304,
+    "buffers": {
+      "secret_key": {
+        "address": 3145728,
+        "size": 64,
+        "input": "secret_key"
+      },
+      "encoded_message": {
+        "address": 3145792,
+        "size": 66,
+        "input": "encoded_message"
+      },
+      "randomness": {
+        "address": 3145920,
+        "size": 16,
+        "input": "randomness"
+      },
+      "signature": {
+        "address": 3145984,
+        "size": 17088
+      }
+    },
+    "arguments": [
+      {
+        "buffer": "secret_key"
+      },
+      {
+        "buffer": "encoded_message"
+      },
+      {
+        "length": "encoded_message"
+      },
+      {
+        "buffer": "randomness"
+      },
+      {
+        "buffer": "signature"
+      }
+    ]
+  }
+}

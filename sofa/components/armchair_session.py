@@ -11,6 +11,7 @@ from argparse import Namespace
 
 import csv
 import logging
+from sofa.components.pqc import (FAMILIES, PQCSpec, generate_pqc_inputs, read_pqc_csv, write_pqc_csv)
 
 from sofa.components.tvla import generate_tvla_inputs, write_tvla_manifest
 
@@ -42,6 +43,7 @@ class ARMChairSession:
         self.logger.setLevel(logging.getLogger().level)
         self.tvla_manifest: list[dict[str, str]] = []
         self.tvla_seed: int | None = None
+        self.pqc_manifest: list[dict[str, str]] = []
 
     def init_session(self) -> None:
         # Initialize (or not) the classes
@@ -49,6 +51,29 @@ class ARMChairSession:
         iv: InputValidator = self.input_validator
         ip: InputParser = self.input_parser
         sl: SettingsLoader = self.settings_loader
+        if self.args.algorithm in FAMILIES:
+            spec = PQCSpec.from_settings(sl.get_target_settings())
+            if self.input_format != 'hex':
+                raise ValueError('PQC inputs require hexadecimal encoding')
+            if self.mode == ARMChairSessionMode.USER:
+                self.target_data = [ip.parse_user_args(self.args, sl.get_target_settings())]
+            elif self.mode == ARMChairSessionMode.USER_CSV:
+                self.target_data = read_pqc_csv(self.input_csv_path, spec)
+            else:
+                if getattr(self.args, 'tvla', False) and self.args.tvla_variable != spec.tvla_variable:
+                    raise ValueError(f'PQC TVLA requires --tvla_variable {spec.tvla_variable}')
+                self.target_data, self.pqc_manifest, self.tvla_seed = generate_pqc_inputs(
+                    spec, self.args.count, getattr(self.args, 'tvla_seed', None),
+                    tvla=getattr(self.args, 'tvla', False))
+                if getattr(self.args, 'tvla', False):
+                    self.tvla_manifest = self.pqc_manifest
+                    self.args.tvla_seed = self.tvla_seed
+                else:
+                    write_pqc_csv(f'{sl.get_target()}-{sl.get_plat()}-Inputs.csv', self.pqc_manifest)
+            if not self.pqc_manifest:
+                self.pqc_manifest = [{**spec.metadata(), 'trace_filename': f'traces_{index+1}.csv',
+                                      **values} for index, values in enumerate(self.target_data)]
+            return
 
 
         if self.mode == ARMChairSessionMode.USER:
@@ -158,4 +183,6 @@ class ARMChairSession:
             write_tvla_manifest(
                 f"{output_dir}/tvla_inputs.csv", self.tvla_manifest
             )
+        if self.pqc_manifest:
+            write_pqc_csv(f"{output_dir}/pqc_inputs.csv", self.pqc_manifest)
         return output_dir

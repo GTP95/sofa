@@ -11,6 +11,7 @@ from qiling import Qiling
 from qiling.const import QL_OS, QL_VERBOSE
 
 from sofa.components.qiling_profile import QilingProfile
+from sofa.components.pqc import FAMILIES, PQCSpec
 from sofa.components.sym_parser import SymParser
 from sofa.utils.architectures import ARCHITECTURES, Architecture, decode_access, instruction_type
 from sofa.utils.register_access import DecodedRegisterAccess, PendingInstruction
@@ -92,11 +93,14 @@ class BaremetalProfile(QilingProfile):
         """Retain raw settings without imposing UART-specific fields."""
         super().__init__()
         self.config = config
+        if config.get("target") in FAMILIES:
+            PQCSpec.from_settings(config)
         self.input_format = "hex"
 
     def get_algorithm_name(self) -> str:
         """Return the base algorithm used for generation and validation."""
-        return self.config["target"].split("_")[0].upper()
+        target = self.config["target"]
+        return target if target in FAMILIES else target.split("_")[0].upper()
 
     def get_profile_range(self, sym_parser: SymParser) -> tuple[int, int]:
         """Resolve explicit capture markers without Thumb address adjustment."""
@@ -106,14 +110,20 @@ class BaremetalProfile(QilingProfile):
         """Remember input encoding; bare-metal calls do not use a UART."""
         self.input_format = input_format
 
-    def hook_cmds(self, ql: Qiling, sym_parser: SymParser, target_data: list[str]) -> None:
+    def hook_cmds(self, ql: Qiling, sym_parser: SymParser, target_data: list[str] | dict[str, str]) -> None:
         """Populate buffers and configure the routine's integer arguments."""
         arch: Architecture = ql.sofa_architecture
         call = self.config["direct_call"]
-        fields = {"AES": ["key", "plaintext", "iv"], "ASCON": ["key", "plaintext", "nonce", "ad"],
-                  "KECCAK": ["plaintext"]}[self.get_algorithm_name()]
-        inputs = {name: (value.encode("utf-8") if self.input_format == "plaintext" else bytes.fromhex(value))
-                  for name, value in zip(fields, target_data) if value is not None}
+        if self.get_algorithm_name() in FAMILIES:
+            if self.input_format != "hex":
+                raise ValueError("PQC inputs require hexadecimal encoding")
+            values = PQCSpec.from_settings(self.config).parse(target_data)
+            inputs = {name: bytes.fromhex(value) for name, value in values.items()}
+        else:
+            fields = {"AES": ["key", "plaintext", "iv"], "ASCON": ["key", "plaintext", "nonce", "ad"],
+                      "KECCAK": ["plaintext"]}[self.get_algorithm_name()]
+            inputs = {name: (value.encode("utf-8") if self.input_format == "plaintext" else bytes.fromhex(value))
+                      for name, value in zip(fields, target_data) if value is not None}
         buffers = call.get("buffers", {})
         for name, spec in buffers.items():
             address, size = spec["address"], spec["size"]
